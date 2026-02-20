@@ -27,6 +27,8 @@ Applikationen har två huvudlägen:
 - Genomför övningssession
 - Skapa (övningar, övningsplaner)
 
+Allting persisteras i local storage. Man kan spara till en lokal fil och samt läsa upp allt från en lokal fil.
+
 UX
 --
 Applikationen har en landningssida med toppmeny och en huvudpanel.
