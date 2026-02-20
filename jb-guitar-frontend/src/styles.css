@@ -1,3 +1,275 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-@import "tailwindcss";
+:root {
+  --bg: #0f0f0f;
+  --surf: #181818;
+  --surf2: #1c1c1c;
+  --border: #2a2a2a;
+  --border2: #3a3a3a;
+  --accent: #c9a84c;
+  --accent-dim: rgba(201, 168, 76, 0.12);
+  --txt: #e8e8e8;
+  --txt2: #888;
+  --txt3: #555;
+  --txt4: #333;
+  --danger: #a05050;
+  --danger-border: #5a2a2a;
+  --success: #5a8a5a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Section labels ──────────────────────────── */
+.sect-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--txt3);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ── Cards ─────────────────────────────────────── */
+.card {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  transition: border-color 0.15s;
+}
+
+.card:hover {
+  border-color: var(--border2);
+}
+
+.card-accent {
+  border-left: 3px solid var(--accent);
+}
+
+.card-accent-top {
+  border-top: 3px solid var(--accent);
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--txt);
+  margin-bottom: 4px;
+}
+
+.card-sub {
+  font-size: 11px;
+  color: var(--txt3);
+}
+
+.card-new {
+  background: none;
+  border: 1px dashed var(--border2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--txt4);
+  font-size: 12px;
+  cursor: pointer;
+  min-height: 80px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.card-new:hover {
+  border-color: var(--accent);
+  color: var(--txt3);
+}
+
+/* ── Grids ─────────────────────────────────────── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* ── Progress bar ──────────────────────────────── */
+.prog-wrap {
+  background: var(--border);
+  border-radius: 4px;
+  height: 4px;
+  margin: 8px 0;
+}
+
+.prog-fill {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+/* ── Buttons ───────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 5px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  color: var(--txt2);
+  background: none;
+  letter-spacing: 0.5px;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn:hover {
+  border-color: var(--txt3);
+  color: var(--txt);
+}
+
+.btn-primary {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-dim);
+}
+
+.btn-ghost {
+  border-color: var(--border);
+  color: var(--txt4);
+}
+
+.btn-ghost:hover {
+  border-color: var(--border2);
+  color: var(--txt3);
+}
+
+.btn-danger {
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: rgba(160, 80, 80, 0.1);
+}
+
+.btn-full {
+  width: 100%;
+  text-align: center;
+  padding: 9px;
+  font-size: 12px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* ── Tags ──────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 10px;
+  color: var(--txt3);
+}
+
+.tag-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ── Form fields ───────────────────────────────── */
+.field {
+  margin-bottom: 16px;
+}
+
+.field-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--txt3);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.field-input {
+  width: 100%;
+  background: var(--surf);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  padding: 8px 12px;
+  color: var(--txt);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.field-input:focus {
+  border-color: var(--accent);
+}
+
+/* ── Source pills ──────────────────────────────── */
+.source-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.spill {
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 10px;
+  color: var(--txt3);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  background: none;
+  font-family: inherit;
+}
+
+.spill:hover {
+  border-color: var(--txt3);
+  color: var(--txt2);
+}
+
+.spill.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 600px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
