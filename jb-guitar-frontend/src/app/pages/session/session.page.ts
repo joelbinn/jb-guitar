@@ -5,8 +5,8 @@ import { Session, PracticePlan, Exercise } from '../../models';
 import { SessionService, PlanService, ExerciseService } from '../../services';
 
 @Component({
-    selector: 'jbg-session',
-    template: `
+  selector: 'jbg-session',
+  template: `
     @if (session && plan) {
       <div class="sess-header">
         <span class="sh-title">{{ plan.name }}</span>
@@ -41,7 +41,7 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
                 <div class="iframe-placeholder">
                   <div class="iframe-label">{{ currentExercise.name }}</div>
                   <div class="iframe-url">{{ currentExercise.url }}</div>
-                  <a [href]="currentExercise.url" target="_blank" class="btn btn-primary" style="margin-top: 12px;">
+                  <a [href]="currentExercise.url" class="btn btn-primary" style="margin-top: 12px;">
                     Öppna i nytt fönster ↗
                   </a>
                 </div>
@@ -67,7 +67,7 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
       </div>
     }
   `,
-    styles: `
+  styles: `
     :host { display: flex; flex-direction: column; margin: -20px -16px; }
     .sess-header {
       background: #141414; border-bottom: 1px solid var(--border);
@@ -114,109 +114,109 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
   `,
 })
 export class SessionPage implements OnInit {
-    session?: Session;
-    plan?: PracticePlan;
-    exercises: Exercise[] = [];
-    currentExercise?: Exercise;
-    embedUrl?: SafeResourceUrl;
+  session?: Session;
+  plan?: PracticePlan;
+  exercises: Exercise[] = [];
+  currentExercise?: Exercise;
+  embedUrl?: SafeResourceUrl;
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private sanitizer: DomSanitizer,
-        private sessionService: SessionService,
-        private planService: PlanService,
-        private exerciseService: ExerciseService,
-    ) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private sanitizer: DomSanitizer,
+    private sessionService: SessionService,
+    private planService: PlanService,
+    private exerciseService: ExerciseService,
+  ) { }
 
-    ngOnInit(): void {
-        const id = this.route.snapshot.paramMap.get('id')!;
-        this.loadSession(id);
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id')!;
+    this.loadSession(id);
+  }
+
+  private loadSession(id: string): void {
+    this.session = this.sessionService.getById(id);
+    if (!this.session) return;
+
+    if (this.session.status === 'paused') {
+      this.sessionService.resume(id);
+      this.session = this.sessionService.getById(id);
     }
 
-    private loadSession(id: string): void {
-        this.session = this.sessionService.getById(id);
-        if (!this.session) return;
-
-        if (this.session.status === 'paused') {
-            this.sessionService.resume(id);
-            this.session = this.sessionService.getById(id);
-        }
-
-        this.plan = this.planService.getById(this.session!.planId);
-        if (this.plan) {
-            this.exercises = this.plan.exerciseIds
-                .map((eid) => this.exerciseService.getById(eid))
-                .filter((e): e is Exercise => !!e);
-        }
-        this.updateCurrentExercise();
+    this.plan = this.planService.getById(this.session!.planId);
+    if (this.plan) {
+      this.exercises = this.plan.exerciseIds
+        .map((eid) => this.exerciseService.getById(eid))
+        .filter((e): e is Exercise => !!e);
     }
+    this.updateCurrentExercise();
+  }
 
-    private updateCurrentExercise(): void {
-        if (!this.session) return;
-        this.currentExercise = this.exercises[this.session.currentIndex];
-        this.embedUrl = this.currentExercise ? this.getEmbedUrl(this.currentExercise) : undefined;
-    }
+  private updateCurrentExercise(): void {
+    if (!this.session) return;
+    this.currentExercise = this.exercises[this.session.currentIndex];
+    this.embedUrl = this.currentExercise ? this.getEmbedUrl(this.currentExercise) : undefined;
+  }
 
-    private getEmbedUrl(exercise: Exercise): SafeResourceUrl | undefined {
-        if (exercise.source === 'youtube') {
-            const match = exercise.url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
-            if (match) {
-                return this.sanitizer.bypassSecurityTrustResourceUrl(
-                    `https://www.youtube.com/embed/${match[1]}`,
-                );
-            }
-        }
-        if (exercise.source === 'soundslice') {
-            return this.sanitizer.bypassSecurityTrustResourceUrl(exercise.url);
-        }
-        return undefined;
+  private getEmbedUrl(exercise: Exercise): SafeResourceUrl | undefined {
+    if (exercise.source === 'youtube') {
+      const match = exercise.url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+      if (match) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(
+          `https://www.youtube.com/embed/${match[1]}`,
+        );
+      }
     }
+    if (exercise.source === 'soundslice') {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(exercise.url);
+    }
+    return undefined;
+  }
 
-    get progressPercent(): number {
-        if (!this.session) return 0;
-        return (this.completedCount / this.totalCount) * 100;
-    }
+  get progressPercent(): number {
+    if (!this.session) return 0;
+    return (this.completedCount / this.totalCount) * 100;
+  }
 
-    get completedCount(): number {
-        return this.session?.completed.filter(Boolean).length ?? 0;
-    }
+  get completedCount(): number {
+    return this.session?.completed.filter(Boolean).length ?? 0;
+  }
 
-    get totalCount(): number {
-        return this.session?.completed.length ?? 0;
-    }
+  get totalCount(): number {
+    return this.session?.completed.length ?? 0;
+  }
 
-    goToExercise(index: number): void {
-        if (!this.session) return;
-        this.session.currentIndex = index;
-        this.session.updatedAt = new Date().toISOString();
-        this.sessionService.getById(this.session.id); // refresh
-        // Directly update and persist
-        const s = this.session;
-        s.currentIndex = index;
-        s.updatedAt = new Date().toISOString();
-        this.updateCurrentExercise();
-    }
+  goToExercise(index: number): void {
+    if (!this.session) return;
+    this.session.currentIndex = index;
+    this.session.updatedAt = new Date().toISOString();
+    this.sessionService.getById(this.session.id); // refresh
+    // Directly update and persist
+    const s = this.session;
+    s.currentIndex = index;
+    s.updatedAt = new Date().toISOString();
+    this.updateCurrentExercise();
+  }
 
-    next(): void {
-        if (!this.session) return;
-        this.session = this.sessionService.next(this.session.id);
-        if (this.session?.status === 'completed') {
-            this.router.navigate(['/practice']);
-        } else {
-            this.updateCurrentExercise();
-        }
+  next(): void {
+    if (!this.session) return;
+    this.session = this.sessionService.next(this.session.id);
+    if (this.session?.status === 'completed') {
+      this.router.navigate(['/practice']);
+    } else {
+      this.updateCurrentExercise();
     }
+  }
 
-    previous(): void {
-        if (!this.session) return;
-        this.session = this.sessionService.previous(this.session.id);
-        this.updateCurrentExercise();
-    }
+  previous(): void {
+    if (!this.session) return;
+    this.session = this.sessionService.previous(this.session.id);
+    this.updateCurrentExercise();
+  }
 
-    pauseSession(): void {
-        if (!this.session) return;
-        this.sessionService.pause(this.session.id);
-        this.router.navigate(['/practice']);
-    }
+  pauseSession(): void {
+    if (!this.session) return;
+    this.sessionService.pause(this.session.id);
+    this.router.navigate(['/practice']);
+  }
 }
