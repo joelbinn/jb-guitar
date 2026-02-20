@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -6,27 +6,27 @@ import { Exercise, PracticePlan } from '../../models';
 import { ExerciseService, PlanService } from '../../services';
 
 interface PlanExerciseRow {
-    exerciseId: string;
-    name: string;
-    source: string;
+  exerciseId: string;
+  name: string;
+  source: string;
 }
 
 @Component({
-    selector: 'jbg-plan-edit',
-    imports: [FormsModule, DragDropModule],
-    template: `
+  selector: 'jbg-plan-edit',
+  imports: [FormsModule, DragDropModule],
+  template: `
     <div class="breadcrumb">← Skapa / <span class="crumb-active">Övningsplan</span></div>
-    <div class="page-title">{{ isNew ? 'Ny plan' : 'Redigera plan' }}</div>
+    <div class="page-title">{{ isNew() ? 'Ny plan' : 'Redigera plan' }}</div>
 
     <div class="field">
       <label class="field-label" for="name">Namn</label>
-      <input class="field-input" id="name" [(ngModel)]="name" placeholder="Ange namn..." />
+      <input class="field-input" id="name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
     </div>
 
-    <div class="sect-label">Övningar i planen <span class="count">{{ rows.length }} st</span></div>
+    <div class="sect-label">Övningar i planen <span class="count">{{ rows().length }} st</span></div>
 
     <div cdkDropList (cdkDropListDropped)="drop($event)">
-      @for (row of rows; track row.exerciseId; let i = $index) {
+      @for (row of rows(); track row.exerciseId; let i = $index) {
         <div class="plan-row" cdkDrag>
           <span class="drag-handle" cdkDragHandle>⠿</span>
           <span class="plan-num">{{ i + 1 }}.</span>
@@ -37,7 +37,7 @@ interface PlanExerciseRow {
       }
     </div>
 
-    <div class="add-exercise" (click)="showAddPicker = true">+ Lägg till övning</div>
+    <div class="add-exercise" (click)="showAddPicker.set(true)">+ Lägg till övning</div>
     <div class="drag-hint">⠿ Drag & drop för att sortera om</div>
 
     <button class="btn btn-primary btn-full" style="margin-bottom: 8px;" (click)="save()">
@@ -45,29 +45,29 @@ interface PlanExerciseRow {
     </button>
     <div class="btn-row">
       <button class="btn btn-ghost" style="flex: 1;" (click)="cancel()">Avbryt</button>
-      @if (!isNew) {
+      @if (!isNew()) {
         <button class="btn btn-danger" style="flex: 1;" (click)="remove()">Ta bort plan</button>
       }
     </div>
 
-    @if (showAddPicker) {
-      <div class="picker-overlay" (click)="showAddPicker = false">
+    @if (showAddPicker()) {
+      <div class="picker-overlay" (click)="showAddPicker.set(false)">
         <div class="picker" (click)="$event.stopPropagation()">
           <div class="picker-title">Lägg till övning</div>
-          @for (ex of availableExercises; track ex.id) {
+          @for (ex of availableExercises(); track ex.id) {
             <button class="picker-item" (click)="addExercise(ex)">
               {{ ex.name }}
               <span class="picker-source">{{ ex.source }}</span>
             </button>
           }
-          @if (availableExercises.length === 0) {
+          @if (availableExercises().length === 0) {
             <div class="picker-empty">Alla övningar är redan tillagda, eller inga övningar finns.</div>
           }
         </div>
       </div>
     }
   `,
-    styles: `
+  styles: `
     .breadcrumb { font-size: 10px; color: var(--txt3); margin-bottom: 16px; cursor: pointer; }
     .crumb-active { color: var(--txt2); }
     .page-title { font-size: 18px; font-weight: 700; color: var(--txt); margin-bottom: 20px; }
@@ -117,89 +117,87 @@ interface PlanExerciseRow {
     .picker-empty { font-size: 11px; color: var(--txt4); font-style: italic; text-align: center; padding: 16px; }
   `,
 })
-export class PlanEditPage implements OnInit {
-    isNew = true;
-    planId = '';
-    name = '';
-    rows: PlanExerciseRow[] = [];
-    showAddPicker = false;
+export class PlanEditPage {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly exerciseService = inject(ExerciseService);
+  private readonly planService = inject(PlanService);
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private exerciseService: ExerciseService,
-        private planService: PlanService,
-    ) { }
+  isNew = signal(true);
+  planId = signal('');
+  name = signal('');
+  rows = signal<PlanExerciseRow[]>([]);
+  showAddPicker = signal(false);
 
-    ngOnInit(): void {
-        const id = this.route.snapshot.paramMap.get('id');
-        if (id && id !== 'new') {
-            this.isNew = false;
-            this.planId = id;
-            const plan = this.planService.getById(id);
-            if (plan) {
-                this.name = plan.name;
-                this.rows = plan.exerciseIds.map((eid) => {
-                    const ex = this.exerciseService.getById(eid);
-                    return {
-                        exerciseId: eid,
-                        name: ex?.name ?? 'Borttagen',
-                        source: ex?.source ?? '',
-                    };
-                });
-            }
-        }
-    }
+  availableExercises = computed(() => {
+    const usedIds = new Set(this.rows().map((r) => r.exerciseId));
+    return this.exerciseService.getAll().filter((e) => !usedIds.has(e.id));
+  });
 
-    get availableExercises(): Exercise[] {
-        const usedIds = new Set(this.rows.map((r) => r.exerciseId));
-        return this.exerciseService.getAll().filter((e) => !usedIds.has(e.id));
-    }
-
-    addExercise(ex: Exercise): void {
-        this.rows.push({
-            exerciseId: ex.id,
-            name: ex.name,
-            source: ex.source,
-        });
-        this.showAddPicker = false;
-    }
-
-    removeExercise(index: number): void {
-        this.rows.splice(index, 1);
-    }
-
-    drop(event: CdkDragDrop<PlanExerciseRow[]>): void {
-        moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
-    }
-
-    save(): void {
-        if (!this.name.trim()) return;
-        if (this.isNew) {
-            this.planService.create(
-                this.name.trim(),
-                this.rows.map((r) => r.exerciseId),
-            );
-        } else {
-            const plan: PracticePlan = {
-                id: this.planId,
-                name: this.name.trim(),
-                exerciseIds: this.rows.map((r) => r.exerciseId),
-                createdAt: this.planService.getById(this.planId)?.createdAt ?? new Date().toISOString(),
+  constructor() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id && id !== 'new') {
+      this.isNew.set(false);
+      this.planId.set(id);
+      const plan = this.planService.getById(id);
+      if (plan) {
+        this.name.set(plan.name);
+        this.rows.set(
+          plan.exerciseIds.map((eid) => {
+            const ex = this.exerciseService.getById(eid);
+            return {
+              exerciseId: eid,
+              name: ex?.name ?? 'Borttagen',
+              source: ex?.source ?? '',
             };
-            this.planService.save(plan);
-        }
-        this.router.navigate(['/create']);
+          }),
+        );
+      }
     }
+  }
 
-    cancel(): void {
-        this.router.navigate(['/create']);
-    }
+  addExercise(ex: Exercise): void {
+    this.rows.update((r) => [...r, { exerciseId: ex.id, name: ex.name, source: ex.source }]);
+    this.showAddPicker.set(false);
+  }
 
-    remove(): void {
-        if (confirm('Ta bort denna övningsplan?')) {
-            this.planService.delete(this.planId);
-            this.router.navigate(['/create']);
-        }
+  removeExercise(index: number): void {
+    this.rows.update((r) => r.filter((_, i) => i !== index));
+  }
+
+  drop(event: CdkDragDrop<PlanExerciseRow[]>): void {
+    this.rows.update((r) => {
+      const copy = [...r];
+      moveItemInArray(copy, event.previousIndex, event.currentIndex);
+      return copy;
+    });
+  }
+
+  save(): void {
+    const n = this.name().trim();
+    if (!n) return;
+    if (this.isNew()) {
+      this.planService.create(n, this.rows().map((r) => r.exerciseId));
+    } else {
+      const plan: PracticePlan = {
+        id: this.planId(),
+        name: n,
+        exerciseIds: this.rows().map((r) => r.exerciseId),
+        createdAt: this.planService.getById(this.planId())?.createdAt ?? new Date().toISOString(),
+      };
+      this.planService.save(plan);
     }
+    this.router.navigate(['/create']);
+  }
+
+  cancel(): void {
+    this.router.navigate(['/create']);
+  }
+
+  remove(): void {
+    if (confirm('Ta bort denna övningsplan?')) {
+      this.planService.delete(this.planId());
+      this.router.navigate(['/create']);
+    }
+  }
 }
