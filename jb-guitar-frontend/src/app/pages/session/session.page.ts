@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Session, PracticePlan, Exercise } from '../../models';
@@ -7,64 +7,66 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
 @Component({
   selector: 'jbg-session',
   template: `
-    @if (session && plan) {
-      <div class="sess-header">
-        <span class="sh-title">{{ plan.name }}</span>
-        <div class="mini-prog">
-          <div class="mini-bar">
-            <div class="mini-fill" [style.width.%]="progressPercent"></div>
+    @if (session(); as s) {
+      @if (plan(); as p) {
+        <div class="sess-header">
+          <span class="sh-title">{{ p.name }}</span>
+          <div class="mini-prog">
+            <div class="mini-bar">
+              <div class="mini-fill" [style.width.%]="progressPercent()"></div>
+            </div>
+            <span class="mini-text">{{ completedCount() }}/{{ totalCount() }}</span>
           </div>
-          <span class="mini-text">{{ completedCount }}/{{ totalCount }}</span>
         </div>
-      </div>
-      <div class="sess-layout">
-        <div class="sess-sidebar">
-          @for (ex of exercises; track ex.id; let i = $index) {
-            <div
-              class="sess-item"
-              [class.active]="i === session.currentIndex"
-              [class.done]="session.completed[i]"
-              (click)="goToExercise(i)"
-            >
-              <div class="n">{{ i + 1 }}</div>
-              <div class="nm">{{ ex.name }}</div>
-              <div class="src">{{ ex.source }}{{ session.completed[i] ? ' ✓' : '' }}</div>
-            </div>
-          }
-        </div>
-        <div class="sess-main">
-          @if (currentExercise) {
-            <div class="iframe-area">
-              @if (embedUrl) {
-                <iframe [src]="embedUrl" class="exercise-iframe" allowfullscreen></iframe>
-              } @else {
-                <div class="iframe-placeholder">
-                  <div class="iframe-label">{{ currentExercise.name }}</div>
-                  <div class="iframe-url">{{ currentExercise.url }}</div>
-                  <a [href]="currentExercise.url" class="btn btn-primary" style="margin-top: 12px;">
-                    Öppna i nytt fönster ↗
-                  </a>
+        <div class="sess-layout">
+          <div class="sess-sidebar">
+            @for (ex of exercises(); track ex.id; let i = $index) {
+              <div
+                class="sess-item"
+                [class.active]="i === s.currentIndex"
+                [class.done]="s.completed[i]"
+                (click)="goToExercise(i)"
+              >
+                <div class="n">{{ i + 1 }}</div>
+                <div class="nm">{{ ex.name }}</div>
+                <div class="src">{{ ex.source }}{{ s.completed[i] ? ' ✓' : '' }}</div>
+              </div>
+            }
+          </div>
+          <div class="sess-main">
+            @if (currentExercise(); as ex) {
+              <div class="iframe-area">
+                @if (embedUrl(); as url) {
+                  <iframe [src]="url" class="exercise-iframe" allowfullscreen></iframe>
+                } @else {
+                  <div class="iframe-placeholder">
+                    <div class="iframe-label">{{ ex.name }}</div>
+                    <div class="iframe-url">{{ ex.url }}</div>
+                    <a [href]="ex.url" class="btn btn-primary" style="margin-top: 12px;">
+                      Öppna i nytt fönster ↗
+                    </a>
+                  </div>
+                }
+              </div>
+              <div class="sess-footer">
+                <div class="exercise-info">
+                  <div class="exercise-name">{{ ex.name }}</div>
+                  <div class="exercise-pos">Övning {{ s.currentIndex + 1 }} av {{ totalCount() }}</div>
                 </div>
-              }
-            </div>
-            <div class="sess-footer">
-              <div class="exercise-info">
-                <div class="exercise-name">{{ currentExercise.name }}</div>
-                <div class="exercise-pos">Övning {{ session.currentIndex + 1 }} av {{ totalCount }}</div>
+                <div class="nav-btns">
+                  <button class="btn btn-ghost" [disabled]="s.currentIndex === 0" (click)="previous()">
+                    ← Föregående
+                  </button>
+                  <button class="btn btn-primary" (click)="next()">
+                    {{ s.currentIndex === totalCount() - 1 ? 'Slutför ✓' : 'Nästa →' }}
+                  </button>
+                </div>
+                <button class="btn btn-ghost btn-pause" (click)="pauseSession()">⏸ Pausa session</button>
               </div>
-              <div class="nav-btns">
-                <button class="btn btn-ghost" [disabled]="session.currentIndex === 0" (click)="previous()">
-                  ← Föregående
-                </button>
-                <button class="btn btn-primary" (click)="next()">
-                  {{ session.currentIndex === totalCount - 1 ? 'Slutför ✓' : 'Nästa →' }}
-                </button>
-              </div>
-              <button class="btn btn-ghost btn-pause" (click)="pauseSession()">⏸ Pausa session</button>
-            </div>
-          }
+            }
+          </div>
         </div>
-      </div>
+      }
     }
   `,
   styles: `
@@ -113,49 +115,62 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
     .btn:disabled { opacity: 0.3; cursor: not-allowed; }
   `,
 })
-export class SessionPage implements OnInit {
-  session?: Session;
-  plan?: PracticePlan;
-  exercises: Exercise[] = [];
-  currentExercise?: Exercise;
-  embedUrl?: SafeResourceUrl;
+export class SessionPage {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly sessionService = inject(SessionService);
+  private readonly planService = inject(PlanService);
+  private readonly exerciseService = inject(ExerciseService);
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private sanitizer: DomSanitizer,
-    private sessionService: SessionService,
-    private planService: PlanService,
-    private exerciseService: ExerciseService,
-  ) { }
+  session = signal<Session | undefined>(undefined);
+  plan = signal<PracticePlan | undefined>(undefined);
+  exercises = signal<Exercise[]>([]);
 
-  ngOnInit(): void {
+  currentExercise = computed(() => {
+    const s = this.session();
+    const exs = this.exercises();
+    return s ? exs[s.currentIndex] : undefined;
+  });
+
+  embedUrl = computed<SafeResourceUrl | undefined>(() => {
+    const ex = this.currentExercise();
+    if (!ex) return undefined;
+    return this.getEmbedUrl(ex);
+  });
+
+  completedCount = computed(() => this.session()?.completed.filter(Boolean).length ?? 0);
+  totalCount = computed(() => this.session()?.completed.length ?? 0);
+  progressPercent = computed(() => {
+    const total = this.totalCount();
+    return total > 0 ? (this.completedCount() / total) * 100 : 0;
+  });
+
+  constructor() {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.loadSession(id);
   }
 
   private loadSession(id: string): void {
-    this.session = this.sessionService.getById(id);
-    if (!this.session) return;
+    let s = this.sessionService.getById(id);
+    if (!s) return;
 
-    if (this.session.status === 'paused') {
+    if (s.status === 'paused') {
       this.sessionService.resume(id);
-      this.session = this.sessionService.getById(id);
+      s = this.sessionService.getById(id);
     }
 
-    this.plan = this.planService.getById(this.session!.planId);
-    if (this.plan) {
-      this.exercises = this.plan.exerciseIds
-        .map((eid) => this.exerciseService.getById(eid))
-        .filter((e): e is Exercise => !!e);
-    }
-    this.updateCurrentExercise();
-  }
+    this.session.set(s);
+    const p = s ? this.planService.getById(s.planId) : undefined;
+    this.plan.set(p);
 
-  private updateCurrentExercise(): void {
-    if (!this.session) return;
-    this.currentExercise = this.exercises[this.session.currentIndex];
-    this.embedUrl = this.currentExercise ? this.getEmbedUrl(this.currentExercise) : undefined;
+    if (p) {
+      this.exercises.set(
+        p.exerciseIds
+          .map((eid) => this.exerciseService.getById(eid))
+          .filter((e): e is Exercise => !!e),
+      );
+    }
   }
 
   private getEmbedUrl(exercise: Exercise): SafeResourceUrl | undefined {
@@ -173,50 +188,35 @@ export class SessionPage implements OnInit {
     return undefined;
   }
 
-  get progressPercent(): number {
-    if (!this.session) return 0;
-    return (this.completedCount / this.totalCount) * 100;
-  }
-
-  get completedCount(): number {
-    return this.session?.completed.filter(Boolean).length ?? 0;
-  }
-
-  get totalCount(): number {
-    return this.session?.completed.length ?? 0;
-  }
-
   goToExercise(index: number): void {
-    if (!this.session) return;
-    this.session.currentIndex = index;
-    this.session.updatedAt = new Date().toISOString();
-    this.sessionService.getById(this.session.id); // refresh
-    // Directly update and persist
-    const s = this.session;
-    s.currentIndex = index;
-    s.updatedAt = new Date().toISOString();
-    this.updateCurrentExercise();
+    const s = this.session();
+    if (!s) return;
+    const updated = { ...s, currentIndex: index, updatedAt: new Date().toISOString() };
+    this.sessionService.getById(s.id); // ensure fresh
+    this.session.set(updated);
   }
 
   next(): void {
-    if (!this.session) return;
-    this.session = this.sessionService.next(this.session.id);
-    if (this.session?.status === 'completed') {
+    const s = this.session();
+    if (!s) return;
+    const updated = this.sessionService.next(s.id);
+    if (updated?.status === 'completed') {
       this.router.navigate(['/practice']);
     } else {
-      this.updateCurrentExercise();
+      this.session.set(updated);
     }
   }
 
   previous(): void {
-    if (!this.session) return;
-    this.session = this.sessionService.previous(this.session.id);
-    this.updateCurrentExercise();
+    const s = this.session();
+    if (!s) return;
+    this.session.set(this.sessionService.previous(s.id));
   }
 
   pauseSession(): void {
-    if (!this.session) return;
-    this.sessionService.pause(this.session.id);
+    const s = this.session();
+    if (!s) return;
+    this.sessionService.pause(s.id);
     this.router.navigate(['/practice']);
   }
 }

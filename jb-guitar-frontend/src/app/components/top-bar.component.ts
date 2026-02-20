@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { StorageService } from '../services';
 
@@ -14,9 +14,9 @@ import { StorageService } from '../services';
           <a class="tnav" routerLink="/create" routerLinkActive="active">SKAPA</a>
         </nav>
         <div class="menu-wrap">
-          <button class="gear-btn" (click)="menuOpen = !menuOpen" title="Data">⚙</button>
-          @if (menuOpen) {
-            <div class="menu-backdrop" (click)="menuOpen = false"></div>
+          <button class="gear-btn" (click)="menuOpen.set(!menuOpen())" title="Data">⚙</button>
+          @if (menuOpen()) {
+            <div class="menu-backdrop" (click)="menuOpen.set(false)"></div>
             <div class="menu">
               <button class="menu-item" (click)="exportData()">📥 Exportera till fil</button>
               <button class="menu-item" (click)="fileInput.click()">📤 Importera från fil</button>
@@ -72,13 +72,13 @@ import { StorageService } from '../services';
   `,
 })
 export class TopBarComponent {
-  menuOpen = false;
+  private readonly storage = inject(StorageService);
 
-  constructor(private storage: StorageService) { }
+  menuOpen = signal(false);
 
   exportData(): void {
     this.storage.exportToFile();
-    this.menuOpen = false;
+    this.menuOpen.set(false);
   }
 
   async importData(event: Event): Promise<void> {
@@ -87,7 +87,7 @@ export class TopBarComponent {
     if (!file) return;
     try {
       await this.storage.importFromFile(file);
-      this.menuOpen = false;
+      this.menuOpen.set(false);
       window.location.reload();
     } catch (e) {
       alert('Kunde inte läsa filen. Kontrollera att det är en giltig JSON-fil.');
@@ -95,4 +95,3 @@ export class TopBarComponent {
     input.value = '';
   }
 }
-
