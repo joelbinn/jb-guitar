@@ -1,10 +1,11 @@
-import { Routes } from '@angular/router';
-import { LandingPage } from './pages/landing/landing.page';
-import { PracticeListPage } from './pages/practice-list/practice-list.page';
-import { SessionPage } from './pages/session/session.page';
-import { CreatePage } from './pages/create/create.page';
-import { ExerciseEditPage } from './pages/exercise-edit/exercise-edit.page';
-import { PlanEditPage } from './pages/plan-edit/plan-edit.page';
+import {Routes} from '@angular/router';
+import {LandingPage} from './pages/landing/landing.page';
+import {PracticeListPage} from './pages/practice-list/practice-list.page';
+import {SessionPage} from './pages/session/session.page';
+import {CreatePage} from './pages/create/create.page';
+import {ExerciseEditPage} from './pages/exercise-edit/exercise-edit.page';
+import {PlanEditPage} from './pages/plan-edit/plan-edit.page';
+import {HelpPage} from './pages/help/help.page';
 
 export const routes: Routes = [
     { path: '', component: LandingPage },
@@ -13,5 +14,6 @@ export const routes: Routes = [
     { path: 'create', component: CreatePage },
     { path: 'create/exercise/:id', component: ExerciseEditPage },
     { path: 'create/plan/:id', component: PlanEditPage },
+  {path: 'help', component: HelpPage},
     { path: '**', redirectTo: '' },
 ];

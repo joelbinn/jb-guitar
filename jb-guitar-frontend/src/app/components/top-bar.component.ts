@@ -1,6 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { StorageService } from '../services';
+import {Component, inject, signal} from '@angular/core';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {StorageService} from '../services';
 
 @Component({
   selector: 'jbg-top-bar',
@@ -12,6 +12,7 @@ import { StorageService } from '../services';
         <nav class="topnav">
           <a class="tnav" routerLink="/practice" routerLinkActive="active">ÖVA</a>
           <a class="tnav" routerLink="/create" routerLinkActive="active">SKAPA</a>
+          <a class="tnav" routerLink="/help" routerLinkActive="active">HJÄLP</a>
         </nav>
         <div class="menu-wrap">
           <button class="gear-btn" (click)="menuOpen.set(!menuOpen())" title="Data">⚙</button>

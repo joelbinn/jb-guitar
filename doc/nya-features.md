@@ -6,7 +6,7 @@
 * [x] Beskrivning på övning
 * [x] Timer
 * [x] Komma ihåg senaste timerinställning (per session)
-* [ ] Avsluta/ta bort session
+* [x] Avsluta/ta bort session
 * [ ] Lägg till helppage med beskrivning av alla funktioner
 * [ ] Metronom
 * [ ] Flagga "öppna i iframe" på övning.
