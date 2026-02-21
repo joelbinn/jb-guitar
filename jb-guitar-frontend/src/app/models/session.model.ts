@@ -11,6 +11,7 @@ export interface Session {
     status: SessionStatus;
   currentExerciseId: string;
   exerciseCompletions: ExerciseCompletion[];
+  timerMinutes: number;
     startedAt: string;
     updatedAt: string;
 }

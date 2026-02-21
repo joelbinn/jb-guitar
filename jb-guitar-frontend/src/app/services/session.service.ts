@@ -29,6 +29,7 @@ export class SessionService {
             status: 'active',
           currentExerciseId: exerciseIds[0] ?? '',
           exerciseCompletions: exerciseIds.map((id) => ({exerciseId: id, completed: false})),
+          timerMinutes: 5,
             startedAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
@@ -129,4 +130,9 @@ export class SessionService {
     delete(id: string): void {
         this.storage.deleteSession(id);
     }
+
+  save(session: Session): void {
+    session.updatedAt = new Date().toISOString();
+    this.storage.saveSession(session);
+  }
 }

@@ -1,11 +1,13 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 import {Exercise, PracticePlan, Session} from '../../models';
 import {ExerciseService, PlanService, SessionService} from '../../services';
 
 @Component({
   selector: 'jbg-session',
+  imports: [FormsModule],
   template: `
     @if (session(); as s) {
       @if (plan(); as p) {
@@ -63,6 +65,28 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
                   <div class="exercise-name">{{ ex.name }}</div>
                   <div class="exercise-pos">Övning {{ currentExerciseIndex() }}
                     av {{ totalCount() }}
+                  </div>
+                </div>
+                <div class="timer-section">
+                  <div class="timer-display">{{ timerDisplay() }}</div>
+                  <div class="timer-input-row">
+                    <input class="timer-input"
+                           type="number"
+                           min="0"
+                           max="59"
+                           [value]="timerInputMinutes()"
+                           (change)="timerInputMinutes.set(+$event.target!.value)"
+                           [disabled]="timerRunning()"/>
+                    <span class="timer-label">min</span>
+                  </div>
+                  <div class="timer-btns">
+                    <button class="btn btn-sm" [disabled]="timerRunning()" (click)="startTimer()">
+                      Start
+                    </button>
+                    <button class="btn btn-sm" [disabled]="!timerRunning()" (click)="pauseTimer()">
+                      Pausa
+                    </button>
+                    <button class="btn btn-sm" (click)="resetTimer()">Återställ</button>
                   </div>
                 </div>
                 <div class="nav-btns">
@@ -164,6 +188,63 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
     .btn-row .btn {
       flex: 1;
     }
+
+    .timer-section {
+      margin-bottom: 12px;
+      padding: 8px;
+      background: var(--surf2);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .timer-display {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 8px;
+      font-family: monospace;
+    }
+
+    .timer-input-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .timer-input {
+      width: 50px;
+      padding: 4px;
+      font-size: 11px;
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--txt);
+      text-align: center;
+    }
+
+    .timer-label {
+      font-size: 10px;
+      color: var(--txt3);
+    }
+
+    .timer-btns {
+      display: flex;
+      gap: 4px;
+    }
+
+    .timer-btns .btn {
+      flex: 1;
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+
+    .btn-sm {
+      font-size: 10px;
+      padding: 4px 8px;
+    }
     .btn:disabled { opacity: 0.3; cursor: not-allowed; }
   `,
 })
@@ -214,30 +295,85 @@ export class SessionPage {
     return s.exerciseCompletions.findIndex((c) => c.exerciseId === s.currentExerciseId) + 1;
   });
 
+  currentExerciseId = computed(() => this.session()?.currentExerciseId ?? '');
+
+  // Timer signals
+  timerInputMinutes = signal(5);
+  timerRunning = signal(false);
+  timerRemaining = signal(5 * 60);
+  timerPausedByUser = signal(false);
+  timerDisplay = computed(() => {
+    const remaining = this.timerRemaining();
+    const minutes = Math.floor(remaining / 60);
+    const seconds = remaining % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  });
+  private timerIntervalId: number | null = null;
+  private previousExerciseId: string | undefined = undefined;
+
   constructor() {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.loadSession(id);
+
+    // Reset timer when input minutes change (but not if paused by user)
+    effect(() => {
+      const minutes = this.timerInputMinutes();
+      if (!this.timerRunning() && !this.timerPausedByUser()) {
+        this.timerRemaining.set(minutes * 60);
+      }
+      // Save timer minutes to session
+      const s = this.session();
+      if (s && s.timerMinutes !== minutes) {
+        const updated = {...s, timerMinutes: minutes};
+        this.sessionService.save(updated);
+      }
+    });
+
+    // Reset and start timer automatically when exercise changes
+    effect(() => {
+      const exerciseId = this.currentExerciseId();
+
+      // Only run if exercise ID changed and is not empty
+      if (exerciseId && exerciseId !== this.previousExerciseId) {
+        this.previousExerciseId = exerciseId;
+
+        // Verify exercise exists
+        if (this.currentExercise()) {
+          // Reset timer to default and clear paused flag
+          this.timerRemaining.set(this.timerInputMinutes() * 60);
+          this.timerPausedByUser.set(false);
+          if (this.timerRunning()) {
+            // Stop current timer if running
+            if (this.timerIntervalId !== null) {
+              clearInterval(this.timerIntervalId);
+              this.timerIntervalId = null;
+            }
+            this.timerRunning.set(false);
+          }
+          // Start new timer for this exercise with a small delay to ensure proper cleanup
+          setTimeout(() => this.startTimer(), 50);
+        }
+      }
+    });
   }
 
-  private loadSession(id: string): void {
-    let s = this.sessionService.getById(id);
+  goToExercise(exerciseId: string): void {
+    const s = this.session();
     if (!s) return;
-
-    if (s.status === 'paused') {
-      this.sessionService.resume(id);
-      s = this.sessionService.getById(id);
-    }
-
-    this.session.set(s);
-    const p = s ? this.planService.getById(s.planId) : undefined;
-    this.plan.set(p);
-
-    if (p) {
-      this.exercises.set(
-        p.exerciseIds
-          .map((eid) => this.exerciseService.getById(eid))
-          .filter((e): e is Exercise => !!e),
-      );
+    const updated = this.sessionService.setCurrentExerciseId(s.id, exerciseId);
+    if (updated) {
+      this.session.set(updated);
+      // Reset and auto-start timer when exercise changes
+      this.timerRemaining.set(this.timerInputMinutes() * 60);
+      this.timerPausedByUser.set(false);
+      if (this.timerRunning()) {
+        if (this.timerIntervalId !== null) {
+          clearInterval(this.timerIntervalId);
+          this.timerIntervalId = null;
+        }
+        this.timerRunning.set(false);
+      }
+      setTimeout(() => this.startTimer(), 50);
     }
   }
 
@@ -258,13 +394,28 @@ export class SessionPage {
     return undefined;
   }
 
-  goToExercise(exerciseId: string): void {
-    const s = this.session();
-    if (!s) return;
-    const updated = this.sessionService.setCurrentExerciseId(s.id, exerciseId);
-    if (updated) {
-      this.session.set(updated);
+  startTimer(): void {
+    if (this.timerRunning()) return;
+    if (this.timerRemaining() === 0) {
+      this.timerRemaining.set(this.timerInputMinutes() * 60);
     }
+    this.timerRunning.set(true);
+    this.timerPausedByUser.set(false);
+
+    this.timerIntervalId = window.setInterval(() => {
+      this.timerRemaining.update((val) => {
+        if (val <= 1) {
+          this.timerRunning.set(false);
+          if (this.timerIntervalId !== null) {
+            clearInterval(this.timerIntervalId);
+            this.timerIntervalId = null;
+          }
+          this.playTimerSound();
+          return 0;
+        }
+        return val - 1;
+      });
+    }, 1000);
   }
 
   next(): void {
@@ -307,6 +458,91 @@ export class SessionPage {
     const updated = this.sessionService.restart(s.id);
     if (updated) {
       this.session.set(updated);
+    }
+  }
+
+  pauseTimer(): void {
+    this.timerRunning.set(false);
+    this.timerPausedByUser.set(true);
+    if (this.timerIntervalId !== null) {
+      clearInterval(this.timerIntervalId);
+      this.timerIntervalId = null;
+    }
+  }
+
+  stopTimer(): void {
+    this.timerRunning.set(false);
+    this.timerPausedByUser.set(false);
+    if (this.timerIntervalId !== null) {
+      clearInterval(this.timerIntervalId);
+      this.timerIntervalId = null;
+    }
+    this.timerRemaining.set(0);
+  }
+
+  resetTimer(): void {
+    this.stopTimer();
+    this.timerRemaining.set(this.timerInputMinutes() * 60);
+  }
+
+  private loadSession(id: string): void {
+    let s = this.sessionService.getById(id);
+    if (!s) return;
+
+    if (s.status === 'paused') {
+      this.sessionService.resume(id);
+      s = this.sessionService.getById(id);
+    }
+
+    this.session.set(s);
+    const p = s ? this.planService.getById(s.planId) : undefined;
+    this.plan.set(p);
+
+    if (p) {
+      this.exercises.set(
+        p.exerciseIds
+          .map((eid) => this.exerciseService.getById(eid))
+          .filter((e): e is Exercise => !!e),
+      );
+    }
+
+    // Set timer minutes from session and start timer for initial exercise
+    const sessionTimerMinutes = s?.timerMinutes ?? 5;
+    this.timerInputMinutes.set(sessionTimerMinutes);
+
+    setTimeout(() => {
+      if (this.currentExercise()) {
+        this.timerRemaining.set(this.timerInputMinutes() * 60);
+        this.timerPausedByUser.set(false);
+        this.startTimer();
+      }
+    }, 100);
+  }
+
+  private playTimerSound(): void {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const now = audioContext.currentTime;
+
+      // Create oscillator for bell sound
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+
+      // Bell-like sound with two frequencies
+      osc.frequency.setValueAtTime(800, now);
+      osc.frequency.exponentialRampToValueAtTime(400, now + 0.3);
+
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+
+      osc.start(now);
+      osc.stop(now + 0.3);
+    } catch (e) {
+      // Fallback: silent if Web Audio API not available
+      console.log('Timer finished');
     }
   }
 }
