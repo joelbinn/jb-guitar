@@ -91,13 +91,6 @@ interface PlanExerciseRow {
     }
     .add-exercise:hover { border-color: var(--accent); color: var(--txt3); }
     .drag-hint { font-size: 9px; color: var(--txt4); margin-bottom: 16px; font-style: italic; }
-    .cdk-drag-preview {
-      box-sizing: border-box; border-radius: 6px; padding: 8px 10px;
-      background: var(--accent-dim); border: 1px solid var(--accent);
-      display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--txt);
-    }
-    .cdk-drag-placeholder { opacity: 0.3; }
-    .cdk-drag-animating { transition: transform 250ms ease; }
     .picker-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.6);
       display: flex; align-items: center; justify-content: center; z-index: 100;
