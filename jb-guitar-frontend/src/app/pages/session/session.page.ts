@@ -42,7 +42,7 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
                   <div class="iframe-placeholder">
                     <div class="iframe-label">{{ ex.name }}</div>
                     <div class="iframe-url">{{ ex.url }}</div>
-                    <a [href]="ex.url" class="btn btn-primary" [target]="ex.name" style="margin-top: 12px;">
+                  <a [href]="ex.url" class="btn btn-primary" [target]="ex.name" style="margin-top: 12px;">
                       Öppna i nytt fönster ↗
                     </a>
                   </div>
@@ -70,7 +70,7 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
     }
   `,
   styles: `
-    :host { display: flex; flex-direction: column; margin: -20px -16px; }
+    :host { display: flex; flex-direction: column; position: fixed; top: 48px; left: 0; right: 0; bottom: 0; }
     .sess-header {
       background: #141414; border-bottom: 1px solid var(--border);
       padding: 7px 16px; display: flex; align-items: center; justify-content: space-between;
@@ -80,9 +80,9 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
     .mini-bar { width: 70px; height: 5px; background: var(--border); border-radius: 3px; }
     .mini-fill { height: 5px; border-radius: 3px; background: var(--accent); opacity: 0.7; transition: width 0.3s ease; }
     .mini-text { font-size: 10px; color: var(--txt3); }
-    .sess-layout { display: flex; flex: 1; min-height: 500px; }
+    .sess-layout { display: flex; flex: 1; min-height: 0; overflow: hidden; }
     .sess-sidebar {
-      width: 150px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0;
+      width: 150px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; min-height: 0;
     }
     .sess-item {
       padding: 9px 10px; border-bottom: 1px solid var(--border); cursor: pointer;
@@ -96,7 +96,7 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
     .sess-item.active { background: var(--accent-dim); border-left: 3px solid var(--accent); }
     .sess-item.active .nm { color: var(--txt); font-weight: 600; }
     .sess-item.active .src { color: var(--accent); }
-    .sess-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .sess-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
     .iframe-area { flex: 1; display: flex; background: #0a0a0a; border-bottom: 1px solid var(--border); }
     .exercise-iframe { width: 100%; height: 100%; border: none; }
     .iframe-placeholder {
@@ -181,9 +181,6 @@ export class SessionPage {
           `https://www.youtube.com/embed/${match[1]}`,
         );
       }
-    }
-    if (exercise.source === 'soundslice') {
-      return this.sanitizer.bypassSecurityTrustResourceUrl(exercise.url);
     }
     return undefined;
   }

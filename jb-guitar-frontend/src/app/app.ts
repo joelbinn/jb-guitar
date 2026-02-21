@@ -20,9 +20,6 @@ import { TopBarComponent } from './components/top-bar.component';
     .app-content {
       flex: 1;
       padding: 20px 16px;
-      max-width: 960px;
-      width: 100%;
-      margin: 0 auto;
     }
   `,
 })
