@@ -53,6 +53,11 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
                   </div>
                 }
               </div>
+              @if (ex.description) {
+                <div class="description-area">
+                  <div class="description-text">{{ ex.description }}</div>
+                </div>
+              }
               <div class="sess-footer">
                 <div class="exercise-info">
                   <div class="exercise-name">{{ ex.name }}</div>
@@ -123,6 +128,21 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
     .sess-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
     .iframe-area { flex: 1; display: flex; background: #0a0a0a; border-bottom: 1px solid var(--border); }
     .exercise-iframe { width: 100%; height: 100%; border: none; }
+
+    .description-area {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surf);
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    .description-text {
+      font-size: 11px;
+      color: var(--txt3);
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
     .iframe-placeholder {
       flex: 1; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 6px;

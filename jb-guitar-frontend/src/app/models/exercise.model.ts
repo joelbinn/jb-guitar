@@ -5,5 +5,6 @@ export interface Exercise {
     name: string;
     source: ExerciseSource;
     url: string;
+  description?: string;
     createdAt: string;
 }

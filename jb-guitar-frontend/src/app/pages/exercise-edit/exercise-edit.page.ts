@@ -42,6 +42,16 @@ import {ExerciseService} from '../../services';
       </div>
     }
 
+    <div class="field">
+      <label class="field-label" for="description">Beskrivning (valfritt)</label>
+      <textarea class="field-input"
+                id="description"
+                [ngModel]="description()"
+                (ngModelChange)="description.set($event)"
+                placeholder="Ange beskrivning..."
+                rows="4"></textarea>
+    </div>
+
     <button class="btn btn-primary btn-full" style="margin-bottom: 8px;" (click)="save()">
       Spara övning
     </button>
@@ -73,6 +83,7 @@ export class ExerciseEditPage {
   name = signal('');
   source = signal<ExerciseSource>('youtube');
   url = signal('');
+  description = signal('');
 
   readonly sources: { value: ExerciseSource; label: string }[] = [
     { value: 'youtube', label: 'YouTube' },
@@ -99,6 +110,7 @@ export class ExerciseEditPage {
         this.name.set(ex.name);
         this.source.set(ex.source);
         this.url.set(ex.url);
+        this.description.set(ex.description ?? '');
       }
     }
   }
@@ -107,14 +119,16 @@ export class ExerciseEditPage {
     const n = this.name().trim();
     const u = this.url().trim();
     if (!n || !u) return;
+    const d = this.description().trim();
     if (this.isNew()) {
-      this.exerciseService.create(n, this.source(), u);
+      this.exerciseService.create(n, this.source(), u, d || undefined);
     } else {
       const ex: Exercise = {
         id: this.exerciseId(),
         name: n,
         source: this.source(),
         url: u,
+        description: d || undefined,
         createdAt: this.exerciseService.getById(this.exerciseId())?.createdAt ?? new Date().toISOString(),
       };
       this.exerciseService.save(ex);

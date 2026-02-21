@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Exercise, ExerciseSource } from '../models';
-import { StorageService } from './storage.service';
+import {Injectable} from '@angular/core';
+import {Exercise, ExerciseSource} from '../models';
+import {StorageService} from './storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class ExerciseService {
@@ -18,12 +18,13 @@ export class ExerciseService {
         this.storage.saveExercise(exercise);
     }
 
-    create(name: string, source: ExerciseSource, url: string): Exercise {
+  create(name: string, source: ExerciseSource, url: string, description?: string): Exercise {
         const exercise: Exercise = {
             id: crypto.randomUUID(),
             name,
             source,
             url,
+          description,
             createdAt: new Date().toISOString(),
         };
         this.storage.saveExercise(exercise);
