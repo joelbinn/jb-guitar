@@ -4,9 +4,10 @@
 * [x] /-path skall leda till Öva
 * [x] Börja om knapp på session
 * [x] Beskrivning på övning
-* [ ] Timer
-* [ ] Komma ihåg senaste timerinställning (per session)
+* [x] Timer
+* [x] Komma ihåg senaste timerinställning (per session)
+* [ ] Avsluta/ta bort session
+* [ ] Lägg till helppage med beskrivning av alla funktioner
 * [ ] Metronom
 * [ ] Flagga "öppna i iframe" på övning.
-* [ ] Avsluta/ta bort session
 * [ ] Backend med persistering

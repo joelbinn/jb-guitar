@@ -102,6 +102,7 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
                 <div class="btn-row">
                   <button class="btn btn-ghost" (click)="pauseSession()">⏸ Pausa session</button>
                   <button class="btn btn-ghost" (click)="restartSession()">↻ Börja om</button>
+                  <button class="btn btn-danger" (click)="deleteSession()">🗑 Ta bort</button>
                 </div>
               </div>
             }
@@ -459,6 +460,16 @@ export class SessionPage {
     if (updated) {
       this.session.set(updated);
     }
+  }
+
+  deleteSession(): void {
+    const s = this.session();
+    if (!s) return;
+    if (!confirm('Vill du ta bort denna session? Detta kan inte ångras.')) {
+      return;
+    }
+    this.sessionService.delete(s.id);
+    this.router.navigate(['/practice']);
   }
 
   pauseTimer(): void {
