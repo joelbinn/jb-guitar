@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Session } from '../models';
-import { StorageService } from './storage.service';
+import {inject, Injectable} from '@angular/core';
+import {Session} from '../models';
+import {StorageService} from './storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
-    constructor(private storage: StorageService) { }
+  private readonly storage = inject(StorageService);
 
     getAll(): Session[] {
         return this.storage.getSessions();
@@ -22,13 +22,13 @@ export class SessionService {
         return sessions[0];
     }
 
-    create(planId: string, exerciseCount: number): Session {
+  create(planId: string, exerciseIds: string[]): Session {
         const session: Session = {
             id: crypto.randomUUID(),
             planId,
             status: 'active',
-            currentIndex: 0,
-            completed: new Array(exerciseCount).fill(false),
+          currentExerciseId: exerciseIds[0] ?? '',
+          exerciseCompletions: exerciseIds.map((id) => ({exerciseId: id, completed: false})),
             startedAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
@@ -39,12 +39,22 @@ export class SessionService {
     next(id: string): Session | undefined {
         const session = this.storage.getSessionById(id);
         if (!session) return undefined;
-        session.completed[session.currentIndex] = true;
-        if (session.currentIndex < session.completed.length - 1) {
-            session.currentIndex++;
+
+      // Find current exercise completion and mark as complete
+      const currentCompletion = session.exerciseCompletions.find((c) => c.exerciseId === session.currentExerciseId);
+      if (currentCompletion) {
+        currentCompletion.completed = true;
+      }
+
+      // Find next uncompleted exercise or go to next in order
+      const currentIdx = session.exerciseCompletions.findIndex((c) => c.exerciseId === session.currentExerciseId);
+      if (currentIdx >= 0 && currentIdx < session.exerciseCompletions.length - 1) {
+        session.currentExerciseId = session.exerciseCompletions[currentIdx + 1].exerciseId;
         } else {
+        // Mark session as completed if on last exercise
             session.status = 'completed';
         }
+
         session.updatedAt = new Date().toISOString();
         this.storage.saveSession(session);
         return session;
@@ -52,8 +62,28 @@ export class SessionService {
 
     previous(id: string): Session | undefined {
         const session = this.storage.getSessionById(id);
-        if (!session || session.currentIndex <= 0) return session;
-        session.currentIndex--;
+      if (!session) return session;
+
+      const currentIdx = session.exerciseCompletions.findIndex((c) => c.exerciseId === session.currentExerciseId);
+      if (currentIdx <= 0) return session;
+
+      session.currentExerciseId = session.exerciseCompletions[currentIdx - 1].exerciseId;
+      session.updatedAt = new Date().toISOString();
+      this.storage.saveSession(session);
+      return session;
+    }
+
+  setCurrentExerciseId(sessionId: string, exerciseId: string): Session | undefined {
+    const session = this.storage.getSessionById(sessionId);
+    if (!session) return undefined;
+
+    // Validate exercise exists in session
+    const exerciseExists = session.exerciseCompletions.some((c) => c.exerciseId === exerciseId);
+    if (!exerciseExists) {
+      return session; // Invalid exercise ID, don't proceed
+    }
+
+    session.currentExerciseId = exerciseId;
         session.updatedAt = new Date().toISOString();
         this.storage.saveSession(session);
         return session;

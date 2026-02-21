@@ -1,8 +1,8 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Session, PracticePlan, Exercise } from '../../models';
-import { SessionService, PlanService, ExerciseService } from '../../services';
+import {Component, computed, inject, signal} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {Exercise, PracticePlan, Session} from '../../models';
+import {ExerciseService, PlanService, SessionService} from '../../services';
 
 @Component({
   selector: 'jbg-session',
@@ -23,13 +23,16 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
             @for (ex of exercises(); track ex.id; let i = $index) {
               <div
                 class="sess-item"
-                [class.active]="i === s.currentIndex"
-                [class.done]="s.completed[i]"
-                (click)="goToExercise(i)"
+                [class.active]="ex.id === s.currentExerciseId"
+                [class.done]="isExerciseCompleted(s, ex.id)"
+                (click)="goToExercise(ex.id)"
               >
                 <div class="n">{{ i + 1 }}</div>
                 <div class="nm">{{ ex.name }}</div>
-                <div class="src">{{ ex.source }}{{ s.completed[i] ? ' ✓' : '' }}</div>
+                <div class="src">{{ ex.source }}{{
+                    isExerciseCompleted(s, ex.id) ? ' ✓' : ''
+                  }}
+                </div>
               </div>
             }
           </div>
@@ -51,14 +54,18 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
               <div class="sess-footer">
                 <div class="exercise-info">
                   <div class="exercise-name">{{ ex.name }}</div>
-                  <div class="exercise-pos">Övning {{ s.currentIndex + 1 }} av {{ totalCount() }}</div>
+                  <div class="exercise-pos">Övning {{ currentExerciseIndex() }}
+                    av {{ totalCount() }}
+                  </div>
                 </div>
                 <div class="nav-btns">
-                  <button class="btn btn-ghost" [disabled]="s.currentIndex === 0" (click)="previous()">
+                  <button class="btn btn-ghost"
+                          [disabled]="currentExerciseIndex() === 1"
+                          (click)="previous()">
                     ← Föregående
                   </button>
                   <button class="btn btn-primary" (click)="next()">
-                    {{ s.currentIndex === totalCount() - 1 ? 'Slutför ✓' : 'Nästa →' }}
+                    {{ currentExerciseIndex() === totalCount() ? 'Slutför ✓' : 'Nästa →' }}
                   </button>
                 </div>
                 <button class="btn btn-ghost btn-pause" (click)="pauseSession()">⏸ Pausa session</button>
@@ -130,7 +137,8 @@ export class SessionPage {
   currentExercise = computed(() => {
     const s = this.session();
     const exs = this.exercises();
-    return s ? exs[s.currentIndex] : undefined;
+    if (!s) return undefined;
+    return exs.find((ex) => ex.id === s.currentExerciseId);
   });
 
   embedUrl = computed<SafeResourceUrl | undefined>(() => {
@@ -139,11 +147,26 @@ export class SessionPage {
     return this.getEmbedUrl(ex);
   });
 
-  completedCount = computed(() => this.session()?.completed.filter(Boolean).length ?? 0);
-  totalCount = computed(() => this.session()?.completed.length ?? 0);
+  completedCount = computed(() => {
+    const s = this.session();
+    if (!s) return 0;
+    return s.exerciseCompletions.filter((c) => c.completed).length;
+  });
+
+  totalCount = computed(() => {
+    const s = this.session();
+    return s?.exerciseCompletions.length ?? 0;
+  });
+
   progressPercent = computed(() => {
     const total = this.totalCount();
     return total > 0 ? (this.completedCount() / total) * 100 : 0;
+  });
+
+  currentExerciseIndex = computed(() => {
+    const s = this.session();
+    if (!s) return 0;
+    return s.exerciseCompletions.findIndex((c) => c.exerciseId === s.currentExerciseId) + 1;
   });
 
   constructor() {
@@ -173,6 +196,11 @@ export class SessionPage {
     }
   }
 
+  isExerciseCompleted(session: Session, exerciseId: string): boolean {
+    const completion = session.exerciseCompletions.find((c) => c.exerciseId === exerciseId);
+    return completion?.completed ?? false;
+  }
+
   private getEmbedUrl(exercise: Exercise): SafeResourceUrl | undefined {
     if (exercise.source === 'youtube') {
       const match = exercise.url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
@@ -185,12 +213,13 @@ export class SessionPage {
     return undefined;
   }
 
-  goToExercise(index: number): void {
+  goToExercise(exerciseId: string): void {
     const s = this.session();
     if (!s) return;
-    const updated = { ...s, currentIndex: index, updatedAt: new Date().toISOString() };
-    this.sessionService.getById(s.id); // ensure fresh
-    this.session.set(updated);
+    const updated = this.sessionService.setCurrentExerciseId(s.id, exerciseId);
+    if (updated) {
+      this.session.set(updated);
+    }
   }
 
   next(): void {
@@ -199,7 +228,7 @@ export class SessionPage {
     const updated = this.sessionService.next(s.id);
     if (updated?.status === 'completed') {
       this.router.navigate(['/practice']);
-    } else {
+    } else if (updated) {
       this.session.set(updated);
     }
   }
@@ -207,7 +236,10 @@ export class SessionPage {
   previous(): void {
     const s = this.session();
     if (!s) return;
-    this.session.set(this.sessionService.previous(s.id));
+    const updated = this.sessionService.previous(s.id);
+    if (updated) {
+      this.session.set(updated);
+    }
   }
 
   pauseSession(): void {

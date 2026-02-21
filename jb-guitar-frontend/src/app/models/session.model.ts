@@ -1,11 +1,16 @@
 export type SessionStatus = 'active' | 'paused' | 'completed';
 
+export interface ExerciseCompletion {
+  exerciseId: string;
+  completed: boolean;
+}
+
 export interface Session {
     id: string;
     planId: string;
     status: SessionStatus;
-    currentIndex: number;
-    completed: boolean[];
+  currentExerciseId: string;
+  exerciseCompletions: ExerciseCompletion[];
     startedAt: string;
     updatedAt: string;
 }

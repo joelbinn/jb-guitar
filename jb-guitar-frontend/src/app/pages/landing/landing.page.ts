@@ -1,14 +1,14 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { Session, PracticePlan, Exercise } from '../../models';
-import { SessionService, PlanService, ExerciseService } from '../../services';
+import {Component, computed, inject, signal} from '@angular/core';
+import {Router} from '@angular/router';
+import {Session} from '../../models';
+import {ExerciseService, PlanService, SessionService} from '../../services';
 
 @Component({
   selector: 'jbg-landing',
   template: `
     <div class="sect-label">Senaste session</div>
 
-    @if (latestSession(); as session) {
+    @if (latestSession()) {
       @if (plan(); as p) {
         <div class="card card-accent-top">
           <div class="card-title">{{ p.name }}</div>
@@ -70,14 +70,17 @@ export class LandingPage {
 
   currentExercise = computed(() => {
     const s = this.latestSession();
-    const p = this.plan();
-    if (!s || !p) return undefined;
-    const exId = p.exerciseIds[s.currentIndex];
-    return this.exerciseService.getById(exId);
+    if (!s) return undefined;
+    return this.exerciseService.getById(s.currentExerciseId);
   });
 
-  completedCount = computed(() => this.latestSession()?.completed.filter(Boolean).length ?? 0);
-  totalCount = computed(() => this.latestSession()?.completed.length ?? 0);
+  completedCount = computed(() => {
+    const s = this.latestSession();
+    if (!s) return 0;
+    return s.exerciseCompletions.filter((c) => c.completed).length;
+  });
+
+  totalCount = computed(() => this.latestSession()?.exerciseCompletions.length ?? 0);
   progressPercent = computed(() => {
     const total = this.totalCount();
     return total > 0 ? (this.completedCount() / total) * 100 : 0;

@@ -1,7 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { Session, PracticePlan } from '../../models';
-import { SessionService, PlanService } from '../../services';
+import {Component, computed, inject, signal} from '@angular/core';
+import {Router} from '@angular/router';
+import {PracticePlan, Session} from '../../models';
+import {PlanService, SessionService} from '../../services';
 
 interface SessionView {
   session: Session;
@@ -123,8 +123,8 @@ export class PracticeListPage {
 
     return sessions.map((s) => {
       const plan = this.planService.getById(s.planId);
-      const completedCount = s.completed.filter(Boolean).length;
-      const totalCount = s.completed.length;
+      const completedCount = s.exerciseCompletions.filter((c) => c.completed).length;
+      const totalCount = s.exerciseCompletions.length;
       return {
         session: s,
         planName: plan?.name ?? 'Okänd plan',
@@ -159,7 +159,7 @@ export class PracticeListPage {
   }
 
   createSession(plan: PracticePlan): void {
-    const session = this.sessionService.create(plan.id, plan.exerciseIds.length);
+    const session = this.sessionService.create(plan.id, plan.exerciseIds);
     this.showPlanPicker.set(false);
     this.router.navigate(['/practice', session.id]);
   }
