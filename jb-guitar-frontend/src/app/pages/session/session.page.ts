@@ -42,7 +42,7 @@ import { SessionService, PlanService, ExerciseService } from '../../services';
                   <div class="iframe-placeholder">
                     <div class="iframe-label">{{ ex.name }}</div>
                     <div class="iframe-url">{{ ex.url }}</div>
-                    <a [href]="ex.url" class="btn btn-primary" style="margin-top: 12px;">
+                    <a [href]="ex.url" class="btn btn-primary" [target]="ex.name" style="margin-top: 12px;">
                       Öppna i nytt fönster ↗
                     </a>
                   </div>
