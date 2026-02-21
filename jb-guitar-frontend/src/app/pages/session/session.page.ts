@@ -70,7 +70,10 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
                     {{ currentExerciseIndex() === totalCount() ? 'Slutför ✓' : 'Nästa →' }}
                   </button>
                 </div>
-                <button class="btn btn-ghost btn-pause" (click)="pauseSession()">⏸ Pausa session</button>
+                <div class="btn-row">
+                  <button class="btn btn-ghost" (click)="pauseSession()">⏸ Pausa session</button>
+                  <button class="btn btn-ghost" (click)="restartSession()">↻ Börja om</button>
+                </div>
               </div>
             }
           </div>
@@ -132,7 +135,15 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
     .exercise-pos { font-size: 10px; color: var(--txt3); }
     .nav-btns { display: flex; gap: 8px; margin-bottom: 8px; }
     .nav-btns .btn { flex: 1; }
-    .btn-pause { width: 100%; font-size: 10px; }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-row .btn {
+      flex: 1;
+    }
     .btn:disabled { opacity: 0.3; cursor: not-allowed; }
   `,
 })
@@ -265,5 +276,17 @@ export class SessionPage {
 
   goBack(): void {
     this.router.navigate(['/practice']);
+  }
+
+  restartSession(): void {
+    const s = this.session();
+    if (!s) return;
+    if (!confirm('Vill du börja om denna session? All progress försvinner.')) {
+      return;
+    }
+    const updated = this.sessionService.restart(s.id);
+    if (updated) {
+      this.session.set(updated);
+    }
   }
 }

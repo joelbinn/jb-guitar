@@ -107,6 +107,25 @@ export class SessionService {
         return session;
     }
 
+  restart(id: string): Session | undefined {
+    const session = this.storage.getSessionById(id);
+    if (!session) return undefined;
+
+    // Reset all exercises to not completed
+    session.exerciseCompletions.forEach((c) => (c.completed = false));
+
+    // Go back to first exercise
+    if (session.exerciseCompletions.length > 0) {
+      session.currentExerciseId = session.exerciseCompletions[0].exerciseId;
+    }
+
+    // Set status back to active
+    session.status = 'active';
+    session.updatedAt = new Date().toISOString();
+    this.storage.saveSession(session);
+    return session;
+  }
+
     delete(id: string): void {
         this.storage.deleteSession(id);
     }
