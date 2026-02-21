@@ -1,14 +1,15 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { Exercise, ExerciseSource } from '../../models';
-import { ExerciseService } from '../../services';
+import {Component, computed, inject, signal} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {Exercise, ExerciseSource} from '../../models';
+import {ExerciseService} from '../../services';
 
 @Component({
   selector: 'jbg-exercise-edit',
   imports: [FormsModule],
   template: `
-    <div class="breadcrumb">← Skapa / <span class="crumb-active">Övning</span></div>
+    <div class="breadcrumb" (click)="goBack()">← Skapa / <span class="crumb-active">Övning</span>
+    </div>
     <div class="page-title">{{ isNew() ? 'Ny övning' : 'Redigera övning' }}</div>
 
     <div class="field">
@@ -130,5 +131,9 @@ export class ExerciseEditPage {
       this.exerciseService.delete(this.exerciseId());
       this.router.navigate(['/create']);
     }
+  }
+
+  goBack(): void {
+    this.router.navigate(['/create']);
   }
 }

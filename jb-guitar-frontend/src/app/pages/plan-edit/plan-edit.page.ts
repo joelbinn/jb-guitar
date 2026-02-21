@@ -1,9 +1,9 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Exercise, PracticePlan } from '../../models';
-import { ExerciseService, PlanService } from '../../services';
+import {Component, computed, inject, signal} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {CdkDragDrop, DragDropModule, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Exercise, PracticePlan} from '../../models';
+import {ExerciseService, PlanService} from '../../services';
 
 interface PlanExerciseRow {
   exerciseId: string;
@@ -15,7 +15,8 @@ interface PlanExerciseRow {
   selector: 'jbg-plan-edit',
   imports: [FormsModule, DragDropModule],
   template: `
-    <div class="breadcrumb">← Skapa / <span class="crumb-active">Övningsplan</span></div>
+    <div class="breadcrumb" (click)="goBack()">← Skapa /
+      <span class="crumb-active">Övningsplan</span></div>
     <div class="page-title">{{ isNew() ? 'Ny plan' : 'Redigera plan' }}</div>
 
     <div class="field">
@@ -199,5 +200,9 @@ export class PlanEditPage {
       this.planService.delete(this.planId());
       this.router.navigate(['/create']);
     }
+  }
+
+  goBack(): void {
+    this.router.navigate(['/create']);
   }
 }

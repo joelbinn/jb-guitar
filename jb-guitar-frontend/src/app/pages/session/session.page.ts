@@ -9,6 +9,8 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
   template: `
     @if (session(); as s) {
       @if (plan(); as p) {
+        <div class="breadcrumb" (click)="goBack()">← Öva /
+          <span class="crumb-active">{{ p.name }}</span></div>
         <div class="sess-header">
           <span class="sh-title">{{ p.name }}</span>
           <div class="mini-prog">
@@ -78,6 +80,18 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
   `,
   styles: `
     :host { display: flex; flex-direction: column; position: fixed; top: 48px; left: 0; right: 0; bottom: 0; }
+
+    .breadcrumb {
+      font-size: 10px;
+      color: var(--txt3);
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .crumb-active {
+      color: var(--txt2);
+    }
     .sess-header {
       background: #141414; border-bottom: 1px solid var(--border);
       padding: 7px 16px; display: flex; align-items: center; justify-content: space-between;
@@ -246,6 +260,10 @@ export class SessionPage {
     const s = this.session();
     if (!s) return;
     this.sessionService.pause(s.id);
+    this.router.navigate(['/practice']);
+  }
+
+  goBack(): void {
     this.router.navigate(['/practice']);
   }
 }
