@@ -49,7 +49,10 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
                   <div class="iframe-placeholder">
                     <div class="iframe-label">{{ ex.name }}</div>
                     <div class="iframe-url">{{ ex.url }}</div>
-                  <a [href]="ex.url" class="btn btn-primary" [target]="ex.name" style="margin-top: 12px;">
+                    <a [href]="ex.url"
+                       class="btn btn-primary"
+                       target="selected-exercise"
+                       style="margin-top: 12px;">
                       Öppna i nytt fönster ↗
                     </a>
                   </div>
@@ -363,7 +366,8 @@ export class SessionPage {
     if (!s) return;
     const updated = this.sessionService.setCurrentExerciseId(s.id, exerciseId);
     if (updated) {
-      this.session.set(updated);
+      // Create new object to trigger signal update
+      this.session.set({...updated});
       // Reset and auto-start timer when exercise changes
       this.timerRemaining.set(this.timerInputMinutes() * 60);
       this.timerPausedByUser.set(false);

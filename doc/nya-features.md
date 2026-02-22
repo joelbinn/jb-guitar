@@ -7,7 +7,7 @@
 * [x] Timer
 * [x] Komma ihåg senaste timerinställning (per session)
 * [x] Avsluta/ta bort session
-* [ ] Lägg till helppage med beskrivning av alla funktioner
+* [x] Lägg till helppage med beskrivning av alla funktioner
 * [ ] Metronom
 * [ ] Flagga "öppna i iframe" på övning.
 * [ ] Backend med persistering
