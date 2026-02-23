@@ -11,7 +11,20 @@ export class SessionService {
     }
 
     getById(id: string): Session | undefined {
-        return this.storage.getSessionById(id);
+      const session = this.storage.getSessionById(id);
+      if (!session) return undefined;
+      // Migrate old sessions that don't have timerMinutes on exercises
+      let needsSave = false;
+      session.exerciseState.forEach((completion: any) => {
+        if (completion.timerMinutes === undefined) {
+          completion.timerMinutes = 5;
+          needsSave = true;
+        }
+      });
+      if (needsSave) {
+        this.storage.saveSession(session);
+      }
+      return session;
     }
 
     getLatest(): Session | undefined {
@@ -28,8 +41,11 @@ export class SessionService {
             planId,
             status: 'active',
           currentExerciseId: exerciseIds[0] ?? '',
-          exerciseCompletions: exerciseIds.map((id) => ({exerciseId: id, completed: false})),
-          timerMinutes: 5,
+          exerciseState: exerciseIds.map((id) => ({
+            exerciseId: id,
+            completed: false,
+            timerMinutes: 5
+          })),
             startedAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
@@ -42,15 +58,15 @@ export class SessionService {
         if (!session) return undefined;
 
       // Find current exercise completion and mark as complete
-      const currentCompletion = session.exerciseCompletions.find((c) => c.exerciseId === session.currentExerciseId);
+      const currentCompletion = session.exerciseState.find((c) => c.exerciseId === session.currentExerciseId);
       if (currentCompletion) {
         currentCompletion.completed = true;
       }
 
       // Find next uncompleted exercise or go to next in order
-      const currentIdx = session.exerciseCompletions.findIndex((c) => c.exerciseId === session.currentExerciseId);
-      if (currentIdx >= 0 && currentIdx < session.exerciseCompletions.length - 1) {
-        session.currentExerciseId = session.exerciseCompletions[currentIdx + 1].exerciseId;
+      const currentIdx = session.exerciseState.findIndex((c) => c.exerciseId === session.currentExerciseId);
+      if (currentIdx >= 0 && currentIdx < session.exerciseState.length - 1) {
+        session.currentExerciseId = session.exerciseState[currentIdx + 1].exerciseId;
         } else {
         // Mark session as completed if on last exercise
             session.status = 'completed';
@@ -65,10 +81,10 @@ export class SessionService {
         const session = this.storage.getSessionById(id);
       if (!session) return session;
 
-      const currentIdx = session.exerciseCompletions.findIndex((c) => c.exerciseId === session.currentExerciseId);
+      const currentIdx = session.exerciseState.findIndex((c) => c.exerciseId === session.currentExerciseId);
       if (currentIdx <= 0) return session;
 
-      session.currentExerciseId = session.exerciseCompletions[currentIdx - 1].exerciseId;
+      session.currentExerciseId = session.exerciseState[currentIdx - 1].exerciseId;
       session.updatedAt = new Date().toISOString();
       this.storage.saveSession(session);
       return session;
@@ -79,7 +95,7 @@ export class SessionService {
     if (!session) return undefined;
 
     // Validate exercise exists in session
-    const exerciseExists = session.exerciseCompletions.some((c) => c.exerciseId === exerciseId);
+    const exerciseExists = session.exerciseState.some((c) => c.exerciseId === exerciseId);
     if (!exerciseExists) {
       return session; // Invalid exercise ID, don't proceed
     }
@@ -113,11 +129,11 @@ export class SessionService {
     if (!session) return undefined;
 
     // Reset all exercises to not completed
-    session.exerciseCompletions.forEach((c) => (c.completed = false));
+    session.exerciseState.forEach((c) => (c.completed = false));
 
     // Go back to first exercise
-    if (session.exerciseCompletions.length > 0) {
-      session.currentExerciseId = session.exerciseCompletions[0].exerciseId;
+    if (session.exerciseState.length > 0) {
+      session.currentExerciseId = session.exerciseState[0].exerciseId;
     }
 
     // Set status back to active

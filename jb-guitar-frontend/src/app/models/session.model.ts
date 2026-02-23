@@ -1,8 +1,9 @@
 export type SessionStatus = 'active' | 'paused' | 'completed';
 
-export interface ExerciseCompletion {
+export interface ExerciseSessionState {
   exerciseId: string;
   completed: boolean;
+  timerMinutes: number;
 }
 
 export interface Session {
@@ -10,8 +11,7 @@ export interface Session {
     planId: string;
     status: SessionStatus;
   currentExerciseId: string;
-  exerciseCompletions: ExerciseCompletion[];
-  timerMinutes: number;
+  exerciseState: ExerciseSessionState[];
     startedAt: string;
     updatedAt: string;
 }

@@ -280,12 +280,12 @@ export class SessionPage {
   completedCount = computed(() => {
     const s = this.session();
     if (!s) return 0;
-    return s.exerciseCompletions.filter((c) => c.completed).length;
+    return s.exerciseState.filter((c) => c.completed).length;
   });
 
   totalCount = computed(() => {
     const s = this.session();
-    return s?.exerciseCompletions.length ?? 0;
+    return s?.exerciseState.length ?? 0;
   });
 
   progressPercent = computed(() => {
@@ -296,7 +296,7 @@ export class SessionPage {
   currentExerciseIndex = computed(() => {
     const s = this.session();
     if (!s) return 0;
-    return s.exerciseCompletions.findIndex((c) => c.exerciseId === s.currentExerciseId) + 1;
+    return s.exerciseState.findIndex((c) => c.exerciseId === s.currentExerciseId) + 1;
   });
 
   currentExerciseId = computed(() => this.session()?.currentExerciseId ?? '');
@@ -325,15 +325,18 @@ export class SessionPage {
       if (!this.timerRunning() && !this.timerPausedByUser()) {
         this.timerRemaining.set(minutes * 60);
       }
-      // Save timer minutes to session
+      // Save timer minutes to current exercise in session
       const s = this.session();
-      if (s && s.timerMinutes !== minutes) {
-        const updated = {...s, timerMinutes: minutes};
-        this.sessionService.save(updated);
+      if (s && s.currentExerciseId) {
+        const completion = s.exerciseState.find((c) => c.exerciseId === s.currentExerciseId);
+        if (completion && completion.timerMinutes !== minutes) {
+          completion.timerMinutes = minutes;
+          this.sessionService.save(s);
+        }
       }
     });
 
-    // Reset and start timer automatically when exercise changes
+    // Load timer and start automatically when exercise changes
     effect(() => {
       const exerciseId = this.currentExerciseId();
 
@@ -343,7 +346,15 @@ export class SessionPage {
 
         // Verify exercise exists
         if (this.currentExercise()) {
-          // Reset timer to default and clear paused flag
+          // Load timer minutes for this exercise
+          const s = this.session();
+          if (s) {
+            const completion = s.exerciseState.find((c) => c.exerciseId === exerciseId);
+            if (completion) {
+              this.timerInputMinutes.set(completion.timerMinutes);
+            }
+          }
+          // Reset timer to loaded value and clear paused flag
           this.timerRemaining.set(this.timerInputMinutes() * 60);
           this.timerPausedByUser.set(false);
           if (this.timerRunning()) {
@@ -368,6 +379,11 @@ export class SessionPage {
     if (updated) {
       // Create new object to trigger signal update
       this.session.set({...updated});
+      // Load the timer value for this exercise
+      const completion = updated.exerciseState.find((c) => c.exerciseId === exerciseId);
+      if (completion) {
+        this.timerInputMinutes.set(completion.timerMinutes);
+      }
       // Reset and auto-start timer when exercise changes
       this.timerRemaining.set(this.timerInputMinutes() * 60);
       this.timerPausedByUser.set(false);
@@ -383,7 +399,7 @@ export class SessionPage {
   }
 
   isExerciseCompleted(session: Session, exerciseId: string): boolean {
-    const completion = session.exerciseCompletions.find((c) => c.exerciseId === exerciseId);
+    const completion = session.exerciseState.find((c) => c.exerciseId === exerciseId);
     return completion?.completed ?? false;
   }
 
@@ -521,9 +537,10 @@ export class SessionPage {
       );
     }
 
-    // Set timer minutes from session and start timer for initial exercise
-    const sessionTimerMinutes = s?.timerMinutes ?? 5;
-    this.timerInputMinutes.set(sessionTimerMinutes);
+    // Set timer minutes from current exercise and start timer for initial exercise
+    const currentExerciseCompletion = s?.exerciseState.find((c) => c.exerciseId === s?.currentExerciseId);
+    const timerMinutes = currentExerciseCompletion?.timerMinutes ?? 5;
+    this.timerInputMinutes.set(timerMinutes);
 
     setTimeout(() => {
       if (this.currentExercise()) {

@@ -123,8 +123,8 @@ export class PracticeListPage {
 
     return sessions.map((s) => {
       const plan = this.planService.getById(s.planId);
-      const completedCount = s.exerciseCompletions.filter((c) => c.completed).length;
-      const totalCount = s.exerciseCompletions.length;
+      const completedCount = s.exerciseState.filter((c) => c.completed).length;
+      const totalCount = s.exerciseState.length;
       return {
         session: s,
         planName: plan?.name ?? 'Okänd plan',

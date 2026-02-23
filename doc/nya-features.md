@@ -8,6 +8,11 @@
 * [x] Komma ihåg senaste timerinställning (per session)
 * [x] Avsluta/ta bort session
 * [x] Lägg till helppage med beskrivning av alla funktioner
+* [ ] Spara timer per övning i session
+  * [ ] Återställ inte vid reset
+* [ ] Visa senast spelad
+* [ ] Visa förväntad tidsåtgång
+  * Basera på timervärden
 * [ ] Metronom
 * [ ] Flagga "öppna i iframe" på övning.
 * [ ] Backend med persistering

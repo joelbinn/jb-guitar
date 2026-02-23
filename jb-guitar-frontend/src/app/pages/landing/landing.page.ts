@@ -77,10 +77,10 @@ export class LandingPage {
   completedCount = computed(() => {
     const s = this.latestSession();
     if (!s) return 0;
-    return s.exerciseCompletions.filter((c) => c.completed).length;
+    return s.exerciseState.filter((c) => c.completed).length;
   });
 
-  totalCount = computed(() => this.latestSession()?.exerciseCompletions.length ?? 0);
+  totalCount = computed(() => this.latestSession()?.exerciseState.length ?? 0);
   progressPercent = computed(() => {
     const total = this.totalCount();
     return total > 0 ? (this.completedCount() / total) * 100 : 0;
