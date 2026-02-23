@@ -2,7 +2,7 @@ import {Component, computed, effect, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {Exercise, PracticePlan, Session} from '../../models';
+import {BeatStrength, Exercise, MetronomeConfig, PracticePlan, Session} from '../../models';
 import {ExerciseService, PlanService, SessionService} from '../../services';
 
 @Component({
@@ -90,6 +90,43 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
                       Pausa
                     </button>
                     <button class="btn btn-sm" (click)="resetTimer()">Återställ</button>
+                  </div>
+                </div>
+                <div class="metro-section">
+                  <div class="metro-top-row">
+                    <span class="metro-label">Metronom</span>
+                    <button class="btn btn-sm" (click)="toggleMetronome()">
+                      {{ metronomeRunning() ? '⏹ Stoppa' : '▶ Starta' }}
+                    </button>
+                  </div>
+                  <div class="metro-controls-row">
+                    <input class="metro-input" type="number" min="20" max="300"
+                           [value]="metroBpm()" (change)="setMetroBpm(+$any($event.target).value)"
+                           [disabled]="metronomeRunning()"/>
+                    <span class="metro-unit">BPM</span>
+                    <input class="metro-input metro-sig"
+                           type="number"
+                           min="1"
+                           max="16"
+                           [value]="metroNumerator()"
+                           (change)="setMetroNumerator(+$any($event.target).value)"
+                           [disabled]="metronomeRunning()"/>
+                    <span class="metro-sep">/</span>
+                    <select class="metro-select" [value]="metroDenominator()"
+                            (change)="setMetroDenominator(+$any($event.target).value)"
+                            [disabled]="metronomeRunning()">
+                      <option value="2">2</option>
+                      <option value="4">4</option>
+                      <option value="8">8</option>
+                    </select>
+                  </div>
+                  <div class="metro-dots">
+                    @for (beat of beatProfile(); track $index; let i = $index) {
+                      <div class="metro-dot"
+                           [class]="'metro-dot dot-' + beat + (currentBeat() === i ? ' dot-active' : '')"
+                           (click)="cycleBeatStrength(i)">
+                      </div>
+                    }
                   </div>
                 </div>
                 <div class="nav-btns">
@@ -245,6 +282,110 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
       padding: 4px 8px;
     }
 
+    .metro-section {
+      margin-bottom: 12px;
+      padding: 8px;
+      background: var(--surf2);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .metro-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .metro-label {
+      font-size: 10px;
+      color: var(--txt3);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .metro-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .metro-input {
+      width: 48px;
+      padding: 3px;
+      font-size: 11px;
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--txt);
+      text-align: center;
+    }
+
+    .metro-sig {
+      width: 36px;
+    }
+
+    .metro-unit {
+      font-size: 10px;
+      color: var(--txt3);
+      margin-right: 4px;
+    }
+
+    .metro-sep {
+      font-size: 14px;
+      color: var(--txt3);
+    }
+
+    .metro-select {
+      padding: 3px;
+      font-size: 11px;
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--txt);
+    }
+
+    .metro-dots {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .metro-dot {
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.05s, transform 0.05s;
+    }
+
+    .dot-stark {
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+
+    .dot-mellan {
+      width: 14px;
+      height: 14px;
+      background: var(--txt2);
+      opacity: 0.5;
+      margin-top: 2px;
+    }
+
+    .dot-svag {
+      width: 10px;
+      height: 10px;
+      background: var(--txt4);
+      opacity: 0.5;
+      margin-top: 4px;
+    }
+
+    .dot-active {
+      opacity: 1 !important;
+      transform: scale(1.3);
+    }
+
     .btn-sm {
       font-size: 10px;
       padding: 4px 8px;
@@ -315,6 +456,18 @@ export class SessionPage {
   private timerIntervalId: number | null = null;
   private previousExerciseId: string | undefined = undefined;
 
+  // Metronome signals
+  metronomeRunning = signal(false);
+  metroBpm = signal(100);
+  metroNumerator = signal(4);
+  metroDenominator = signal<2 | 4 | 8>(4);
+  beatProfile = signal<BeatStrength[]>(['stark', 'svag', 'svag', 'svag']);
+  currentBeat = signal(-1);   // -1 = inget aktivt slag
+  private audioCtx: AudioContext | null = null;
+  private nextBeatTime = 0;
+  private nextBeatIndex = 0;
+  private metronomeTimerId: number | null = null;
+
   constructor() {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.loadSession(id);
@@ -346,17 +499,25 @@ export class SessionPage {
 
         // Verify exercise exists
         if (this.currentExercise()) {
-          // Load timer minutes for this exercise
+          // Load timer minutes and metronome config for this exercise
           const s = this.session();
           if (s) {
             const completion = s.exerciseState.find((c) => c.exerciseId === exerciseId);
             if (completion) {
               this.timerInputMinutes.set(completion.timerMinutes);
+              // Load metronome config
+              const mc = completion.metronomeConfig ?? this.defaultMetronomeConfig();
+              this.metroBpm.set(mc.bpm);
+              this.metroNumerator.set(mc.numerator);
+              this.metroDenominator.set(mc.denominator as 2 | 4 | 8);
+              this.beatProfile.set([...mc.beatProfile]);
             }
           }
           // Reset timer to loaded value and clear paused flag
           this.timerRemaining.set(this.timerInputMinutes() * 60);
           this.timerPausedByUser.set(false);
+          // Stop metronome when exercise changes
+          this.stopMetronome();
           if (this.timerRunning()) {
             // Stop current timer if running
             if (this.timerIntervalId !== null) {
@@ -379,14 +540,22 @@ export class SessionPage {
     if (updated) {
       // Create new object to trigger signal update
       this.session.set({...updated});
-      // Load the timer value for this exercise
+      // Load the timer value and metronome config for this exercise
       const completion = updated.exerciseState.find((c) => c.exerciseId === exerciseId);
       if (completion) {
         this.timerInputMinutes.set(completion.timerMinutes);
+        // Load metronome config
+        const mc = completion.metronomeConfig ?? this.defaultMetronomeConfig();
+        this.metroBpm.set(mc.bpm);
+        this.metroNumerator.set(mc.numerator);
+        this.metroDenominator.set(mc.denominator as 2 | 4 | 8);
+        this.beatProfile.set([...mc.beatProfile]);
       }
       // Reset and auto-start timer when exercise changes
       this.timerRemaining.set(this.timerInputMinutes() * 60);
       this.timerPausedByUser.set(false);
+      // Stop metronome when exercise changes
+      this.stopMetronome();
       if (this.timerRunning()) {
         if (this.timerIntervalId !== null) {
           clearInterval(this.timerIntervalId);
@@ -396,6 +565,10 @@ export class SessionPage {
       }
       setTimeout(() => this.startTimer(), 50);
     }
+  }
+
+  toggleMetronome(): void {
+    this.metronomeRunning() ? this.stopMetronome() : this.startMetronome();
   }
 
   isExerciseCompleted(session: Session, exerciseId: string): boolean {
@@ -514,6 +687,111 @@ export class SessionPage {
   resetTimer(): void {
     this.stopTimer();
     this.timerRemaining.set(this.timerInputMinutes() * 60);
+  }
+
+  startMetronome(): void {
+    if (!this.audioCtx)
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    this.nextBeatIndex = 0;
+    this.nextBeatTime = this.audioCtx.currentTime + 0.05;
+    this.metronomeRunning.set(true);
+    this.metronomeTimerId = window.setInterval(() => this.scheduleBulk(), 25);
+  }
+
+  stopMetronome(): void {
+    this.metronomeRunning.set(false);
+    if (this.metronomeTimerId !== null) {
+      clearInterval(this.metronomeTimerId);
+      this.metronomeTimerId = null;
+    }
+    this.currentBeat.set(-1);
+  }
+
+  setMetroBpm(v: number): void {
+    this.metroBpm.set(Math.max(20, Math.min(300, v)));
+    this.saveMetronomeConfig();
+  }
+
+  setMetroNumerator(v: number): void {
+    const n = Math.max(1, Math.min(16, v));
+    this.metroNumerator.set(n);
+    // Anpassa beatProfile
+    const profile = [...this.beatProfile()];
+    while (profile.length < n) profile.push('svag');
+    this.beatProfile.set(profile.slice(0, n));
+    this.saveMetronomeConfig();
+  }
+
+  setMetroDenominator(v: number): void {
+    this.metroDenominator.set(v as 2 | 4 | 8);
+    this.saveMetronomeConfig();
+  }
+
+  cycleBeatStrength(idx: number): void {
+    const order: BeatStrength[] = ['stark', 'mellan', 'svag'];
+    const profile = [...this.beatProfile()];
+    const curr = order.indexOf(profile[idx]);
+    profile[idx] = order[(curr + 1) % 3];
+    this.beatProfile.set(profile);
+    this.saveMetronomeConfig();
+  }
+
+  private defaultMetronomeConfig(): MetronomeConfig {
+    return {
+      bpm: 100,
+      numerator: 4,
+      denominator: 4,
+      beatProfile: ['stark', 'svag', 'svag', 'svag']
+    };
+  }
+
+  private saveMetronomeConfig(): void {
+    const s = this.session();
+    if (!s) return;
+    const c = s.exerciseState.find(e => e.exerciseId === s.currentExerciseId);
+    if (!c) return;
+    c.metronomeConfig = {
+      bpm: this.metroBpm(),
+      numerator: this.metroNumerator(),
+      denominator: this.metroDenominator(),
+      beatProfile: [...this.beatProfile()],
+    };
+    this.sessionService.save(s);
+  }
+
+  private scheduleBulk(): void {
+    if (!this.audioCtx) return;
+    const AHEAD = 0.1; // sekunder att schemalägga framåt
+    while (this.nextBeatTime < this.audioCtx.currentTime + AHEAD) {
+      this.scheduleBeat(this.nextBeatIndex, this.nextBeatTime);
+      // Visuell uppdatering vid exakt slagstidpunkt
+      const delayMs = (this.nextBeatTime - this.audioCtx.currentTime) * 1000;
+      const capturedBeat = this.nextBeatIndex;
+      setTimeout(() => this.currentBeat.set(capturedBeat), Math.max(0, delayMs - 5));
+      // Räkna ut nästa slags tidpunkt: beatInterval = 60/bpm * (4/denominator)
+      this.nextBeatTime += 60 / this.metroBpm() * (4 / this.metroDenominator());
+      this.nextBeatIndex = (this.nextBeatIndex + 1) % this.metroNumerator();
+    }
+  }
+
+  private scheduleBeat(beatIdx: number, when: number): void {
+    if (!this.audioCtx) return;
+    const strength = this.beatProfile()[beatIdx] ?? 'svag';
+    const params: Record<BeatStrength, [number, number, number]> = {
+      stark: [1050, 0.05, 0.5],
+      mellan: [880, 0.04, 0.35],
+      svag: [660, 0.04, 0.2],
+    };
+    const [freq, dur, vol] = params[strength];
+    const osc = this.audioCtx.createOscillator();
+    const gain = this.audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(this.audioCtx.destination);
+    osc.frequency.setValueAtTime(freq, when);
+    gain.gain.setValueAtTime(vol, when);
+    gain.gain.exponentialRampToValueAtTime(0.001, when + dur);
+    osc.start(when);
+    osc.stop(when + dur);
   }
 
   private loadSession(id: string): void {

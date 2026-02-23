@@ -20,6 +20,16 @@ export class SessionService {
           completion.timerMinutes = 5;
           needsSave = true;
         }
+        // Migrate old sessions that don't have metronomeConfig
+        if (!completion.metronomeConfig) {
+          completion.metronomeConfig = {
+            bpm: 100,
+            numerator: 4,
+            denominator: 4,
+            beatProfile: ['stark', 'svag', 'svag', 'svag']
+          };
+          needsSave = true;
+        }
       });
       if (needsSave) {
         this.storage.saveSession(session);
@@ -44,7 +54,13 @@ export class SessionService {
           exerciseState: exerciseIds.map((id) => ({
             exerciseId: id,
             completed: false,
-            timerMinutes: 5
+            timerMinutes: 5,
+            metronomeConfig: {
+              bpm: 100,
+              numerator: 4,
+              denominator: 4,
+              beatProfile: ['stark', 'svag', 'svag', 'svag']
+            }
           })),
             startedAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
