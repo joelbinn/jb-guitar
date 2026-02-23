@@ -37,6 +37,33 @@ import {Router} from '@angular/router';
     </div>
 
     <div class="help-section">
+      <h3>🎵 Metronom</h3>
+      <p>En inbyggd metronom för att hålla takten under övning.</p>
+      <ul>
+        <li><strong>BPM:</strong> Ställ in tempo från 20 till 300 slag per minut</li>
+        <li><strong>Taktarts-inställning:</strong> Välj taktart med två spinners
+          <ul>
+            <li>Täljare: 1-16 (hur många slag per takt)</li>
+            <li>Nämnare: 2, 4 eller 8 (noter per slag)</li>
+            <li>Exempel: 4/4, 3/4, 7/8</li>
+          </ul>
+        </li>
+        <li><strong>Slag-nivåer:</strong> Anpassa varje slag individuellt:
+          <ul>
+            <li><strong>Stark</strong> (1050 Hz, stor prick) - vanligtvis första slaget</li>
+            <li><strong>Mellan</strong> (880 Hz, mellan prick) - betoning på vissa slag</li>
+            <li><strong>Svag</strong> (660 Hz, liten prick) - vanliga slag</li>
+          </ul>
+        </li>
+        <li><strong>Visuell feedback:</strong> Prickar animeras synkroniserat med ljud</li>
+        <li><strong>Start/Stopp:</strong> Knapp för att starta och stoppa metronomen</li>
+        <li><strong>Snabb anpassning:</strong> Klicka på en prick för att snabbt ändra dess styrka
+        </li>
+        <li><strong>Sparad inställning:</strong> Metronominställningar sparas per övning</li>
+      </ul>
+    </div>
+
+    <div class="help-section">
       <h3>✏️ Skapa</h3>
       <p>Här kan du skapa och hantera övningar och övningsplaner.</p>
 
