@@ -12,7 +12,7 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
       @if (plan(); as p) {
         <div class="card card-accent-top">
           <div class="card-title">{{ p.name }}</div>
-          <div class="card-sub">Övningsplan · {{ statusLabel() }} {{ pausedDate() }} ·
+          <div class="card-sub">Övningsplan · {{ statusLabel() }} {{ pausedDateTime() }} ·
             ⏱ {{ estimatedMinutes() }} min
           </div>
           <div class="prog-wrap">
@@ -94,11 +94,13 @@ export class LandingPage {
     return s.status === 'paused' ? 'Pausad' : 'Pågående';
   });
 
-  pausedDate = computed(() => {
+  pausedDateTime = computed(() => {
     const s = this.latestSession();
     if (!s) return '';
     const d = new Date(s.updatedAt);
-    return `${d.getDate()} ${d.toLocaleString('sv', { month: 'short' })}`;
+    const date = `${d.getDate()} ${d.toLocaleString('sv', {month: 'short'})}`;
+    const time = d.toLocaleTimeString('sv', {hour: '2-digit', minute: '2-digit'});
+    return `${date} ${time}`;
   });
 
   estimatedMinutes = computed(() => {

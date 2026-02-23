@@ -7,7 +7,10 @@ import {StorageService} from '../services';
   imports: [RouterLink, RouterLinkActive],
   template: `
     <header class="topbar">
-      <a class="logo" routerLink="/">JB GUITAR</a>
+      <a class="logo" routerLink="/"><img src="app-logo.png"
+                                          alt="applogo"
+                                          height="32"
+                                          width="32"/><span>JB GUITAR</span></a>
       <div class="topbar-right">
         <nav class="topnav">
           <a class="tnav" routerLink="/practice" routerLinkActive="active">ÖVA</a>
@@ -35,6 +38,9 @@ import {StorageService} from '../services';
       border-bottom: 1px solid var(--border); background: var(--surf);
     }
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       font-weight: 700; letter-spacing: 3px; font-size: 13px;
       color: var(--accent); text-decoration: none;
     }

@@ -10,6 +10,7 @@ interface SessionView {
   totalCount: number;
   progressPercent: number;
   dateLabel: string;
+  timeLabel: string;
   estimatedMinutes: number;
 }
 
@@ -24,7 +25,7 @@ interface SessionView {
             <div class="card-title">{{ lat.planName }}</div>
             <div class="card-sub">{{ lat.completedCount }} av {{ lat.totalCount }} · {{
                 statusLabel(lat.session)
-              }} · ⏱ {{ lat.estimatedMinutes }} min
+              }} {{ lat.dateLabel }} {{ lat.timeLabel }} · ⏱ {{ lat.estimatedMinutes }} min
             </div>
           </div>
           <button class="btn btn-primary" (click)="openSession(lat.session.id)">Fortsätt →</button>
@@ -51,7 +52,7 @@ interface SessionView {
             ></div>
           </div>
           <div class="card-bottom">
-            <div class="date-label">{{ sv.dateLabel }}</div>
+            <div class="date-label">{{ sv.dateLabel }} {{ sv.timeLabel }}</div>
             <button class="btn btn-ghost btn-sm" (click)="openSession(sv.session.id)">
               {{ sv.session.status === 'completed' ? 'Se igen →' : 'Fortsätt →' }}
             </button>
@@ -130,13 +131,15 @@ export class PracticeListPage {
       const completedCount = s.exerciseState.filter((c) => c.completed).length;
       const totalCount = s.exerciseState.length;
       const estimatedMinutes = s.exerciseState.reduce((sum, state) => sum + state.timerMinutes, 0);
+      const updatedDate = new Date(s.updatedAt);
       return {
         session: s,
         planName: plan?.name ?? 'Okänd plan',
         completedCount,
         totalCount,
         progressPercent: totalCount > 0 ? (completedCount / totalCount) * 100 : 0,
-        dateLabel: new Date(s.updatedAt).toLocaleDateString('sv', { day: 'numeric', month: 'short' }),
+        dateLabel: updatedDate.toLocaleDateString('sv', {day: 'numeric', month: 'short'}),
+        timeLabel: updatedDate.toLocaleTimeString('sv', {hour: '2-digit', minute: '2-digit'}),
         estimatedMinutes,
       };
     });
