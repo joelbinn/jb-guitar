@@ -12,7 +12,9 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
       @if (plan(); as p) {
         <div class="card card-accent-top">
           <div class="card-title">{{ p.name }}</div>
-          <div class="card-sub">Övningsplan · {{ statusLabel() }} {{ pausedDate() }}</div>
+          <div class="card-sub">Övningsplan · {{ statusLabel() }} {{ pausedDate() }} ·
+            ⏱ {{ estimatedMinutes() }} min
+          </div>
           <div class="prog-wrap">
             <div class="prog-fill" [style.width.%]="progressPercent()"></div>
           </div>
@@ -97,6 +99,12 @@ export class LandingPage {
     if (!s) return '';
     const d = new Date(s.updatedAt);
     return `${d.getDate()} ${d.toLocaleString('sv', { month: 'short' })}`;
+  });
+
+  estimatedMinutes = computed(() => {
+    const s = this.latestSession();
+    if (!s) return 0;
+    return s.exerciseState.reduce((sum, state) => sum + state.timerMinutes, 0);
   });
 
   continueSession(): void {

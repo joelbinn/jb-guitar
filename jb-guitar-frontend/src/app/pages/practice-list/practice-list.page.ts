@@ -10,6 +10,7 @@ interface SessionView {
   totalCount: number;
   progressPercent: number;
   dateLabel: string;
+  estimatedMinutes: number;
 }
 
 @Component({
@@ -21,7 +22,10 @@ interface SessionView {
         <div class="latest-row">
           <div>
             <div class="card-title">{{ lat.planName }}</div>
-            <div class="card-sub">{{ lat.completedCount }} av {{ lat.totalCount }} · {{ statusLabel(lat.session) }}</div>
+            <div class="card-sub">{{ lat.completedCount }} av {{ lat.totalCount }} · {{
+                statusLabel(lat.session)
+              }} · ⏱ {{ lat.estimatedMinutes }} min
+            </div>
           </div>
           <button class="btn btn-primary" (click)="openSession(lat.session.id)">Fortsätt →</button>
         </div>
@@ -37,7 +41,7 @@ interface SessionView {
         <div class="card">
           <div class="card-title" style="font-size: 12px;">{{ sv.planName }}</div>
           <div class="card-sub" [class.completed]="sv.session.status === 'completed'">
-            {{ sv.completedCount }} av {{ sv.totalCount }} · {{ statusLabel(sv.session) }}
+            {{ sv.completedCount }} av {{ sv.totalCount }} · ⏱ {{ sv.estimatedMinutes }} min
             @if (sv.session.status === 'completed') { ✓ }
           </div>
           <div class="prog-wrap">
@@ -125,6 +129,7 @@ export class PracticeListPage {
       const plan = this.planService.getById(s.planId);
       const completedCount = s.exerciseState.filter((c) => c.completed).length;
       const totalCount = s.exerciseState.length;
+      const estimatedMinutes = s.exerciseState.reduce((sum, state) => sum + state.timerMinutes, 0);
       return {
         session: s,
         planName: plan?.name ?? 'Okänd plan',
@@ -132,6 +137,7 @@ export class PracticeListPage {
         totalCount,
         progressPercent: totalCount > 0 ? (completedCount / totalCount) * 100 : 0,
         dateLabel: new Date(s.updatedAt).toLocaleDateString('sv', { day: 'numeric', month: 'short' }),
+        estimatedMinutes,
       };
     });
   });
