@@ -358,34 +358,6 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
       transition: background 0.05s, transform 0.05s;
     }
 
-    .dot-stark {
-      width: 18px;
-      height: 18px;
-      background: var(--accent);
-      opacity: 0.6;
-    }
-
-    .dot-mellan {
-      width: 14px;
-      height: 14px;
-      background: var(--txt2);
-      opacity: 0.5;
-      margin-top: 2px;
-    }
-
-    .dot-svag {
-      width: 10px;
-      height: 10px;
-      background: var(--txt4);
-      opacity: 0.5;
-      margin-top: 4px;
-    }
-
-    .dot-active {
-      opacity: 1 !important;
-      transform: scale(1.3);
-    }
-
     .btn-sm {
       font-size: 10px;
       padding: 4px 8px;
@@ -619,7 +591,8 @@ export class SessionPage {
     if (updated?.status === 'completed') {
       this.router.navigate(['/practice']);
     } else if (updated) {
-      this.session.set(updated);
+      // Create new object to trigger signal update and re-evaluate computeds
+      this.session.set({...updated});
     }
   }
 
@@ -628,7 +601,8 @@ export class SessionPage {
     if (!s) return;
     const updated = this.sessionService.previous(s.id);
     if (updated) {
-      this.session.set(updated);
+      // Create new object to trigger signal update and re-evaluate computeds
+      this.session.set({...updated});
     }
   }
 
@@ -651,7 +625,8 @@ export class SessionPage {
     }
     const updated = this.sessionService.restart(s.id);
     if (updated) {
-      this.session.set(updated);
+      // Create new object to trigger signal update and re-evaluate computeds
+      this.session.set({...updated});
     }
   }
 
