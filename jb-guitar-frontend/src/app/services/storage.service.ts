@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Exercise, PracticePlan, Session } from '../models';
+import { Injectable, inject, signal } from '@angular/core';
+import { Exercise, PracticePlan, Session, SyncStatus } from '../models';
+import { GitHubSyncService } from './github-sync.service';
 
 export interface AppData {
     exercises: Exercise[];
@@ -11,10 +12,18 @@ const STORAGE_KEY = 'jb-guitar-data';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
+    private readonly gitSync = inject(GitHubSyncService);
+    
     private data: AppData = { exercises: [], plans: [], sessions: [] };
+    
+    syncStatus = signal<SyncStatus>('unconfigured');
+    private currentSha?: string;
+    private isPushing = false;
+    private pushPending = false;
 
     constructor() {
         this.load();
+        this.initSync();
     }
 
     private load(): void {
@@ -30,6 +39,7 @@ export class StorageService {
 
     private persist(): void {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+        this.pushToGitHubBackground();
     }
 
     // ── Exercises ──────────────────────────────────
@@ -134,5 +144,85 @@ export class StorageService {
             reader.onerror = () => reject(reader.error);
             reader.readAsText(file);
         });
+    }
+
+    // ── GitHub Sync ────────────────────────────────
+
+    private async initSync(): Promise<void> {
+        const settings = this.gitSync.settings();
+        if (!settings.enabled || !settings.repo || !settings.token) {
+            this.syncStatus.set('unconfigured');
+            return;
+        }
+        // Pull latest data from GitHub on startup
+        await this.pullFromGitHub();
+    }
+
+    private async pushToGitHubBackground(): Promise<void> {
+        const settings = this.gitSync.settings();
+        if (!settings.enabled || !settings.repo || !settings.token) return;
+
+        // Debounce: if already pushing, flag that a new push is pending
+        if (this.isPushing) {
+            this.pushPending = true;
+            return;
+        }
+
+        this.isPushing = true;
+        this.syncStatus.set('syncing');
+        try {
+            this.currentSha = await this.gitSync.updateFile(settings, this.data, this.currentSha);
+            this.syncStatus.set('synced');
+        } catch (error) {
+            console.error('GitHub push failed:', error);
+            this.syncStatus.set('error');
+        } finally {
+            this.isPushing = false;
+            if (this.pushPending) {
+                this.pushPending = false;
+                this.pushToGitHubBackground();
+            }
+        }
+    }
+
+    /** Manually pull data from GitHub (overwrites local data) */
+    async pullFromGitHub(): Promise<void> {
+        const settings = this.gitSync.settings();
+        if (!settings.repo || !settings.token) return;
+
+        this.syncStatus.set('syncing');
+        try {
+            const result = await this.gitSync.getFile(settings);
+            if (result.data) {
+                this.data = result.data;
+                this.currentSha = result.sha;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+            } else {
+                // File doesn't exist yet on GitHub — push our current local data
+                this.currentSha = await this.gitSync.updateFile(settings, this.data, undefined);
+            }
+            this.syncStatus.set('synced');
+        } catch (error) {
+            console.error('GitHub pull failed:', error);
+            this.syncStatus.set('error');
+        }
+    }
+
+    /** Manually push local data to GitHub (overwrites remote) */
+    async pushToGitHub(): Promise<void> {
+        const settings = this.gitSync.settings();
+        if (!settings.repo || !settings.token) return;
+
+        this.syncStatus.set('syncing');
+        try {
+            // Always fetch latest SHA before pushing to avoid conflicts
+            const result = await this.gitSync.getFile(settings);
+            const sha = result.sha ?? this.currentSha;
+            this.currentSha = await this.gitSync.updateFile(settings, this.data, sha);
+            this.syncStatus.set('synced');
+        } catch (error) {
+            console.error('GitHub push failed:', error);
+            this.syncStatus.set('error');
+        }
     }
 }
