@@ -162,6 +162,21 @@ import { StorageService } from '../services/storage.service';
                                 >⬆ Skicka till GitHub</button>
                             </div>
                         </div>
+
+                        <div class="sync-actions" style="margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px;">
+                            <p class="sect-label">Historikhantering</p>
+                            <div style="margin-top: 8px;">
+                                <button
+                                    class="btn btn-danger btn-full"
+                                    type="button"
+                                    [disabled]="storage.syncStatus() === 'syncing' || compacting()"
+                                    (click)="compact()"
+                                    title="Radera all tidigare versionshistorik för din data på denna branch och spara endast den senaste versionen."
+                                >
+                                    @if (compacting()) { ⏳ Kompakterar... } @else { 🗑 Kompaktera historik }
+                                </button>
+                            </div>
+                        </div>
                     }
                 </div>
 
@@ -324,6 +339,7 @@ export class GitHubSyncModalComponent {
 
     showToken = signal(false);
     testing = signal(false);
+    compacting = signal(false);
     statusMsg = signal('');
     statusClass = signal('status-info');
 
@@ -402,6 +418,37 @@ export class GitHubSyncModalComponent {
         } else {
             this.statusMsg.set('✗ Kunde inte skicka data. Kontrollera anslutningen.');
             this.statusClass.set('status-err');
+        }
+    }
+
+    async compact(): Promise<void> {
+        const confirmed = window.confirm(
+            'VARNING: Detta kommer permanent att radera all tidigare versionshistorik för din övningsdata på GitHub och endast behålla den nuvarande versionen (1 commit). Vill du fortsätta?'
+        );
+        if (!confirmed) return;
+
+        this.compacting.set(true);
+        this.statusMsg.set('⏳ Kompakterar historik på GitHub...');
+        this.statusClass.set('status-info');
+
+        const settings = {
+            enabled: this.formEnabled,
+            repo: this.formRepo.trim(),
+            token: this.formToken.trim(),
+            branch: this.formBranch.trim() || 'main',
+            filePath: this.formFilePath.trim() || 'jb-guitar-data.json',
+        };
+
+        try {
+            await this.gitSync.compactHistory(settings);
+            this.statusMsg.set('✓ Historik kompakterad! Endast senaste versionen är sparad.');
+            this.statusClass.set('status-ok');
+        } catch (error) {
+            console.error('History compaction failed:', error);
+            this.statusMsg.set('✗ Kompakteringen misslyckades. Kontrollera anslutningen och rättigheter.');
+            this.statusClass.set('status-err');
+        } finally {
+            this.compacting.set(false);
         }
     }
 }

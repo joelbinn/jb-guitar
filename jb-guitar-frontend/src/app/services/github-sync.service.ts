@@ -131,4 +131,43 @@ export class GitHubSyncService {
         
         return response.content.sha;
     }
+
+    /**
+     * Compacts history of the data branch to a single orphan commit.
+     * DANGER: This deletes all previous commits on this branch!
+     */
+    async compactHistory(settings: GitHubSyncSettings): Promise<void> {
+        if (!settings.repo || !settings.token) return;
+        const headers = this.getHeaders(settings.token);
+        
+        // 1. Get the tree SHA of the latest commit on the branch
+        const commitUrl = `https://api.github.com/repos/${settings.repo}/commits/${settings.branch}`;
+        const commitObj = await firstValueFrom(
+            this.http.get<{ commit: { tree: { sha: string } } }>(commitUrl, { headers })
+        );
+        const treeSha = commitObj.commit.tree.sha;
+        
+        // 2. Create a new orphan commit with no parents (parents: [])
+        const createCommitUrl = `https://api.github.com/repos/${settings.repo}/git/commits`;
+        const newCommitBody = {
+            message: 'Kompakterad övningsdatahistorik 🎸',
+            tree: treeSha,
+            parents: []
+        };
+        const newCommitObj = await firstValueFrom(
+            this.http.post<{ sha: string }>(createCommitUrl, newCommitBody, { headers })
+        );
+        const newCommitSha = newCommitObj.sha;
+        
+        // 3. Force-update the branch ref to point to the new orphan commit
+        const refUrl = `https://api.github.com/repos/${settings.repo}/git/refs/heads/${settings.branch}`;
+        const refBody = {
+            sha: newCommitSha,
+            force: true
+        };
+        await firstValueFrom(
+            this.http.patch(refUrl, refBody, { headers })
+        );
+    }
 }
+
