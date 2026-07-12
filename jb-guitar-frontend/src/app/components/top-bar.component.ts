@@ -39,6 +39,18 @@ import { GitHubSyncModalComponent } from './github-sync-modal.component';
             <div class="menu">
               <button class="menu-item" (click)="openSyncModal()">☁ GitHub-synkronisering</button>
               <div class="menu-divider"></div>
+              <div class="menu-volume">
+                <span class="volume-label">🔊 Metronomvolym: {{ storage.metronomeVolume() }}%</span>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  [value]="storage.metronomeVolume()"
+                  (input)="onVolumeChange($event)"
+                  class="volume-slider"
+                />
+              </div>
+              <div class="menu-divider"></div>
               <button class="menu-item" (click)="exportData()">📥 Exportera till fil</button>
               <button class="menu-item" (click)="fileInput.click()">📤 Importera från fil</button>
             </div>
@@ -127,6 +139,38 @@ import { GitHubSyncModalComponent } from './github-sync-modal.component';
       height: 1px; background: var(--border);
       margin: 4px 8px;
     }
+    .menu-volume {
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .volume-label {
+      font-size: 10px;
+      color: var(--txt2);
+      font-weight: 500;
+    }
+    .volume-slider {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
   `,
 })
 export class TopBarComponent {
@@ -134,6 +178,11 @@ export class TopBarComponent {
 
   menuOpen = signal(false);
   syncModalOpen = signal(false);
+
+  onVolumeChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.storage.setMetronomeVolume(+input.value);
+  }
 
   syncTitle(): string {
     const status = this.storage.syncStatus();

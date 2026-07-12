@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {BeatStrength, Exercise, MetronomeConfig, PracticePlan, Session} from '../../models';
-import {ExerciseService, PlanService, SessionService} from '../../services';
+import {ExerciseService, PlanService, SessionService, StorageService} from '../../services';
 
 @Component({
   selector: 'jbg-session',
@@ -418,6 +418,7 @@ export class SessionPage {
   private readonly sessionService = inject(SessionService);
   private readonly planService = inject(PlanService);
   private readonly exerciseService = inject(ExerciseService);
+  protected readonly storage = inject(StorageService);
 
   session = signal<Session | undefined>(undefined);
   plan = signal<PracticePlan | undefined>(undefined);
@@ -804,7 +805,10 @@ export class SessionPage {
       mellan: [880, 0.04, 0.35],
       svag: [660, 0.04, 0.2],
     };
-    const [freq, dur, vol] = params[strength];
+    const [freq, dur, baseVol] = params[strength];
+    const volumeMultiplier = this.storage.metronomeVolume() / 100;
+    const vol = baseVol * volumeMultiplier;
+
     const osc = this.audioCtx.createOscillator();
     const gain = this.audioCtx.createGain();
     osc.connect(gain);

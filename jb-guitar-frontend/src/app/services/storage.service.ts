@@ -17,6 +17,7 @@ export class StorageService {
     private data: AppData = { exercises: [], plans: [], sessions: [] };
     
     syncStatus = signal<SyncStatus>('unconfigured');
+    metronomeVolume = signal<number>(this.loadMetronomeVolume());
     private currentSha?: string;
     private isPushing = false;
     private pushPending = false;
@@ -24,6 +25,23 @@ export class StorageService {
     constructor() {
         this.load();
         this.initSync();
+    }
+
+    private loadMetronomeVolume(): number {
+        const raw = localStorage.getItem('jbguitar:metronome-volume');
+        if (raw !== null) {
+            const val = parseInt(raw, 10);
+            if (!isNaN(val) && val >= 0 && val <= 100) {
+                return val;
+            }
+        }
+        return 50; // default 50%
+    }
+
+    setMetronomeVolume(vol: number): void {
+        const clamped = Math.max(0, Math.min(100, vol));
+        this.metronomeVolume.set(clamped);
+        localStorage.setItem('jbguitar:metronome-volume', clamped.toString());
     }
 
     private load(): void {
