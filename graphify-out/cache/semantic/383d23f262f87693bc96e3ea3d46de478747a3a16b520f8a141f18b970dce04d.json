@@ -1,1 +1,40 @@
-{"nodes": [{"id": "openspec_explore_skill_openspec_explore", "label": "OpenSpec Explore Skill", "file_type": "document", "source_file": ".gemini/skills/openspec-explore/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null}, {"id": "openspec_explore_skill_explore_mode_stance", "label": "Explore Mode Stance", "file_type": "rationale", "source_file": ".gemini/skills/openspec-explore/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null, "rationale": "Explore mode is for thinking, not implementing. You must never write code or implement features in explore mode."}], "edges": [{"source": "openspec_explore_skill_explore_mode_stance", "target": "openspec_explore_skill_openspec_explore", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".gemini/skills/openspec-explore/SKILL.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "openspec_explore_skill_openspec_explore",
+      "label": "OpenSpec Explore Skill",
+      "file_type": "document",
+      "source_file": ".gemini/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_explore_mode_stance",
+      "label": "Explore Mode Stance",
+      "file_type": "rationale",
+      "source_file": ".gemini/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Explore mode is for thinking, not implementing. You must never write code or implement features in explore mode."
+    }
+  ],
+  "edges": [
+    {
+      "source": "openspec_explore_skill_explore_mode_stance",
+      "target": "openspec_explore_skill_openspec_explore",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".gemini/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

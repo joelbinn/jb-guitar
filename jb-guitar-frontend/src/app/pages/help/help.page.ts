@@ -1,5 +1,4 @@
-import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
-import {Router} from '@angular/router';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'jbg-help',
@@ -80,7 +79,9 @@ import {Router} from '@angular/router';
       <h4>Övningsplaner</h4>
       <ul>
         <li><strong>Ny plan:</strong> Klicka "+ Ny plan" för att skapa en</li>
-        <li><strong>Lägg till övningar:</strong> Klicka "+ Lägg till övning" för att välja vilka övningar planen ska innehålla</li>
+        <li><strong>Lägg till övningar:</strong> Klicka "+ Lägg till övning" för att välja vilka
+          övningar planen ska innehålla
+        </li>
         <li><strong>Sortera:</strong> Dra & drop (⠿) för att ändra ordning på övningar</li>
         <li><strong>Ta bort övning:</strong> Klicka × för att ta bort en övning från planen</li>
         <li><strong>Redigera:</strong> Klicka på en plan för att ändra</li>
@@ -121,4 +122,5 @@ import {Router} from '@angular/router';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HelpPage {}
+export class HelpPage {
+}

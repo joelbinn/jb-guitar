@@ -1,1 +1,68 @@
-{"nodes": [{"id": "opsx_onboard_command", "label": "OPSX Onboard Command", "file_type": "document", "source_file": ".claude/commands/opsx/onboard.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "opsx_onboard_command", "target": "openspec_onboard_skill_definition", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.95, "source_file": ".claude/commands/opsx/onboard.md", "source_location": null, "weight": 1.0}, {"source": "opsx_onboard_command", "target": "opsx_explore_command", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".claude/commands/opsx/onboard.md", "source_location": null, "weight": 1.0}, {"source": "opsx_onboard_command", "target": "opsx_new_command", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".claude/commands/opsx/onboard.md", "source_location": null, "weight": 1.0}, {"source": "opsx_onboard_command", "target": "opsx_apply_command", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".claude/commands/opsx/onboard.md", "source_location": null, "weight": 1.0}, {"source": "opsx_onboard_command", "target": "opsx_archive_command", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".claude/commands/opsx/onboard.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "opsx_onboard_command",
+      "label": "OPSX Onboard Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "opsx_onboard_command",
+      "target": "openspec_onboard_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "opsx_explore_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "opsx_new_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "opsx_apply_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "opsx_archive_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

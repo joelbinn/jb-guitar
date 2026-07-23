@@ -1,7 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { StorageService } from '../services';
-import { GitHubSyncModalComponent } from './github-sync-modal.component';
+import {Component, inject, signal} from '@angular/core';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {StorageService} from '../services';
+import {GitHubSyncModalComponent} from './github-sync-modal.component';
 
 @Component({
   selector: 'jbg-top-bar',
@@ -16,20 +16,20 @@ import { GitHubSyncModalComponent } from './github-sync-modal.component';
       <div class="topbar-right">
         <nav class="topnav">
           <a class="tnav" routerLink="/practice" routerLinkActive="active">ÖVAS</a>
-          <a class="tnav" routerLink="/create"   routerLinkActive="active">SKAPA</a>
-          <a class="tnav" routerLink="/help"      routerLinkActive="active">HJÄLP</a>
+          <a class="tnav" routerLink="/create" routerLinkActive="active">SKAPA</a>
+          <a class="tnav" routerLink="/help" routerLinkActive="active">HJÄLP</a>
         </nav>
 
         <!-- GitHub sync status indicator -->
         <button
-            class="sync-btn"
-            [class]="'sync-btn sync-' + storage.syncStatus()"
-            (click)="syncModalOpen.set(true)"
-            [title]="syncTitle()"
-            aria-label="GitHub-synkronisering"
+          class="sync-btn"
+          [class]="'sync-btn sync-' + storage.syncStatus()"
+          (click)="syncModalOpen.set(true)"
+          [title]="syncTitle()"
+          aria-label="GitHub-synkronisering"
         >
-            <span class="sync-icon">☁</span>
-            <span class="sync-dot"></span>
+          <span class="sync-icon">☁</span>
+          <span class="sync-dot"></span>
         </button>
 
         <div class="menu-wrap">
@@ -55,13 +55,13 @@ import { GitHubSyncModalComponent } from './github-sync-modal.component';
               <button class="menu-item" (click)="fileInput.click()">📤 Importera från fil</button>
             </div>
           }
-          <input #fileInput type="file" accept=".json" hidden (change)="importData($event)" />
+          <input #fileInput type="file" accept=".json" hidden (change)="importData($event)"/>
         </div>
       </div>
     </header>
 
     @if (syncModalOpen()) {
-        <jbg-github-sync-modal (closed)="syncModalOpen.set(false)" />
+      <jbg-github-sync-modal (closed)="syncModalOpen.set(false)"/>
     }
   `,
   styles: `
@@ -174,10 +174,9 @@ import { GitHubSyncModalComponent } from './github-sync-modal.component';
   `,
 })
 export class TopBarComponent {
-  protected readonly storage = inject(StorageService);
-
   menuOpen = signal(false);
   syncModalOpen = signal(false);
+  protected readonly storage = inject(StorageService);
 
   onVolumeChange(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -187,10 +186,14 @@ export class TopBarComponent {
   syncTitle(): string {
     const status = this.storage.syncStatus();
     switch (status) {
-      case 'synced':       return 'GitHub-synk: OK';
-      case 'syncing':      return 'GitHub-synk: Synkar...';
-      case 'error':        return 'GitHub-synk: Fel – klicka för att konfigurera';
-      default:             return 'GitHub-synkronisering (ej konfigurerad)';
+      case 'synced':
+        return 'GitHub-synk: OK';
+      case 'syncing':
+        return 'GitHub-synk: Synkar...';
+      case 'error':
+        return 'GitHub-synk: Fel – klicka för att konfigurera';
+      default:
+        return 'GitHub-synkronisering (ej konfigurerad)';
     }
   }
 

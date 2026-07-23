@@ -1,10 +1,10 @@
 export type ExerciseSource = 'youtube' | 'jtc' | 'soundslice' | 'other';
 
 export interface Exercise {
-    id: string;
-    name: string;
-    source: ExerciseSource;
-    url: string;
+  id: string;
+  name: string;
+  source: ExerciseSource;
+  url: string;
   description?: string;
-    createdAt: string;
+  createdAt: string;
 }

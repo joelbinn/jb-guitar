@@ -1,8 +1,17 @@
-import { Component, computed, effect, inject, signal, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { BeatStrength, Exercise, PracticePlan, Session } from '../../models';
-import { ExerciseService, PlanService, SessionService } from '../../services';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild
+} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {BeatStrength, Exercise, Session} from '../../models';
+import {ExerciseService, PlanService, SessionService} from '../../services';
 
 @Component({
   selector: 'jbg-session',
@@ -36,15 +45,44 @@ import { ExerciseService, PlanService, SessionService } from '../../services';
 
         <!-- Current Exercise Card -->
         @if (currentExercise(); as ex) {
-          <div class="card" [style.display]="'flex'" [style.flex-direction]="'column'" [style.align-items]="'center'" [style.gap]="'var(--space-2)'" [style.text-align]="'center'" [style.margin-bottom]="'var(--space-4)'">
+          <div class="card"
+               [style.display]="'flex'"
+               [style.flex-direction]="'column'"
+               [style.align-items]="'center'"
+               [style.gap]="'var(--space-2)'"
+               [style.text-align]="'center'"
+               [style.margin-bottom]="'var(--space-4)'">
             <div class="card-title">{{ ex.name }}</div>
-            <div [style.font-size]="'11px'" [style.color]="'var(--color-neutral-600)'" [style.word-break]="'break-all'">{{ ex.url }}</div>
-            <div [style.display]="'flex'" [style.flex-direction]="'column'" [style.gap]="'var(--space-2)'" [style.width]="'100%'" [style.margin-top]="'var(--space-2)'">
-              <a [href]="ex.url" target="_blank" rel="noreferrer" class="btn btn-primary btn-block mob-btn">
+            <div [style.font-size]="'11px'"
+                 [style.color]="'var(--color-neutral-600)'"
+                 [style.word-break]="'break-all'">{{ ex.url }}
+            </div>
+            <div [style.display]="'flex'"
+                 [style.flex-direction]="'column'"
+                 [style.gap]="'var(--space-2)'"
+                 [style.width]="'100%'"
+                 [style.margin-top]="'var(--space-2)'">
+              <a [href]="ex.url"
+                 target="_blank"
+                 rel="noreferrer"
+                 class="btn btn-primary btn-block mob-btn">
                 Öppna i nytt fönster
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+                <svg width="14"
+                     height="14"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.5"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <path d="M15 3h6v6"/>
+                  <path d="M10 14 21 3"/>
+                </svg>
               </a>
-              <button type="button" class="btn btn-secondary btn-block mob-btn" (click)="copyLink()">
+              <button type="button"
+                      class="btn btn-secondary btn-block mob-btn"
+                      (click)="copyLink()">
                 @if (copied()) {
                   Kopierad ✓
                 } @else {
@@ -55,54 +93,150 @@ import { ExerciseService, PlanService, SessionService } from '../../services';
           </div>
 
           @if (ex.description) {
-            <div [style.font-size]="'13px'" [style.color]="'var(--color-neutral-700)'" [style.white-space]="'pre-wrap'" [style.line-height]="'1.5'" [style.border-left]="'2px solid var(--color-divider)'" [style.padding-left]="'var(--space-3)'" [style.margin-bottom]="'var(--space-4)'">{{ ex.description }}</div>
+            <div [style.font-size]="'13px'"
+                 [style.color]="'var(--color-neutral-700)'"
+                 [style.white-space]="'pre-wrap'"
+                 [style.line-height]="'1.5'"
+                 [style.border-left]="'2px solid var(--color-divider)'"
+                 [style.padding-left]="'var(--space-3)'"
+                 [style.margin-bottom]="'var(--space-4)'">{{ ex.description }}
+            </div>
           }
 
           <!-- Timer -->
           <div class="card" [style.margin-bottom]="'var(--space-4)'">
             <div class="card-kicker">Timer</div>
-            <div [style.font-family]="'ui-monospace, monospace'" [style.font-size]="'40px'" [style.text-align]="'center'" [style.color]="'var(--color-accent-700)'">{{ timerDisplay() }}</div>
-            <div [style.display]="'flex'" [style.align-items]="'center'" [style.justify-content]="'center'" [style.gap]="'var(--space-2)'" [style.margin-bottom]="'var(--space-2)'">
-              <input class="input mob-btn" type="number" min="0" max="59" [style.width]="'72px'" [style.text-align]="'center'" [value]="timerInputMinutes()" (change)="setTimerMinutes($event)" [disabled]="timerRunning()" />
+            <div [style.font-family]="'ui-monospace, monospace'"
+                 [style.font-size]="'40px'"
+                 [style.text-align]="'center'"
+                 [style.color]="'var(--color-accent-700)'">{{ timerDisplay() }}
+            </div>
+            <div [style.display]="'flex'"
+                 [style.align-items]="'center'"
+                 [style.justify-content]="'center'"
+                 [style.gap]="'var(--space-2)'"
+                 [style.margin-bottom]="'var(--space-2)'">
+              <input class="input mob-btn"
+                     type="number"
+                     min="0"
+                     max="59"
+                     [style.width]="'72px'"
+                     [style.text-align]="'center'"
+                     [value]="timerInputMinutes()"
+                     (change)="setTimerMinutes($event)"
+                     [disabled]="timerRunning()"/>
               <span [style.font-size]="'12px'" [style.color]="'var(--color-neutral-600)'">min</span>
             </div>
             <div [style.display]="'flex'" [style.gap]="'var(--space-2)'">
-              <button type="button" class="btn btn-secondary mob-btn" [style.flex]="'1'" (click)="startTimer()" [disabled]="timerRunning()">Start</button>
-              <button type="button" class="btn btn-secondary mob-btn" [style.flex]="'1'" (click)="pauseTimer()" [disabled]="!timerRunning()">Pausa</button>
-              <button type="button" class="btn btn-ghost mob-btn" [style.flex]="'1'" (click)="resetTimer()">Återst.</button>
+              <button type="button"
+                      class="btn btn-secondary mob-btn"
+                      [style.flex]="'1'"
+                      (click)="startTimer()"
+                      [disabled]="timerRunning()">Start
+              </button>
+              <button type="button"
+                      class="btn btn-secondary mob-btn"
+                      [style.flex]="'1'"
+                      (click)="pauseTimer()"
+                      [disabled]="!timerRunning()">Pausa
+              </button>
+              <button type="button"
+                      class="btn btn-ghost mob-btn"
+                      [style.flex]="'1'"
+                      (click)="resetTimer()">Återst.
+              </button>
             </div>
           </div>
 
           <!-- Metronome -->
           <div class="card" [style.margin-bottom]="'var(--space-4)'">
-            <div [style.display]="'flex'" [style.justify-content]="'space-between'" [style.align-items]="'center'" [style.margin-bottom]="'var(--space-2)'">
+            <div [style.display]="'flex'"
+                 [style.justify-content]="'space-between'"
+                 [style.align-items]="'center'"
+                 [style.margin-bottom]="'var(--space-2)'">
               <div class="card-kicker">Metronom</div>
-              <button type="button" class="btn btn-secondary mob-btn" (click)="toggleMetronome()">{{ metronomeRunning() ? 'Stoppa' : 'Starta' }}</button>
+              <button type="button"
+                      class="btn btn-secondary mob-btn"
+                      (click)="toggleMetronome()">{{ metronomeRunning() ? 'Stoppa' : 'Starta' }}
+              </button>
             </div>
-            <div [style.display]="'flex'" [style.align-items]="'center'" [style.gap]="'var(--space-2)'" [style.margin-bottom]="'var(--space-3)'">
-              <input class="input mob-btn" type="number" min="20" max="300" [style.width]="'64px'" [style.text-align]="'center'" [value]="metroBpm()" (change)="setMetroBpm($event)" [disabled]="metronomeRunning()" />
+            <div [style.display]="'flex'"
+                 [style.align-items]="'center'"
+                 [style.gap]="'var(--space-2)'"
+                 [style.margin-bottom]="'var(--space-3)'">
+              <input class="input mob-btn"
+                     type="number"
+                     min="20"
+                     max="300"
+                     [style.width]="'64px'"
+                     [style.text-align]="'center'"
+                     [value]="metroBpm()"
+                     (change)="setMetroBpm($event)"
+                     [disabled]="metronomeRunning()"/>
               <span [style.font-size]="'11px'" [style.color]="'var(--color-neutral-600)'">BPM</span>
-              <input class="input mob-btn" type="number" min="1" max="16" [style.width]="'52px'" [style.text-align]="'center'" [value]="metroNumerator()" (change)="setMetroNumerator($event)" [disabled]="metronomeRunning()" />
+              <input class="input mob-btn"
+                     type="number"
+                     min="1"
+                     max="16"
+                     [style.width]="'52px'"
+                     [style.text-align]="'center'"
+                     [value]="metroNumerator()"
+                     (change)="setMetroNumerator($event)"
+                     [disabled]="metronomeRunning()"/>
               <span [style.font-size]="'13px'" [style.color]="'var(--color-neutral-500)'">/4</span>
             </div>
-            <div [style.display]="'flex'" [style.gap]="'var(--space-2)'" [style.flex-wrap]="'wrap'" [style.align-items]="'flex-end'" [style.min-height]="'22px'">
+            <div [style.display]="'flex'"
+                 [style.gap]="'var(--space-2)'"
+                 [style.flex-wrap]="'wrap'"
+                 [style.align-items]="'flex-end'"
+                 [style.min-height]="'22px'">
               @for (beat of beatProfile(); track $index; let i = $index) {
-                <div class="session-beat-dot" [style.width]="getBeatDotSize(beat) + 'px'" [style.height]="getBeatDotSize(beat) + 'px'" [style.border-radius]="'50%'" [style.background]="getBeatDotColor(beat)" [style.cursor]="'pointer'" [style.transform]="currentBeat() === i ? 'scale(1.3)' : 'scale(1)'" [style.transition]="'transform 0.05s'" (click)="cycleBeatStrength(i)"></div>
+                <div class="session-beat-dot"
+                     [style.width]="getBeatDotSize(beat) + 'px'"
+                     [style.height]="getBeatDotSize(beat) + 'px'"
+                     [style.border-radius]="'50%'"
+                     [style.background]="getBeatDotColor(beat)"
+                     [style.cursor]="'pointer'"
+                     [style.transform]="currentBeat() === i ? 'scale(1.3)' : 'scale(1)'"
+                     [style.transition]="'transform 0.05s'"
+                     (click)="cycleBeatStrength(i)"></div>
               }
             </div>
           </div>
 
           <!-- Navigation -->
-          <div [style.display]="'flex'" [style.gap]="'var(--space-2)'" [style.margin-bottom]="'var(--space-2)'">
-            <button type="button" class="btn btn-secondary mob-btn" [style.flex]="'1'" (click)="previous()" [disabled]="isFirstExercise()">← Föreg.</button>
-            <button type="button" class="btn btn-primary mob-btn" [style.flex]="'1'" (click)="next()">{{ isLastExercise() ? 'Slutför' : 'Nästa →' }}</button>
+          <div [style.display]="'flex'"
+               [style.gap]="'var(--space-2)'"
+               [style.margin-bottom]="'var(--space-2)'">
+            <button type="button"
+                    class="btn btn-secondary mob-btn"
+                    [style.flex]="'1'"
+                    (click)="previous()"
+                    [disabled]="isFirstExercise()">← Föreg.
+            </button>
+            <button type="button"
+                    class="btn btn-primary mob-btn"
+                    [style.flex]="'1'"
+                    (click)="next()">{{ isLastExercise() ? 'Slutför' : 'Nästa →' }}
+            </button>
           </div>
 
           <!-- Session Controls -->
-          <div [style.display]="'flex'" [style.flex-direction]="'column'" [style.gap]="'var(--space-2)'">
-            <button type="button" class="btn btn-secondary btn-block mob-btn" (click)="pauseSession()">Pausa session</button>
-            <button type="button" class="btn btn-secondary btn-block mob-btn" (click)="restartSession()">Börja om</button>
-            <button type="button" class="btn btn-secondary btn-block mob-btn" (click)="deleteSession()">Ta bort</button>
+          <div [style.display]="'flex'"
+               [style.flex-direction]="'column'"
+               [style.gap]="'var(--space-2)'">
+            <button type="button"
+                    class="btn btn-secondary btn-block mob-btn"
+                    (click)="pauseSession()">Pausa session
+            </button>
+            <button type="button"
+                    class="btn btn-secondary btn-block mob-btn"
+                    (click)="restartSession()">Börja om
+            </button>
+            <button type="button"
+                    class="btn btn-secondary btn-block mob-btn"
+                    (click)="deleteSession()">Ta bort
+            </button>
           </div>
         }
       }
@@ -219,79 +353,64 @@ import { ExerciseService, PlanService, SessionService } from '../../services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SessionPage {
-  private readonly sessionService = inject(SessionService);
-  private readonly planService = inject(PlanService);
-  private readonly exerciseService = inject(ExerciseService);
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-
   sessionId = signal<string | null>(null);
   session = signal<Session | undefined>(undefined);
-
-
-  plan = computed(() => {
-    const s = this.session();
-    return s ? this.planService.getById(s.planId) : undefined;
-  });
-
-  exercises = computed(() => {
-    const p = this.plan();
-    if (!p) return [];
-    return p.exerciseIds.map(id => this.exerciseService.getById(id)).filter(Boolean) as Exercise[];
-  });
-
-  currentExercise = computed(() => {
-    const s = this.session();
-    if (!s) return undefined;
-    return this.exerciseService.getById(s.currentExerciseId);
-  });
-
   completedCount = computed(() => {
     const s = this.session();
     if (!s) return 0;
     return s.exerciseState.filter(c => c.completed).length;
   });
-
   totalCount = computed(() => this.session()?.exerciseState.length ?? 0);
-
   progressPercent = computed(() => {
     const total = this.totalCount();
     return total > 0 ? (this.completedCount() / total) * 100 : 0;
   });
-
   currentExerciseIndex = computed(() => {
     const s = this.session();
     if (!s) return 0;
     const exs = this.exercises();
     return exs.findIndex(e => e.id === s.currentExerciseId) + 1;
   });
-
   isFirstExercise = computed(() => this.currentExerciseIndex() <= 1);
   isLastExercise = computed(() => this.currentExerciseIndex() >= this.totalCount());
-
   // Timer
   timerInputMinutes = signal(5);
   timerRemaining = signal(300);
   timerRunning = signal(false);
-  private timerInterval: any = null;
-
   timerDisplay = computed(() => {
     const rem = this.timerRemaining();
     return `${String(Math.floor(rem / 60)).padStart(2, '0')}:${String(rem % 60).padStart(2, '0')}`;
   });
-
   // Metronome
   metroBpm = signal(100);
   metroNumerator = signal(4);
   beatProfile = signal<BeatStrength[]>(['stark', 'svag', 'svag', 'svag']);
   currentBeat = signal(-1);
   metronomeRunning = signal(false);
+  copied = signal(false);
+  @ViewChild('chipsContainer') chipsContainer?: ElementRef<HTMLDivElement>;
+  private readonly sessionService = inject(SessionService);
+  private readonly planService = inject(PlanService);
+  plan = computed(() => {
+    const s = this.session();
+    return s ? this.planService.getById(s.planId) : undefined;
+  });
+  private readonly exerciseService = inject(ExerciseService);
+  exercises = computed(() => {
+    const p = this.plan();
+    if (!p) return [];
+    return p.exerciseIds.map(id => this.exerciseService.getById(id)).filter(Boolean) as Exercise[];
+  });
+  currentExercise = computed(() => {
+    const s = this.session();
+    if (!s) return undefined;
+    return this.exerciseService.getById(s.currentExerciseId);
+  });
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private timerInterval: any = null;
   private metroInterval: any = null;
   private audioCtx: AudioContext | null = null;
-
-  copied = signal(false);
-
-  @ViewChild('chipsContainer') chipsContainer?: ElementRef<HTMLDivElement>;
 
   constructor() {
     effect(() => {
@@ -314,7 +433,7 @@ export class SessionPage {
       setTimeout(() => {
         const activeChip = this.chipsContainer?.nativeElement.querySelector('[data-exercise-id="' + s.currentExerciseId + '"]');
         if (activeChip) {
-          activeChip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          activeChip.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'});
         }
       }, 0);
     });
@@ -438,13 +557,6 @@ export class SessionPage {
     this.timerRemaining.set(this.timerInputMinutes() * 60);
   }
 
-  private stopTimerInterval(): void {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-      this.timerInterval = null;
-    }
-  }
-
   setMetroBpm(event: Event): void {
     const value = Math.max(20, Math.min(300, +(event.target as HTMLInputElement).value || 100));
     this.metroBpm.set(value);
@@ -471,17 +583,23 @@ export class SessionPage {
 
   getBeatDotSize(beat: BeatStrength): number {
     switch (beat) {
-      case 'stark': return 20;
-      case 'mellan': return 16;
-      case 'svag': return 12;
+      case 'stark':
+        return 20;
+      case 'mellan':
+        return 16;
+      case 'svag':
+        return 12;
     }
   }
 
   getBeatDotColor(beat: BeatStrength): string {
     switch (beat) {
-      case 'stark': return 'var(--color-accent)';
-      case 'mellan': return 'var(--color-neutral-600)';
-      case 'svag': return 'var(--color-neutral-400)';
+      case 'stark':
+        return 'var(--color-accent)';
+      case 'mellan':
+        return 'var(--color-neutral-600)';
+      case 'svag':
+        return 'var(--color-neutral-400)';
     }
   }
 
@@ -528,6 +646,13 @@ export class SessionPage {
 
     tick();
     this.metroInterval = setInterval(tick, (60000 / this.metroBpm()));
+  }
+
+  private stopTimerInterval(): void {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
   }
 
   private stopMetroInterval(): void {

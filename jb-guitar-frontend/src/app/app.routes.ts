@@ -8,12 +8,12 @@ import {PlanEditPage} from './pages/plan-edit/plan-edit.page';
 import {HelpPage} from './pages/help/help.page';
 
 export const routes: Routes = [
-    { path: '', component: LandingPage },
-    { path: 'practice', component: PracticeListPage },
-    { path: 'practice/:id', component: SessionPage },
-    { path: 'create', component: CreatePage },
-    { path: 'create/exercise/:id', component: ExerciseEditPage },
-    { path: 'create/plan/:id', component: PlanEditPage },
+  {path: '', component: LandingPage},
+  {path: 'practice', component: PracticeListPage},
+  {path: 'practice/:id', component: SessionPage},
+  {path: 'create', component: CreatePage},
+  {path: 'create/exercise/:id', component: ExerciseEditPage},
+  {path: 'create/plan/:id', component: PlanEditPage},
   {path: 'help', component: HelpPage},
-    { path: '**', redirectTo: '' },
+  {path: '**', redirectTo: ''},
 ];

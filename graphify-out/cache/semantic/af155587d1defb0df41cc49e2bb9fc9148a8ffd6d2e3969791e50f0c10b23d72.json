@@ -1,1 +1,40 @@
-{"nodes": [{"id": "openspec_apply_change_skill", "label": "openspec-apply-change/SKILL.md", "file_type": "document", "source_file": ".opencode/skills/openspec-apply-change/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null}, {"id": "openspec_apply_change_skill_implementation_flow", "label": "OpenSpec Apply Change Flow", "file_type": "concept", "source_file": ".opencode/skills/openspec-apply-change/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null, "rationale": "Enables a developer to implement pending tasks from a change spec sequentially in a loop, pausing on errors or blockers."}], "edges": [{"source": "openspec_apply_change_skill", "target": "openspec_apply_change_skill_implementation_flow", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/openspec-apply-change/SKILL.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "openspec_apply_change_skill",
+      "label": "openspec-apply-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_apply_change_skill_implementation_flow",
+      "label": "OpenSpec Apply Change Flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Enables a developer to implement pending tasks from a change spec sequentially in a loop, pausing on errors or blockers."
+    }
+  ],
+  "edges": [
+    {
+      "source": "openspec_apply_change_skill",
+      "target": "openspec_apply_change_skill_implementation_flow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

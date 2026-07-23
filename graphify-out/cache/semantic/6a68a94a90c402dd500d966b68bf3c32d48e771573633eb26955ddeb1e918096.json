@@ -1,1 +1,40 @@
-{"nodes": [{"id": "openspec_explore_skill", "label": "openspec-explore/SKILL.md", "file_type": "document", "source_file": ".opencode/skills/openspec-explore/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null}, {"id": "openspec_explore_skill_explore_stance", "label": "OpenSpec Explore Stance", "file_type": "concept", "source_file": ".opencode/skills/openspec-explore/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null, "rationale": "A non-prescriptive, curious posture for thinking and mapping architecture, explicitly prohibiting codebase implementation."}], "edges": [{"source": "openspec_explore_skill", "target": "openspec_explore_skill_explore_stance", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/openspec-explore/SKILL.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "openspec_explore_skill",
+      "label": "openspec-explore/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_explore_stance",
+      "label": "OpenSpec Explore Stance",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "A non-prescriptive, curious posture for thinking and mapping architecture, explicitly prohibiting codebase implementation."
+    }
+  ],
+  "edges": [
+    {
+      "source": "openspec_explore_skill",
+      "target": "openspec_explore_skill_explore_stance",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

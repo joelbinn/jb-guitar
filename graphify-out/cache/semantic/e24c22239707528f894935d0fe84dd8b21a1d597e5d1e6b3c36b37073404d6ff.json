@@ -1,1 +1,40 @@
-{"nodes": [{"id": "openspec_verify_change_skill", "label": "openspec-verify-change/SKILL.md", "file_type": "document", "source_file": ".opencode/skills/openspec-verify-change/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null}, {"id": "openspec_verify_change_skill_verification_report", "label": "OpenSpec Verification Report", "file_type": "concept", "source_file": ".opencode/skills/openspec-verify-change/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null, "rationale": "Verifies correctness, completeness, and coherence of code implementations against change specifications before archiving."}], "edges": [{"source": "openspec_verify_change_skill", "target": "openspec_verify_change_skill_verification_report", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/openspec-verify-change/SKILL.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "openspec_verify_change_skill",
+      "label": "openspec-verify-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_verify_change_skill_verification_report",
+      "label": "OpenSpec Verification Report",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Verifies correctness, completeness, and coherence of code implementations against change specifications before archiving."
+    }
+  ],
+  "edges": [
+    {
+      "source": "openspec_verify_change_skill",
+      "target": "openspec_verify_change_skill_verification_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

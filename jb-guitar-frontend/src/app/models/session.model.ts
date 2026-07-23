@@ -16,11 +16,11 @@ export interface ExerciseSessionState {
 }
 
 export interface Session {
-    id: string;
-    planId: string;
-    status: SessionStatus;
+  id: string;
+  planId: string;
+  status: SessionStatus;
   currentExerciseId: string;
   exerciseState: ExerciseSessionState[];
-    startedAt: string;
-    updatedAt: string;
+  startedAt: string;
+  updatedAt: string;
 }

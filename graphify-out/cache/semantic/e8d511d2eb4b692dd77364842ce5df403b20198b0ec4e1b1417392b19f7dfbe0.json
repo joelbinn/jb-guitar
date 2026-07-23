@@ -1,1 +1,58 @@
-{"nodes": [{"id": "session_session_page_sessionpage", "label": "SessionPage", "file_type": "code", "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "session_session_page_sessionpage", "target": "services_session_service_sessionservice", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts", "source_location": null, "weight": 1.0}, {"source": "session_session_page_sessionpage", "target": "services_plan_service_planservice", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts", "source_location": null, "weight": 1.0}, {"source": "session_session_page_sessionpage", "target": "services_exercise_service_exerciseservice", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts", "source_location": null, "weight": 1.0}, {"source": "session_session_page_sessionpage", "target": "services_storage_service_storageservice", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "session_session_page_sessionpage",
+      "label": "SessionPage",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "session_session_page_sessionpage",
+      "target": "services_session_service_sessionservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "session_session_page_sessionpage",
+      "target": "services_plan_service_planservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "session_session_page_sessionpage",
+      "target": "services_exercise_service_exerciseservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "session_session_page_sessionpage",
+      "target": "services_storage_service_storageservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/session/session.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

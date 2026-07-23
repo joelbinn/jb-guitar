@@ -1,1 +1,83 @@
-{"nodes": [{"id": "doc_kravspecifikation", "label": "kravspecifikation.md", "file_type": "document", "source_file": "doc/kravspecifikation.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "doc_kravspecifikation_metronom_spec", "label": "Metronome Requirements Specification", "file_type": "concept", "source_file": "doc/kravspecifikation.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Specifies support for customizable BPM, denominator, numerator, individual beat profiles (strong, middle, weak), and visual indicators."}, {"id": "doc_kravspecifikation_timer_spec", "label": "Timer Requirements Specification", "file_type": "concept", "source_file": "doc/kravspecifikation.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "doc_kravspecifikation_data_models", "label": "JB Guitar Domain Data Models", "file_type": "concept", "source_file": "doc/kravspecifikation.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Defines Exercise, PracticePlan, ExerciseSessionState, and Session TypeScript structures for persistent LocalStorage representation."}], "edges": [{"source": "doc_kravspecifikation", "target": "doc_kravspecifikation_metronom_spec", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "doc/kravspecifikation.md", "source_location": null, "weight": 1.0}, {"source": "doc_kravspecifikation", "target": "doc_kravspecifikation_timer_spec", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "doc/kravspecifikation.md", "source_location": null, "weight": 1.0}, {"source": "doc_kravspecifikation", "target": "doc_kravspecifikation_data_models", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "doc/kravspecifikation.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "doc_kravspecifikation",
+      "label": "kravspecifikation.md",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_kravspecifikation_metronom_spec",
+      "label": "Metronome Requirements Specification",
+      "file_type": "concept",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Specifies support for customizable BPM, denominator, numerator, individual beat profiles (strong, middle, weak), and visual indicators."
+    },
+    {
+      "id": "doc_kravspecifikation_timer_spec",
+      "label": "Timer Requirements Specification",
+      "file_type": "concept",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_kravspecifikation_data_models",
+      "label": "JB Guitar Domain Data Models",
+      "file_type": "concept",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Defines Exercise, PracticePlan, ExerciseSessionState, and Session TypeScript structures for persistent LocalStorage representation."
+    }
+  ],
+  "edges": [
+    {
+      "source": "doc_kravspecifikation",
+      "target": "doc_kravspecifikation_metronom_spec",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation",
+      "target": "doc_kravspecifikation_timer_spec",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation",
+      "target": "doc_kravspecifikation_data_models",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

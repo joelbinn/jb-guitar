@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal, ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {Session} from '../../models';
 import {ExerciseService, PlanService, SessionService} from '../../services';
@@ -101,59 +101,49 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingPage {
-  private readonly sessionService = inject(SessionService);
-  private readonly planService = inject(PlanService);
-  private readonly exerciseService = inject(ExerciseService);
-  private readonly router = inject(Router);
-
-  latestSession = signal<Session | undefined>(this.sessionService.getLatest());
-
-  plan = computed(() => {
-    const s = this.latestSession();
-    return s ? this.planService.getById(s.planId) : undefined;
-  });
-
-  currentExercise = computed(() => {
-    const s = this.latestSession();
-    if (!s) return undefined;
-    return this.exerciseService.getById(s.currentExerciseId);
-  });
-
   completedCount = computed(() => {
     const s = this.latestSession();
     if (!s) return 0;
     return s.exerciseState.filter((c) => c.completed).length;
   });
-
   totalCount = computed(() => this.latestSession()?.exerciseState.length ?? 0);
-
   progressPercent = computed(() => {
     const total = this.totalCount();
     return total > 0 ? (this.completedCount() / total) * 100 : 0;
   });
-
   statusLabel = computed(() => {
     const s = this.latestSession();
     if (!s) return '';
     return s.status === 'paused' ? 'Pausad' : 'Pågående';
   });
-
   pausedDateTime = computed(() => {
     const s = this.latestSession();
     if (!s) return '';
     const d = new Date(s.updatedAt);
-    const date = d.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' });
-    const time = d.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+    const date = d.toLocaleDateString('sv-SE', {day: 'numeric', month: 'short'});
+    const time = d.toLocaleTimeString('sv-SE', {hour: '2-digit', minute: '2-digit'});
     return `${date} ${time}`;
   });
-
+  private readonly sessionService = inject(SessionService);
+  latestSession = signal<Session | undefined>(this.sessionService.getLatest());
   estimatedMinutes = computed(() => {
     const s = this.latestSession();
     if (!s) return 0;
     return s.exerciseState.reduce((sum, state) => sum + state.timerMinutes, 0);
   });
-
   hasLatestSession = computed(() => !!this.latestSession());
+  private readonly planService = inject(PlanService);
+  plan = computed(() => {
+    const s = this.latestSession();
+    return s ? this.planService.getById(s.planId) : undefined;
+  });
+  private readonly exerciseService = inject(ExerciseService);
+  currentExercise = computed(() => {
+    const s = this.latestSession();
+    if (!s) return undefined;
+    return this.exerciseService.getById(s.currentExerciseId);
+  });
+  private readonly router = inject(Router);
 
   continueSession(): void {
     const s = this.latestSession();

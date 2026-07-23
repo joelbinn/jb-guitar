@@ -1,1 +1,28 @@
-{"nodes": [{"id": "jb_guitar_frontend_tsconfig_app", "label": "tsconfig.app.json", "file_type": "code", "source_file": "jb-guitar-frontend/tsconfig.app.json", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "jb_guitar_frontend_tsconfig_app", "target": "jb_guitar_frontend_tsconfig", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "jb-guitar-frontend/tsconfig.app.json", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "jb_guitar_frontend_tsconfig_app",
+      "label": "tsconfig.app.json",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/tsconfig.app.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "jb_guitar_frontend_tsconfig_app",
+      "target": "jb_guitar_frontend_tsconfig",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/tsconfig.app.json",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

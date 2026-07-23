@@ -1,1 +1,60 @@
-{"nodes": [{"id": "openspec_explore_skill_definition", "label": "OpenSpec Explore Skill", "file_type": "document", "source_file": ".claude/skills/openspec-explore/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null}, {"id": "openspec_explore_skill_stance_over_workflow", "label": "Explore Mode Stance (Skill)", "file_type": "rationale", "source_file": ".claude/skills/openspec-explore/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null}, {"id": "openspec_explore_skill_explore_vs_implement", "label": "Explore vs Implement Distinction (Skill)", "file_type": "rationale", "source_file": ".claude/skills/openspec-explore/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": "openspec", "contributor": null}], "edges": [{"source": "openspec_explore_skill_stance_over_workflow", "target": "openspec_explore_skill_definition", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".claude/skills/openspec-explore/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "openspec_explore_skill_explore_vs_implement", "target": "openspec_explore_skill_definition", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".claude/skills/openspec-explore/SKILL.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "openspec_explore_skill_definition",
+      "label": "OpenSpec Explore Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_stance_over_workflow",
+      "label": "Explore Mode Stance (Skill)",
+      "file_type": "rationale",
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_explore_vs_implement",
+      "label": "Explore vs Implement Distinction (Skill)",
+      "file_type": "rationale",
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "openspec_explore_skill_stance_over_workflow",
+      "target": "openspec_explore_skill_definition",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_explore_skill_explore_vs_implement",
+      "target": "openspec_explore_skill_definition",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

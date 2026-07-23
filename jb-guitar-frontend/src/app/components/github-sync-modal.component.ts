@@ -1,193 +1,203 @@
-import { Component, inject, signal, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { GitHubSyncSettings } from '../models';
-import { GitHubSyncService } from '../services/github-sync.service';
-import { StorageService } from '../services/storage.service';
+import {Component, inject, output, signal} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {GitHubSyncService} from '../services/github-sync.service';
+import {StorageService} from '../services/storage.service';
 
 @Component({
-    selector: 'jbg-github-sync-modal',
-    imports: [FormsModule],
-    template: `
-        <div class="modal-backdrop" (click)="handleBackdropClick($event)">
-            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  selector: 'jbg-github-sync-modal',
+  imports: [FormsModule],
+  template: `
+    <div class="modal-backdrop" (click)="handleBackdropClick($event)">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
 
-                <div class="modal-header">
-                    <div class="modal-title-row">
-                        <span class="modal-icon">☁</span>
-                        <h2 id="modal-title">GitHub-synkronisering</h2>
-                    </div>
-                    <button class="close-btn" (click)="close()" aria-label="Stäng">✕</button>
-                </div>
+        <div class="modal-header">
+          <div class="modal-title-row">
+            <span class="modal-icon">☁</span>
+            <h2 id="modal-title">GitHub-synkronisering</h2>
+          </div>
+          <button class="close-btn" (click)="close()" aria-label="Stäng">✕</button>
+        </div>
 
-                <div class="modal-body">
-                    <p class="modal-desc">
-                        Synkronisera din övningsdata med ett privat GitHub-repository.
-                        Dina inloggningsuppgifter sparas <strong>bara lokalt</strong> i din webbläsare.
-                    </p>
+        <div class="modal-body">
+          <p class="modal-desc">
+            Synkronisera din övningsdata med ett privat GitHub-repository.
+            Dina inloggningsuppgifter sparas <strong>bara lokalt</strong> i din webbläsare.
+          </p>
 
-                    <!-- Enable toggle -->
-                    <label class="toggle-row">
-                        <span class="toggle-label">Aktivera synkronisering</span>
-                        <div class="toggle-wrap">
-                            <input
-                                id="sync-enabled"
-                                type="checkbox"
-                                class="toggle-input"
-                                [(ngModel)]="formEnabled"
-                            />
-                            <span class="toggle-track">
+          <!-- Enable toggle -->
+          <label class="toggle-row">
+            <span class="toggle-label">Aktivera synkronisering</span>
+            <div class="toggle-wrap">
+              <input
+                id="sync-enabled"
+                type="checkbox"
+                class="toggle-input"
+                [(ngModel)]="formEnabled"
+              />
+              <span class="toggle-track">
                                 <span class="toggle-thumb"></span>
                             </span>
-                        </div>
-                    </label>
-
-                    <div class="form-fields" [class.disabled]="!formEnabled">
-                        <!-- Repository -->
-                        <div class="field">
-                            <label class="field-label" for="sync-repo">Repository (ägare/repo)</label>
-                            <input
-                                id="sync-repo"
-                                type="text"
-                                class="field-input"
-                                [(ngModel)]="formRepo"
-                                placeholder="t.ex. johndoe/jb-guitar-data"
-                                [disabled]="!formEnabled"
-                                autocomplete="off"
-                            />
-                        </div>
-
-                        <!-- PAT Token -->
-                        <div class="field">
-                            <div class="field-label-row">
-                                <label class="field-label" for="sync-token">Personal Access Token (PAT)</label>
-                                <a
-                                    class="help-link"
-                                    href="https://github.com/settings/personal-access-tokens/new"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    title="Skapa ny token på GitHub"
-                                >? Skapa token</a>
-                            </div>
-                            <input
-                                id="sync-token"
-                                [type]="showToken() ? 'text' : 'password'"
-                                class="field-input token-input"
-                                [(ngModel)]="formToken"
-                                placeholder="github_pat_..."
-                                [disabled]="!formEnabled"
-                                autocomplete="off"
-                            />
-                            <button class="token-toggle" type="button" (click)="showToken.set(!showToken())">
-                                {{ showToken() ? 'Dölj' : 'Visa' }}
-                            </button>
-                        </div>
-
-                        <!-- Branch -->
-                        <div class="field-row">
-                            <div class="field">
-                                <label class="field-label" for="sync-branch">Branch</label>
-                                <input
-                                    id="sync-branch"
-                                    type="text"
-                                    class="field-input"
-                                    [(ngModel)]="formBranch"
-                                    placeholder="main"
-                                    [disabled]="!formEnabled"
-                                />
-                            </div>
-                            <div class="field">
-                                <label class="field-label" for="sync-path">Filväg</label>
-                                <input
-                                    id="sync-path"
-                                    type="text"
-                                    class="field-input"
-                                    [(ngModel)]="formFilePath"
-                                    placeholder="jb-guitar-data.json"
-                                    [disabled]="!formEnabled"
-                                />
-                            </div>
-                        </div>
-
-                        <!-- Help info box -->
-                        <div class="info-box">
-                            <span class="info-icon">ℹ</span>
-                            <div class="info-text">
-                                <strong>Så här skapar du en PAT:</strong>
-                                GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token.
-                                Välj ditt repository och ge det <em>Contents: Read and write</em>-behörighet.
-                                <a
-                                    href="https://github.com/settings/personal-access-tokens/new"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >Öppna GitHub →</a>
-                            </div>
-                        </div>
-
-                        <!-- Status -->
-                        @if (statusMsg()) {
-                            <div class="status-msg" [class]="statusClass()">
-                                {{ statusMsg() }}
-                            </div>
-                        }
-
-                        <!-- Test connection button -->
-                        <button
-                            class="btn btn-ghost btn-full"
-                            type="button"
-                            [disabled]="testing() || !formRepo || !formToken"
-                            (click)="testConnection()"
-                        >
-                            @if (testing()) { ⏳ Testar... } @else { 🔌 Testa anslutning }
-                        </button>
-                    </div>
-
-                    <!-- Manual sync actions (only when saved and enabled) -->
-                    @if (storage.syncStatus() !== 'unconfigured') {
-                        <div class="sync-actions">
-                            <p class="sect-label">Manuell synkronisering</p>
-                            <div class="btn-row">
-                                <button
-                                    class="btn btn-ghost"
-                                    type="button"
-                                    [disabled]="storage.syncStatus() === 'syncing'"
-                                    (click)="pull()"
-                                    title="Hämta data från GitHub och skriv över lokalt"
-                                >⬇ Hämta från GitHub</button>
-                                <button
-                                    class="btn btn-ghost"
-                                    type="button"
-                                    [disabled]="storage.syncStatus() === 'syncing'"
-                                    (click)="push()"
-                                    title="Skicka lokal data till GitHub och skriv över remote"
-                                >⬆ Skicka till GitHub</button>
-                            </div>
-                        </div>
-
-                        <div class="sync-actions" style="margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px;">
-                            <p class="sect-label">Historikhantering</p>
-                            <div style="margin-top: 8px;">
-                                <button
-                                    class="btn btn-danger btn-full"
-                                    type="button"
-                                    [disabled]="storage.syncStatus() === 'syncing' || compacting()"
-                                    (click)="compact()"
-                                    title="Radera all tidigare versionshistorik för din data på denna branch och spara endast den senaste versionen."
-                                >
-                                    @if (compacting()) { ⏳ Kompakterar... } @else { 🗑 Kompaktera historik }
-                                </button>
-                            </div>
-                        </div>
-                    }
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-ghost" type="button" (click)="close()">Stäng</button>
-                    <button class="btn btn-primary" type="button" (click)="save()">Spara</button>
-                </div>
             </div>
+          </label>
+
+          <div class="form-fields" [class.disabled]="!formEnabled">
+            <!-- Repository -->
+            <div class="field">
+              <label class="field-label" for="sync-repo">Repository (ägare/repo)</label>
+              <input
+                id="sync-repo"
+                type="text"
+                class="field-input"
+                [(ngModel)]="formRepo"
+                placeholder="t.ex. johndoe/jb-guitar-data"
+                [disabled]="!formEnabled"
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- PAT Token -->
+            <div class="field">
+              <div class="field-label-row">
+                <label class="field-label" for="sync-token">Personal Access Token (PAT)</label>
+                <a
+                  class="help-link"
+                  href="https://github.com/settings/personal-access-tokens/new"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Skapa ny token på GitHub"
+                >? Skapa token</a>
+              </div>
+              <input
+                id="sync-token"
+                [type]="showToken() ? 'text' : 'password'"
+                class="field-input token-input"
+                [(ngModel)]="formToken"
+                placeholder="github_pat_..."
+                [disabled]="!formEnabled"
+                autocomplete="off"
+              />
+              <button class="token-toggle" type="button" (click)="showToken.set(!showToken())">
+                {{ showToken() ? 'Dölj' : 'Visa' }}
+              </button>
+            </div>
+
+            <!-- Branch -->
+            <div class="field-row">
+              <div class="field">
+                <label class="field-label" for="sync-branch">Branch</label>
+                <input
+                  id="sync-branch"
+                  type="text"
+                  class="field-input"
+                  [(ngModel)]="formBranch"
+                  placeholder="main"
+                  [disabled]="!formEnabled"
+                />
+              </div>
+              <div class="field">
+                <label class="field-label" for="sync-path">Filväg</label>
+                <input
+                  id="sync-path"
+                  type="text"
+                  class="field-input"
+                  [(ngModel)]="formFilePath"
+                  placeholder="jb-guitar-data.json"
+                  [disabled]="!formEnabled"
+                />
+              </div>
+            </div>
+
+            <!-- Help info box -->
+            <div class="info-box">
+              <span class="info-icon">ℹ</span>
+              <div class="info-text">
+                <strong>Så här skapar du en PAT:</strong>
+                GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token.
+                Välj ditt repository och ge det <em>Contents: Read and write</em>-behörighet.
+                <a
+                  href="https://github.com/settings/personal-access-tokens/new"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >Öppna GitHub →</a>
+              </div>
+            </div>
+
+            <!-- Status -->
+            @if (statusMsg()) {
+              <div class="status-msg" [class]="statusClass()">
+                {{ statusMsg() }}
+              </div>
+            }
+
+            <!-- Test connection button -->
+            <button
+              class="btn btn-ghost btn-full"
+              type="button"
+              [disabled]="testing() || !formRepo || !formToken"
+              (click)="testConnection()"
+            >
+              @if (testing()) {
+                ⏳ Testar...
+              } @else {
+                🔌 Testa anslutning
+              }
+            </button>
+          </div>
+
+          <!-- Manual sync actions (only when saved and enabled) -->
+          @if (storage.syncStatus() !== 'unconfigured') {
+            <div class="sync-actions">
+              <p class="sect-label">Manuell synkronisering</p>
+              <div class="btn-row">
+                <button
+                  class="btn btn-ghost"
+                  type="button"
+                  [disabled]="storage.syncStatus() === 'syncing'"
+                  (click)="pull()"
+                  title="Hämta data från GitHub och skriv över lokalt"
+                >⬇ Hämta från GitHub
+                </button>
+                <button
+                  class="btn btn-ghost"
+                  type="button"
+                  [disabled]="storage.syncStatus() === 'syncing'"
+                  (click)="push()"
+                  title="Skicka lokal data till GitHub och skriv över remote"
+                >⬆ Skicka till GitHub
+                </button>
+              </div>
+            </div>
+
+            <div class="sync-actions"
+                 style="margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px;">
+              <p class="sect-label">Historikhantering</p>
+              <div style="margin-top: 8px;">
+                <button
+                  class="btn btn-danger btn-full"
+                  type="button"
+                  [disabled]="storage.syncStatus() === 'syncing' || compacting()"
+                  (click)="compact()"
+                  title="Radera all tidigare versionshistorik för din data på denna branch och spara endast den senaste versionen."
+                >
+                  @if (compacting()) {
+                    ⏳ Kompakterar...
+                  } @else {
+                    🗑 Kompaktera historik
+                  }
+                </button>
+              </div>
+            </div>
+          }
         </div>
-    `,
-    styles: `
+
+        <div class="modal-footer">
+          <button class="btn btn-ghost" type="button" (click)="close()">Stäng</button>
+          <button class="btn btn-primary" type="button" (click)="save()">Spara</button>
+        </div>
+      </div>
+    </div>
+  `,
+  styles: `
         .modal-backdrop {
             position: fixed; inset: 0; z-index: 200;
             background: rgba(0,0,0,0.65);
@@ -325,130 +335,128 @@ import { StorageService } from '../services/storage.service';
     `,
 })
 export class GitHubSyncModalComponent {
-    readonly closed = output<void>();
+  readonly closed = output<void>();
+  showToken = signal(false);
+  testing = signal(false);
+  compacting = signal(false);
+  statusMsg = signal('');
+  statusClass = signal('status-info');
+  protected readonly gitSync = inject(GitHubSyncService);
+  // Form state (local copy of settings)
+  formEnabled = this.gitSync.settings().enabled;
+  formRepo = this.gitSync.settings().repo;
+  formToken = this.gitSync.settings().token;
+  formBranch = this.gitSync.settings().branch || 'main';
+  formFilePath = this.gitSync.settings().filePath || 'jb-guitar-data.json';
+  protected readonly storage = inject(StorageService);
 
-    protected readonly gitSync = inject(GitHubSyncService);
-    protected readonly storage = inject(StorageService);
+  handleBackdropClick(event: MouseEvent): void {
+    if ((event.target as HTMLElement).classList.contains('modal-backdrop')) {
+      this.close();
+    }
+  }
 
-    // Form state (local copy of settings)
-    formEnabled = this.gitSync.settings().enabled;
-    formRepo = this.gitSync.settings().repo;
-    formToken = this.gitSync.settings().token;
-    formBranch = this.gitSync.settings().branch || 'main';
-    formFilePath = this.gitSync.settings().filePath || 'jb-guitar-data.json';
+  close(): void {
+    this.closed.emit();
+  }
 
-    showToken = signal(false);
-    testing = signal(false);
-    compacting = signal(false);
-    statusMsg = signal('');
-    statusClass = signal('status-info');
+  save(): void {
+    const settings = {
+      enabled: this.formEnabled,
+      repo: this.formRepo.trim(),
+      token: this.formToken.trim(),
+      branch: this.formBranch.trim() || 'main',
+      filePath: this.formFilePath.trim() || 'jb-guitar-data.json',
+    };
+    this.gitSync.saveSettings(settings);
+    this.statusMsg.set('✓ Inställningar sparade');
+    this.statusClass.set('status-ok');
 
-    handleBackdropClick(event: MouseEvent): void {
-        if ((event.target as HTMLElement).classList.contains('modal-backdrop')) {
-            this.close();
-        }
+    // Re-init sync with new settings
+    if (settings.enabled && settings.repo && settings.token) {
+      this.storage.pullFromGitHub();
     }
 
-    close(): void {
-        this.closed.emit();
+    setTimeout(() => this.close(), 800);
+  }
+
+  async testConnection(): Promise<void> {
+    this.testing.set(true);
+    this.statusMsg.set('');
+    const settings = {
+      enabled: this.formEnabled,
+      repo: this.formRepo.trim(),
+      token: this.formToken.trim(),
+      branch: this.formBranch.trim() || 'main',
+      filePath: this.formFilePath.trim() || 'jb-guitar-data.json',
+    };
+    const ok = await this.gitSync.testConnection(settings);
+    this.testing.set(false);
+    if (ok) {
+      this.statusMsg.set('✓ Anslutningen fungerar! Repository och token är giltiga.');
+      this.statusClass.set('status-ok');
+    } else {
+      this.statusMsg.set(
+        '✗ Anslutningen misslyckades. Kontrollera repository-namn, token och branch.');
+      this.statusClass.set('status-err');
     }
+  }
 
-    save(): void {
-        const settings = {
-            enabled: this.formEnabled,
-            repo: this.formRepo.trim(),
-            token: this.formToken.trim(),
-            branch: this.formBranch.trim() || 'main',
-            filePath: this.formFilePath.trim() || 'jb-guitar-data.json',
-        };
-        this.gitSync.saveSettings(settings);
-        this.statusMsg.set('✓ Inställningar sparade');
-        this.statusClass.set('status-ok');
-
-        // Re-init sync with new settings
-        if (settings.enabled && settings.repo && settings.token) {
-            this.storage.pullFromGitHub();
-        }
-
-        setTimeout(() => this.close(), 800);
+  async pull(): Promise<void> {
+    this.statusMsg.set('⏳ Hämtar data från GitHub...');
+    this.statusClass.set('status-info');
+    await this.storage.pullFromGitHub();
+    if (this.storage.syncStatus() === 'synced') {
+      this.statusMsg.set('✓ Data hämtad! Sidan laddas om...');
+      this.statusClass.set('status-ok');
+      setTimeout(() => window.location.reload(), 800);
+    } else {
+      this.statusMsg.set('✗ Kunde inte hämta data. Kontrollera anslutningen.');
+      this.statusClass.set('status-err');
     }
+  }
 
-    async testConnection(): Promise<void> {
-        this.testing.set(true);
-        this.statusMsg.set('');
-        const settings = {
-            enabled: this.formEnabled,
-            repo: this.formRepo.trim(),
-            token: this.formToken.trim(),
-            branch: this.formBranch.trim() || 'main',
-            filePath: this.formFilePath.trim() || 'jb-guitar-data.json',
-        };
-        const ok = await this.gitSync.testConnection(settings);
-        this.testing.set(false);
-        if (ok) {
-            this.statusMsg.set('✓ Anslutningen fungerar! Repository och token är giltiga.');
-            this.statusClass.set('status-ok');
-        } else {
-            this.statusMsg.set('✗ Anslutningen misslyckades. Kontrollera repository-namn, token och branch.');
-            this.statusClass.set('status-err');
-        }
+  async push(): Promise<void> {
+    this.statusMsg.set('⏳ Skickar data till GitHub...');
+    this.statusClass.set('status-info');
+    await this.storage.pushToGitHub();
+    if (this.storage.syncStatus() === 'synced') {
+      this.statusMsg.set('✓ Data skickad till GitHub!');
+      this.statusClass.set('status-ok');
+    } else {
+      this.statusMsg.set('✗ Kunde inte skicka data. Kontrollera anslutningen.');
+      this.statusClass.set('status-err');
     }
+  }
 
-    async pull(): Promise<void> {
-        this.statusMsg.set('⏳ Hämtar data från GitHub...');
-        this.statusClass.set('status-info');
-        await this.storage.pullFromGitHub();
-        if (this.storage.syncStatus() === 'synced') {
-            this.statusMsg.set('✓ Data hämtad! Sidan laddas om...');
-            this.statusClass.set('status-ok');
-            setTimeout(() => window.location.reload(), 800);
-        } else {
-            this.statusMsg.set('✗ Kunde inte hämta data. Kontrollera anslutningen.');
-            this.statusClass.set('status-err');
-        }
+  async compact(): Promise<void> {
+    const confirmed = window.confirm(
+      'VARNING: Detta kommer permanent att radera all tidigare versionshistorik för din övningsdata på GitHub och endast behålla den nuvarande versionen (1 commit). Vill du fortsätta?'
+    );
+    if (!confirmed) return;
+
+    this.compacting.set(true);
+    this.statusMsg.set('⏳ Kompakterar historik på GitHub...');
+    this.statusClass.set('status-info');
+
+    const settings = {
+      enabled: this.formEnabled,
+      repo: this.formRepo.trim(),
+      token: this.formToken.trim(),
+      branch: this.formBranch.trim() || 'main',
+      filePath: this.formFilePath.trim() || 'jb-guitar-data.json',
+    };
+
+    try {
+      await this.gitSync.compactHistory(settings);
+      this.statusMsg.set('✓ Historik kompakterad! Endast senaste versionen är sparad.');
+      this.statusClass.set('status-ok');
+    } catch (error) {
+      console.error('History compaction failed:', error);
+      this.statusMsg.set('✗ Kompakteringen misslyckades. Kontrollera anslutningen och rättigheter.');
+      this.statusClass.set('status-err');
+    } finally {
+      this.compacting.set(false);
     }
-
-    async push(): Promise<void> {
-        this.statusMsg.set('⏳ Skickar data till GitHub...');
-        this.statusClass.set('status-info');
-        await this.storage.pushToGitHub();
-        if (this.storage.syncStatus() === 'synced') {
-            this.statusMsg.set('✓ Data skickad till GitHub!');
-            this.statusClass.set('status-ok');
-        } else {
-            this.statusMsg.set('✗ Kunde inte skicka data. Kontrollera anslutningen.');
-            this.statusClass.set('status-err');
-        }
-    }
-
-    async compact(): Promise<void> {
-        const confirmed = window.confirm(
-            'VARNING: Detta kommer permanent att radera all tidigare versionshistorik för din övningsdata på GitHub och endast behålla den nuvarande versionen (1 commit). Vill du fortsätta?'
-        );
-        if (!confirmed) return;
-
-        this.compacting.set(true);
-        this.statusMsg.set('⏳ Kompakterar historik på GitHub...');
-        this.statusClass.set('status-info');
-
-        const settings = {
-            enabled: this.formEnabled,
-            repo: this.formRepo.trim(),
-            token: this.formToken.trim(),
-            branch: this.formBranch.trim() || 'main',
-            filePath: this.formFilePath.trim() || 'jb-guitar-data.json',
-        };
-
-        try {
-            await this.gitSync.compactHistory(settings);
-            this.statusMsg.set('✓ Historik kompakterad! Endast senaste versionen är sparad.');
-            this.statusClass.set('status-ok');
-        } catch (error) {
-            console.error('History compaction failed:', error);
-            this.statusMsg.set('✗ Kompakteringen misslyckades. Kontrollera anslutningen och rättigheter.');
-            this.statusClass.set('status-err');
-        } finally {
-            this.compacting.set(false);
-        }
-    }
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal, ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {PracticePlan, Session} from '../../models';
 import {PlanService, SessionService} from '../../services';
@@ -113,13 +113,11 @@ interface SessionView {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PracticeListPage {
+  showPlanPicker = signal(false);
   private readonly sessionService = inject(SessionService);
   private readonly planService = inject(PlanService);
-  private readonly router = inject(Router);
-
-  showPlanPicker = signal(false);
   plans = signal<PracticePlan[]>(this.planService.getAll());
-
+  private readonly router = inject(Router);
   private readonly sessionViews = computed<SessionView[]>(() => {
     const sessions = this.sessionService.getAll()
       .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
@@ -136,7 +134,7 @@ export class PracticeListPage {
         completedCount,
         totalCount,
         progressPercent: totalCount > 0 ? (completedCount / totalCount) * 100 : 0,
-        dateLabel: updatedDate.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' }),
+        dateLabel: updatedDate.toLocaleDateString('sv-SE', {day: 'numeric', month: 'short'}),
         estimatedMinutes,
       };
     });
@@ -150,9 +148,12 @@ export class PracticeListPage {
 
   statusLabel(session: Session): string {
     switch (session.status) {
-      case 'active': return 'Pågående';
-      case 'paused': return 'Pausad';
-      case 'completed': return 'Klar';
+      case 'active':
+        return 'Pågående';
+      case 'paused':
+        return 'Pausad';
+      case 'completed':
+        return 'Klar';
     }
   }
 

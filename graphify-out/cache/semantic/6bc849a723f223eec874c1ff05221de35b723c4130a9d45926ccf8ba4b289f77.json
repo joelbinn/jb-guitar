@@ -1,1 +1,58 @@
-{"nodes": [{"id": "components_github_sync_modal_component_githubsyncmodalcomponent", "label": "GitHubSyncModalComponent", "file_type": "code", "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "components_github_sync_modal_component_githubsyncmodalcomponent", "target": "services_github_sync_service_githubsyncservice", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts", "source_location": null, "weight": 1.0}, {"source": "components_github_sync_modal_component_githubsyncmodalcomponent", "target": "services_storage_service_storageservice", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts", "source_location": null, "weight": 1.0}, {"source": "components_github_sync_modal_component_githubsyncmodalcomponent", "target": "models_github_sync_model_githubsyncsettings", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts", "source_location": null, "weight": 1.0}, {"source": "components_github_sync_modal_component_githubsyncmodalcomponent", "target": "components_top_bar_component_topbarcomponent", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "label": "GitHubSyncModalComponent",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "target": "services_github_sync_service_githubsyncservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "target": "services_storage_service_storageservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "target": "models_github_sync_model_githubsyncsettings",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "target": "components_top_bar_component_topbarcomponent",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}
