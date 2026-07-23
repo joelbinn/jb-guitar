@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    {
+      "id": "services_session_service_sessionservice",
+      "label": "SessionService",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/services/session.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "services_session_service_sessionservice",
+      "label": "SessionService",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/services/session.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "services_session_service_sessionservice",
+      "target": "services_storage_service_storageservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/services/session.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

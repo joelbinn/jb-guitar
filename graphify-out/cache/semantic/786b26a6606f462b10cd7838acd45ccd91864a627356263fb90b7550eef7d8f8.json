@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "id": "openspec_new_change_skill",
+      "label": "openspec-new-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_new_change_skill_change_directory",
+      "label": "OpenSpec Change Directory Scaffold",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "openspec_new_change_skill",
+      "target": "openspec_new_change_skill_change_directory",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_new_change_skill_change_directory",
+      "target": "openspec_ff_change_skill_fast_forward",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".opencode/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

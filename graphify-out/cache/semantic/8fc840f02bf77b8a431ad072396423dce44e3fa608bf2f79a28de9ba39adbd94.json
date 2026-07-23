@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "id": "commands_opsx_continue_opsx_continue",
+      "label": "OpenCode Continue Command",
+      "file_type": "document",
+      "source_file": ".opencode/commands/opsx-continue.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "commands_opsx_continue_opsx_continue",
+      "target": "openspec_continue_change_skill_openspec_continue_change",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/opsx-continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "commands_opsx_continue_opsx_continue",
+      "target": "commands_opsx_apply_opsx_apply",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/opsx-continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "commands_opsx_continue_opsx_continue",
+      "target": "commands_opsx_archive_opsx_archive",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/opsx-continue.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

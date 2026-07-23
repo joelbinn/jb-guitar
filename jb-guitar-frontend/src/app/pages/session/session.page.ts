@@ -1,8 +1,16 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {BeatStrength, Exercise, MetronomeConfig, PracticePlan, Session} from '../../models';
+import {BeatStrength, Exercise, Session} from '../../models';
 import {ExerciseService, PlanService, SessionService} from '../../services';
 
 @Component({
@@ -11,581 +19,513 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
   template: `
     @if (session(); as s) {
       @if (plan(); as p) {
-        <div class="breadcrumb" (click)="goBack()">← Öva /
-          <span class="crumb-active">{{ p.name }}</span></div>
-        <div class="sess-header">
-          <span class="sh-title">{{ p.name }}</span>
-          <div class="mini-prog">
-            <div class="mini-bar">
-              <div class="mini-fill" [style.width.%]="progressPercent()"></div>
+        <div class="session-header-back" (click)="goBack()">← Öva</div>
+        <div class="session-plan-header">
+          <span class="session-plan-name">{{ p.name }}</span>
+          <span class="session-progress-text">{{ completedCount() }}/{{ totalCount() }}</span>
+        </div>
+        <div class="session-progress-bar">
+          <div class="session-progress-fill" [style.width.%]="progressPercent()"></div>
+        </div>
+
+        <!-- Exercise Chips -->
+        <div class="session-chips-scroll" #chipsContainer>
+          @for (ex of exercises(); track ex.id; let i = $index) {
+            <div
+              class="session-chip"
+              [class.active]="ex.id === s.currentExerciseId"
+              [class.completed]="isExerciseCompleted(s, ex.id)"
+              (click)="goToExercise(ex.id)"
+              [attr.data-exercise-id]="ex.id"
+            >
+              {{ i + 1 }}. {{ ex.name }}
             </div>
-            <span class="mini-text">{{ completedCount() }}/{{ totalCount() }}</span>
-          </div>
+          }
         </div>
-        <div class="sess-layout">
-          <div class="sess-sidebar">
-            @for (ex of exercises(); track ex.id; let i = $index) {
-              <div
-                class="sess-item"
-                [class.active]="ex.id === s.currentExerciseId"
-                [class.done]="isExerciseCompleted(s, ex.id)"
-                (click)="goToExercise(ex.id)"
-              >
-                <div class="n">{{ i + 1 }}</div>
-                <div class="nm">{{ ex.name }}</div>
-                <div class="src">{{ ex.source }}{{
-                    isExerciseCompleted(s, ex.id) ? ' ✓' : ''
-                  }}
-                </div>
-              </div>
-            }
-          </div>
-          <div class="sess-main">
-            @if (currentExercise(); as ex) {
-              <div class="iframe-area">
-                @if (embedUrl(); as url) {
-                  <iframe [src]="url" class="exercise-iframe" allowfullscreen></iframe>
+
+        <!-- Current Exercise Card -->
+        @if (currentExercise(); as ex) {
+          <div class="card"
+               [style.display]="'flex'"
+               [style.flex-direction]="'column'"
+               [style.align-items]="'center'"
+               [style.gap]="'var(--space-2)'"
+               [style.text-align]="'center'"
+               [style.margin-bottom]="'var(--space-4)'">
+            <div class="card-title">{{ ex.name }}</div>
+            <div [style.font-size]="'11px'"
+                 [style.color]="'var(--color-neutral-600)'"
+                 [style.word-break]="'break-all'">{{ ex.url }}
+            </div>
+            <div [style.display]="'flex'"
+                 [style.flex-direction]="'column'"
+                 [style.gap]="'var(--space-2)'"
+                 [style.width]="'100%'"
+                 [style.margin-top]="'var(--space-2)'">
+              <a [href]="ex.url"
+                 target="_blank"
+                 rel="noreferrer"
+                 class="btn btn-primary btn-block mob-btn">
+                Öppna i nytt fönster
+                <svg width="14"
+                     height="14"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.5"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <path d="M15 3h6v6"/>
+                  <path d="M10 14 21 3"/>
+                </svg>
+              </a>
+              <button type="button"
+                      class="btn btn-secondary btn-block mob-btn"
+                      (click)="copyLink()">
+                @if (copied()) {
+                  Kopierad ✓
                 } @else {
-                  <div class="iframe-placeholder">
-                    <div class="iframe-label">{{ ex.name }}</div>
-                    <div class="iframe-url">{{ ex.url }}</div>
-                    <a [href]="ex.url"
-                       class="btn btn-primary"
-                       target="selected-exercise"
-                       style="margin-top: 12px;">
-                      Öppna i nytt fönster ↗
-                    </a>
-                  </div>
+                  Kopiera länk
                 }
-              </div>
-              @if (ex.description) {
-                <div class="description-area">
-                  <div class="description-text">{{ ex.description }}</div>
-                </div>
-              }
-              <div class="sess-footer">
-                <div class="exercise-info">
-                  <div class="exercise-name">{{ ex.name }}</div>
-                  <div class="exercise-pos">Övning {{ currentExerciseIndex() }}
-                    av {{ totalCount() }}
-                  </div>
-                </div>
-                <div class="timer-section">
-                  <div class="timer-display">{{ timerDisplay() }}</div>
-                  <div class="timer-input-row">
-                    <input class="timer-input"
-                           type="number"
-                           min="0"
-                           max="59"
-                           [value]="timerInputMinutes()"
-                           (change)="timerInputMinutes.set(+$event.target!.value)"
-                           [disabled]="timerRunning()"/>
-                    <span class="timer-label">min</span>
-                  </div>
-                  <div class="timer-btns">
-                    <button class="btn btn-sm" [disabled]="timerRunning()" (click)="startTimer()">
-                      Start
-                    </button>
-                    <button class="btn btn-sm" [disabled]="!timerRunning()" (click)="pauseTimer()">
-                      Pausa
-                    </button>
-                    <button class="btn btn-sm" (click)="resetTimer()">Återställ</button>
-                  </div>
-                </div>
-                <div class="metro-section">
-                  <div class="metro-top-row">
-                    <span class="metro-label">Metronom</span>
-                    <button class="btn btn-sm" (click)="toggleMetronome()">
-                      {{ metronomeRunning() ? '⏹ Stoppa' : '▶ Starta' }}
-                    </button>
-                  </div>
-                  <div class="metro-controls-row">
-                    <input class="metro-input" type="number" min="20" max="300"
-                           [value]="metroBpm()" (change)="setMetroBpm(+$any($event.target).value)"
-                           [disabled]="metronomeRunning()"/>
-                    <span class="metro-unit">BPM</span>
-                    <input class="metro-input metro-sig"
-                           type="number"
-                           min="1"
-                           max="16"
-                           [value]="metroNumerator()"
-                           (change)="setMetroNumerator(+$any($event.target).value)"
-                           [disabled]="metronomeRunning()"/>
-                    <span class="metro-sep">/</span>
-                    <select class="metro-select" [value]="metroDenominator()"
-                            (change)="setMetroDenominator(+$any($event.target).value)"
-                            [disabled]="metronomeRunning()">
-                      <option value="2">2</option>
-                      <option value="4">4</option>
-                      <option value="8">8</option>
-                    </select>
-                  </div>
-                  <div class="metro-dots">
-                    @for (beat of beatProfile(); track $index; let i = $index) {
-                      <div class="metro-dot"
-                           [class]="'metro-dot dot-' + beat + (currentBeat() === i ? ' dot-active' : '')"
-                           (click)="cycleBeatStrength(i)">
-                      </div>
-                    }
-                  </div>
-                </div>
-                <div class="nav-btns">
-                  <button class="btn btn-ghost"
-                          [disabled]="currentExerciseIndex() === 1"
-                          (click)="previous()">
-                    ← Föregående
-                  </button>
-                  <button class="btn btn-primary" (click)="next()">
-                    {{ currentExerciseIndex() === totalCount() ? 'Slutför ✓' : 'Nästa →' }}
-                  </button>
-                </div>
-                <div class="btn-row">
-                  <button class="btn btn-ghost" (click)="pauseSession()">⏸ Pausa session</button>
-                  <button class="btn btn-ghost" (click)="restartSession()">↻ Börja om</button>
-                  <button class="btn btn-danger" (click)="deleteSession()">🗑 Ta bort</button>
-                </div>
-              </div>
-            }
+              </button>
+            </div>
           </div>
-        </div>
+
+          @if (ex.description) {
+            <div [style.font-size]="'13px'"
+                 [style.color]="'var(--color-neutral-700)'"
+                 [style.white-space]="'pre-wrap'"
+                 [style.line-height]="'1.5'"
+                 [style.border-left]="'2px solid var(--color-divider)'"
+                 [style.padding-left]="'var(--space-3)'"
+                 [style.margin-bottom]="'var(--space-4)'">{{ ex.description }}
+            </div>
+          }
+
+          <!-- Timer -->
+          <div class="card" [style.margin-bottom]="'var(--space-4)'">
+            <div class="card-kicker">Timer</div>
+            <div [style.font-family]="'ui-monospace, monospace'"
+                 [style.font-size]="'40px'"
+                 [style.text-align]="'center'"
+                 [style.color]="'var(--color-accent-700)'">{{ timerDisplay() }}
+            </div>
+            <div [style.display]="'flex'"
+                 [style.align-items]="'center'"
+                 [style.justify-content]="'center'"
+                 [style.gap]="'var(--space-2)'"
+                 [style.margin-bottom]="'var(--space-2)'">
+              <input class="input mob-btn"
+                     type="number"
+                     min="0"
+                     max="59"
+                     [style.width]="'72px'"
+                     [style.text-align]="'center'"
+                     [value]="timerInputMinutes()"
+                     (change)="setTimerMinutes($event)"
+                     [disabled]="timerRunning()"/>
+              <span [style.font-size]="'12px'" [style.color]="'var(--color-neutral-600)'">min</span>
+            </div>
+            <div [style.display]="'flex'" [style.gap]="'var(--space-2)'">
+              <button type="button"
+                      class="btn btn-secondary mob-btn"
+                      [style.flex]="'1'"
+                      (click)="startTimer()"
+                      [disabled]="timerRunning()">Start
+              </button>
+              <button type="button"
+                      class="btn btn-secondary mob-btn"
+                      [style.flex]="'1'"
+                      (click)="pauseTimer()"
+                      [disabled]="!timerRunning()">Pausa
+              </button>
+              <button type="button"
+                      class="btn btn-ghost mob-btn"
+                      [style.flex]="'1'"
+                      (click)="resetTimer()">Återst.
+              </button>
+            </div>
+          </div>
+
+          <!-- Metronome -->
+          <div class="card" [style.margin-bottom]="'var(--space-4)'">
+            <div [style.display]="'flex'"
+                 [style.justify-content]="'space-between'"
+                 [style.align-items]="'center'"
+                 [style.margin-bottom]="'var(--space-2)'">
+              <div class="card-kicker">Metronom</div>
+              <button type="button"
+                      class="btn btn-secondary mob-btn"
+                      (click)="toggleMetronome()">{{ metronomeRunning() ? 'Stoppa' : 'Starta' }}
+              </button>
+            </div>
+            <div [style.display]="'flex'"
+                 [style.align-items]="'center'"
+                 [style.gap]="'var(--space-2)'"
+                 [style.margin-bottom]="'var(--space-3)'">
+              <input class="input mob-btn"
+                     type="number"
+                     min="20"
+                     max="300"
+                     [style.width]="'64px'"
+                     [style.text-align]="'center'"
+                     [value]="metroBpm()"
+                     (change)="setMetroBpm($event)"
+                     [disabled]="metronomeRunning()"/>
+              <span [style.font-size]="'11px'" [style.color]="'var(--color-neutral-600)'">BPM</span>
+              <input class="input mob-btn"
+                     type="number"
+                     min="1"
+                     max="16"
+                     [style.width]="'52px'"
+                     [style.text-align]="'center'"
+                     [value]="metroNumerator()"
+                     (change)="setMetroNumerator($event)"
+                     [disabled]="metronomeRunning()"/>
+              <span [style.font-size]="'13px'" [style.color]="'var(--color-neutral-500)'">/4</span>
+            </div>
+            <div [style.display]="'flex'"
+                 [style.gap]="'var(--space-2)'"
+                 [style.flex-wrap]="'wrap'"
+                 [style.align-items]="'flex-end'"
+                 [style.min-height]="'22px'">
+              @for (beat of beatProfile(); track $index; let i = $index) {
+                <div class="session-beat-dot"
+                     [style.width]="getBeatDotSize(beat) + 'px'"
+                     [style.height]="getBeatDotSize(beat) + 'px'"
+                     [style.border-radius]="'50%'"
+                     [style.background]="getBeatDotColor(beat)"
+                     [style.cursor]="'pointer'"
+                     [style.transform]="currentBeat() === i ? 'scale(1.3)' : 'scale(1)'"
+                     [style.transition]="'transform 0.05s'"
+                     (click)="cycleBeatStrength(i)"></div>
+              }
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div [style.display]="'flex'"
+               [style.gap]="'var(--space-2)'"
+               [style.margin-bottom]="'var(--space-2)'">
+            <button type="button"
+                    class="btn btn-secondary mob-btn"
+                    [style.flex]="'1'"
+                    (click)="previous()"
+                    [disabled]="isFirstExercise()">← Föreg.
+            </button>
+            <button type="button"
+                    class="btn btn-primary mob-btn"
+                    [style.flex]="'1'"
+                    (click)="next()">{{ isLastExercise() ? 'Slutför' : 'Nästa →' }}
+            </button>
+          </div>
+
+          <!-- Session Controls -->
+          <div [style.display]="'flex'"
+               [style.flex-direction]="'column'"
+               [style.gap]="'var(--space-2)'">
+            <button type="button"
+                    class="btn btn-secondary btn-block mob-btn"
+                    (click)="pauseSession()">Pausa session
+            </button>
+            <button type="button"
+                    class="btn btn-secondary btn-block mob-btn"
+                    (click)="restartSession()">Börja om
+            </button>
+            <button type="button"
+                    class="btn btn-secondary btn-block mob-btn"
+                    (click)="deleteSession()">Ta bort
+            </button>
+          </div>
+        }
       }
     }
   `,
   styles: `
-    :host { display: flex; flex-direction: column; position: fixed; top: 48px; left: 0; right: 0; bottom: 0; }
-
-    .breadcrumb {
-      font-size: 10px;
-      color: var(--txt3);
-      padding: 8px 16px;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-    }
-
-    .crumb-active {
-      color: var(--txt2);
-    }
-    .sess-header {
-      background: #141414; border-bottom: 1px solid var(--border);
-      padding: 7px 16px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .sh-title { font-size: 12px; font-weight: 600; color: var(--txt); }
-    .mini-prog { display: flex; align-items: center; gap: 6px; }
-    .mini-bar { width: 70px; height: 5px; background: var(--border); border-radius: 3px; }
-    .mini-fill { height: 5px; border-radius: 3px; background: var(--accent); opacity: 0.7; transition: width 0.3s ease; }
-    .mini-text { font-size: 10px; color: var(--txt3); }
-    .sess-layout { display: flex; flex: 1; min-height: 0; overflow: hidden; }
-    .sess-sidebar {
-      width: 150px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; min-height: 0;
-    }
-    .sess-item {
-      padding: 9px 10px; border-bottom: 1px solid var(--border); cursor: pointer;
-      transition: background 0.15s;
-    }
-    .sess-item:hover { background: var(--surf); }
-    .sess-item .n { font-size: 9px; color: var(--txt3); margin-bottom: 2px; }
-    .sess-item .nm { font-size: 11px; color: var(--txt3); }
-    .sess-item .src { font-size: 9px; color: var(--txt4); }
-    .sess-item.done .nm { color: var(--txt4); text-decoration: line-through; }
-    .sess-item.active { background: var(--accent-dim); border-left: 3px solid var(--accent); }
-    .sess-item.active .nm { color: var(--txt); font-weight: 600; }
-    .sess-item.active .src { color: var(--accent); }
-    .sess-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
-    .iframe-area { flex: 1; display: flex; background: #0a0a0a; border-bottom: 1px solid var(--border); }
-    .exercise-iframe { width: 100%; height: 100%; border: none; }
-
-    .description-area {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surf);
-      max-height: 120px;
-      overflow-y: auto;
-    }
-
-    .description-text {
+    .session-header-back {
       font-size: 11px;
-      color: var(--txt3);
-      white-space: pre-wrap;
-      line-height: 1.4;
-    }
-    .iframe-placeholder {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 6px;
-    }
-    .iframe-label { font-size: 12px; color: var(--txt3); }
-    .iframe-url { font-size: 9px; color: var(--txt4); }
-    .sess-footer { padding: 12px; border-top: 1px solid var(--border); }
-    .exercise-info { margin-bottom: 8px; }
-    .exercise-name { font-size: 11px; font-weight: 600; color: var(--txt); margin-bottom: 2px; }
-    .exercise-pos { font-size: 10px; color: var(--txt3); }
-    .nav-btns { display: flex; gap: 8px; margin-bottom: 8px; }
-    .nav-btns .btn { flex: 1; }
-
-    .btn-row {
-      display: flex;
-      gap: 8px;
+      color: var(--color-neutral-500);
+      cursor: pointer;
+      margin-bottom: var(--space-3);
     }
 
-    .btn-row .btn {
-      flex: 1;
-    }
-
-    .timer-section {
-      margin-bottom: 12px;
-      padding: 8px;
-      background: var(--surf2);
-      border-radius: 4px;
-      border: 1px solid var(--border);
-    }
-
-    .timer-display {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--accent);
-      text-align: center;
-      margin-bottom: 8px;
-      font-family: monospace;
-    }
-
-    .timer-input-row {
+    .session-plan-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 4px;
-      margin-bottom: 8px;
-    }
-
-    .timer-input {
-      width: 50px;
-      padding: 4px;
-      font-size: 11px;
-      background: var(--surf);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--txt);
-      text-align: center;
-    }
-
-    .timer-label {
-      font-size: 10px;
-      color: var(--txt3);
-    }
-
-    .timer-btns {
-      display: flex;
-      gap: 4px;
-    }
-
-    .timer-btns .btn {
-      flex: 1;
-      font-size: 10px;
-      padding: 4px 8px;
-    }
-
-    .metro-section {
-      margin-bottom: 12px;
-      padding: 8px;
-      background: var(--surf2);
-      border-radius: 4px;
-      border: 1px solid var(--border);
-    }
-
-    .metro-top-row {
-      display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+      padding: var(--space-3);
+      background: var(--color-neutral-100);
+      border: 1px solid var(--color-divider);
     }
 
-    .metro-label {
-      font-size: 10px;
-      color: var(--txt3);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+    .session-plan-name {
+      font-family: var(--font-heading);
+      font-weight: var(--font-heading-weight);
+      font-size: 16px;
     }
 
-    .metro-controls-row {
+    .session-progress-text {
+      font-size: 12px;
+      color: var(--color-neutral-600);
+      flex-shrink: 0;
+    }
+
+    .session-progress-bar {
+      background: var(--color-neutral-300);
+      border-radius: var(--radius-sm);
+      height: 6px;
+      margin-bottom: var(--space-4);
+    }
+
+    .session-progress-fill {
+      display: block;
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: var(--radius-sm);
+    }
+
+    .session-chips-scroll {
       display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-bottom: 8px;
+      gap: var(--space-2);
+      overflow-x: auto;
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-1);
+      -webkit-overflow-scrolling: touch;
     }
 
-    .metro-input {
-      width: 48px;
-      padding: 3px;
-      font-size: 11px;
-      background: var(--surf);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--txt);
-      text-align: center;
-    }
-
-    .metro-sig {
-      width: 36px;
-    }
-
-    .metro-unit {
-      font-size: 10px;
-      color: var(--txt3);
-      margin-right: 4px;
-    }
-
-    .metro-sep {
-      font-size: 14px;
-      color: var(--txt3);
-    }
-
-    .metro-select {
-      padding: 3px;
-      font-size: 11px;
-      background: var(--surf);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--txt);
-    }
-
-    .metro-dots {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .metro-dot {
-      border-radius: 50%;
+    .session-chip {
+      flex-shrink: 0;
+      font-size: 12px;
+      padding: 8px 12px;
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-sm);
+      color: var(--color-text);
+      background: transparent;
       cursor: pointer;
-      transition: background 0.05s, transform 0.05s;
+      white-space: nowrap;
+      text-decoration: none;
     }
 
-    .dot-stark {
-      width: 18px;
-      height: 18px;
-      background: var(--accent);
-      opacity: 0.6;
+    .session-chip.active {
+      border-color: var(--color-accent);
+      background: var(--color-accent-100);
+      color: var(--color-accent);
     }
 
-    .dot-mellan {
-      width: 14px;
-      height: 14px;
-      background: var(--txt2);
-      opacity: 0.5;
-      margin-top: 2px;
+    .session-chip.completed {
+      text-decoration: line-through;
+      color: var(--color-neutral-500);
     }
 
-    .dot-svag {
-      width: 10px;
-      height: 10px;
-      background: var(--txt4);
-      opacity: 0.5;
-      margin-top: 4px;
+    .session-chips-scroll::-webkit-scrollbar {
+      display: block;
+      height: 6px;
     }
 
-    .dot-active {
-      opacity: 1 !important;
-      transform: scale(1.3);
+    .session-chips-scroll::-webkit-scrollbar-track {
+      background: transparent;
     }
 
-    .btn-sm {
-      font-size: 10px;
-      padding: 4px 8px;
+    .session-chips-scroll::-webkit-scrollbar-thumb {
+      background: var(--color-neutral-400);
+      border-radius: 3px;
     }
-    .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .session-chips-scroll::-webkit-scrollbar-thumb:hover {
+      background: var(--color-neutral-600);
+    }
+
+    .session-beat-dot {
+      background: var(--color-neutral-500);
+    }
+
+    .card-kicker {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-accent-700);
+    }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SessionPage {
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  private readonly sanitizer = inject(DomSanitizer);
-  private readonly sessionService = inject(SessionService);
-  private readonly planService = inject(PlanService);
-  private readonly exerciseService = inject(ExerciseService);
-
+  sessionId = signal<string | null>(null);
   session = signal<Session | undefined>(undefined);
-  plan = signal<PracticePlan | undefined>(undefined);
-  exercises = signal<Exercise[]>([]);
-
-  currentExercise = computed(() => {
-    const s = this.session();
-    const exs = this.exercises();
-    if (!s) return undefined;
-    return exs.find((ex) => ex.id === s.currentExerciseId);
-  });
-
-  embedUrl = computed<SafeResourceUrl | undefined>(() => {
-    const ex = this.currentExercise();
-    if (!ex) return undefined;
-    return this.getEmbedUrl(ex);
-  });
-
   completedCount = computed(() => {
     const s = this.session();
     if (!s) return 0;
-    return s.exerciseState.filter((c) => c.completed).length;
+    return s.exerciseState.filter(c => c.completed).length;
   });
-
-  totalCount = computed(() => {
-    const s = this.session();
-    return s?.exerciseState.length ?? 0;
-  });
-
+  totalCount = computed(() => this.session()?.exerciseState.length ?? 0);
   progressPercent = computed(() => {
     const total = this.totalCount();
     return total > 0 ? (this.completedCount() / total) * 100 : 0;
   });
-
   currentExerciseIndex = computed(() => {
     const s = this.session();
     if (!s) return 0;
-    return s.exerciseState.findIndex((c) => c.exerciseId === s.currentExerciseId) + 1;
+    const exs = this.exercises();
+    return exs.findIndex(e => e.id === s.currentExerciseId) + 1;
   });
-
-  currentExerciseId = computed(() => this.session()?.currentExerciseId ?? '');
-
-  // Timer signals
+  isFirstExercise = computed(() => this.currentExerciseIndex() <= 1);
+  isLastExercise = computed(() => this.currentExerciseIndex() >= this.totalCount());
+  // Timer
   timerInputMinutes = signal(5);
+  timerRemaining = signal(300);
   timerRunning = signal(false);
-  timerRemaining = signal(5 * 60);
-  timerPausedByUser = signal(false);
   timerDisplay = computed(() => {
-    const remaining = this.timerRemaining();
-    const minutes = Math.floor(remaining / 60);
-    const seconds = remaining % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    const rem = this.timerRemaining();
+    return `${String(Math.floor(rem / 60)).padStart(2, '0')}:${String(rem % 60).padStart(2, '0')}`;
   });
-  private timerIntervalId: number | null = null;
-  private previousExerciseId: string | undefined = undefined;
-
-  // Metronome signals
-  metronomeRunning = signal(false);
+  // Metronome
   metroBpm = signal(100);
   metroNumerator = signal(4);
-  metroDenominator = signal<2 | 4 | 8>(4);
   beatProfile = signal<BeatStrength[]>(['stark', 'svag', 'svag', 'svag']);
-  currentBeat = signal(-1);   // -1 = inget aktivt slag
+  currentBeat = signal(-1);
+  metronomeRunning = signal(false);
+  copied = signal(false);
+  @ViewChild('chipsContainer') chipsContainer?: ElementRef<HTMLDivElement>;
+  private readonly sessionService = inject(SessionService);
+  private readonly planService = inject(PlanService);
+  plan = computed(() => {
+    const s = this.session();
+    return s ? this.planService.getById(s.planId) : undefined;
+  });
+  private readonly exerciseService = inject(ExerciseService);
+  exercises = computed(() => {
+    const p = this.plan();
+    if (!p) return [];
+    return p.exerciseIds.map(id => this.exerciseService.getById(id)).filter(Boolean) as Exercise[];
+  });
+  currentExercise = computed(() => {
+    const s = this.session();
+    if (!s) return undefined;
+    return this.exerciseService.getById(s.currentExerciseId);
+  });
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private timerInterval: any = null;
+  private metroInterval: any = null;
   private audioCtx: AudioContext | null = null;
-  private nextBeatTime = 0;
-  private nextBeatIndex = 0;
-  private metronomeTimerId: number | null = null;
 
   constructor() {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.loadSession(id);
-
-    // Reset timer when input minutes change (but not if paused by user)
     effect(() => {
-      const minutes = this.timerInputMinutes();
-      if (!this.timerRunning() && !this.timerPausedByUser()) {
-        this.timerRemaining.set(minutes * 60);
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) this.sessionId.set(id);
+    });
+
+    effect(() => {
+      const id = this.sessionId();
+      if (id) {
+        this.session.set(this.sessionService.getById(id));
       }
-      // Save timer minutes to current exercise in session
+    });
+
+    effect(() => {
+      // Auto-scroll chips to active exercise
       const s = this.session();
-      if (s && s.currentExerciseId) {
-        const completion = s.exerciseState.find((c) => c.exerciseId === s.currentExerciseId);
-        if (completion && completion.timerMinutes !== minutes) {
-          completion.timerMinutes = minutes;
-          this.sessionService.save(s);
+      if (!s || !this.chipsContainer) return;
+
+      setTimeout(() => {
+        const activeChip = this.chipsContainer?.nativeElement.querySelector('[data-exercise-id="' + s.currentExerciseId + '"]');
+        if (activeChip) {
+          activeChip.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'});
         }
-      }
+      }, 0);
     });
+  }
 
-    // Load timer and start automatically when exercise changes
-    effect(() => {
-      const exerciseId = this.currentExerciseId();
+  isExerciseCompleted(session: Session, exerciseId: string): boolean {
+    return session.exerciseState.some(e => e.exerciseId === exerciseId && e.completed);
+  }
 
-      // Only run if exercise ID changed and is not empty
-      if (exerciseId && exerciseId !== this.previousExerciseId) {
-        this.previousExerciseId = exerciseId;
-
-        // Verify exercise exists
-        if (this.currentExercise()) {
-          // Load timer minutes and metronome config for this exercise
-          const s = this.session();
-          if (s) {
-            const completion = s.exerciseState.find((c) => c.exerciseId === exerciseId);
-            if (completion) {
-              this.timerInputMinutes.set(completion.timerMinutes);
-              // Load metronome config
-              const mc = completion.metronomeConfig ?? this.defaultMetronomeConfig();
-              this.metroBpm.set(mc.bpm);
-              this.metroNumerator.set(mc.numerator);
-              this.metroDenominator.set(mc.denominator as 2 | 4 | 8);
-              this.beatProfile.set([...mc.beatProfile]);
-            }
-          }
-          // Reset timer to loaded value and clear paused flag
-          this.timerRemaining.set(this.timerInputMinutes() * 60);
-          this.timerPausedByUser.set(false);
-          // Stop metronome when exercise changes
-          this.stopMetronome();
-          if (this.timerRunning()) {
-            // Stop current timer if running
-            if (this.timerIntervalId !== null) {
-              clearInterval(this.timerIntervalId);
-              this.timerIntervalId = null;
-            }
-            this.timerRunning.set(false);
-          }
-          // Start new timer for this exercise with a small delay to ensure proper cleanup
-          setTimeout(() => this.startTimer(), 50);
-        }
-      }
-    });
+  goBack(): void {
+    this.router.navigate(['/practice']);
   }
 
   goToExercise(exerciseId: string): void {
     const s = this.session();
     if (!s) return;
+    this.stopTimerInterval();
+    this.stopMetroInterval();
     const updated = this.sessionService.setCurrentExerciseId(s.id, exerciseId);
     if (updated) {
-      // Create new object to trigger signal update
-      this.session.set({...updated});
-      // Load the timer value and metronome config for this exercise
-      const completion = updated.exerciseState.find((c) => c.exerciseId === exerciseId);
-      if (completion) {
-        this.timerInputMinutes.set(completion.timerMinutes);
-        // Load metronome config
-        const mc = completion.metronomeConfig ?? this.defaultMetronomeConfig();
-        this.metroBpm.set(mc.bpm);
-        this.metroNumerator.set(mc.numerator);
-        this.metroDenominator.set(mc.denominator as 2 | 4 | 8);
-        this.beatProfile.set([...mc.beatProfile]);
-      }
-      // Reset and auto-start timer when exercise changes
-      this.timerRemaining.set(this.timerInputMinutes() * 60);
-      this.timerPausedByUser.set(false);
-      // Stop metronome when exercise changes
-      this.stopMetronome();
-      if (this.timerRunning()) {
-        if (this.timerIntervalId !== null) {
-          clearInterval(this.timerIntervalId);
-          this.timerIntervalId = null;
-        }
-        this.timerRunning.set(false);
-      }
-      setTimeout(() => this.startTimer(), 50);
+      this.session.set(updated);
     }
   }
 
-  toggleMetronome(): void {
-    this.metronomeRunning() ? this.stopMetronome() : this.startMetronome();
-  }
-
-  isExerciseCompleted(session: Session, exerciseId: string): boolean {
-    const completion = session.exerciseState.find((c) => c.exerciseId === exerciseId);
-    return completion?.completed ?? false;
-  }
-
-  private getEmbedUrl(exercise: Exercise): SafeResourceUrl | undefined {
-    if (exercise.source === 'youtube') {
-      const match = exercise.url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
-      if (match) {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(
-          `https://www.youtube.com/embed/${match[1]}`,
-        );
-      }
+  next(): void {
+    const s = this.session();
+    if (!s) return;
+    this.stopTimerInterval();
+    this.stopMetroInterval();
+    const updated = this.sessionService.next(s.id);
+    if (updated && updated.status !== 'completed') {
+      this.session.set(updated);
+    } else {
+      this.router.navigate(['/practice']);
     }
-    return undefined;
+  }
+
+  previous(): void {
+    const s = this.session();
+    if (!s || this.isFirstExercise()) return;
+    this.stopTimerInterval();
+    this.stopMetroInterval();
+    const updated = this.sessionService.previous(s.id);
+    if (updated) {
+      this.session.set(updated);
+    }
+  }
+
+  pauseSession(): void {
+    const s = this.session();
+    if (!s) return;
+    this.stopTimerInterval();
+    this.stopMetroInterval();
+    this.sessionService.pause(s.id);
+    this.router.navigate(['/practice']);
+  }
+
+  restartSession(): void {
+    const s = this.session();
+    if (!s) return;
+    if (!confirm('Vill du börja om denna session? All progress försvinner.')) return;
+    this.stopTimerInterval();
+    this.stopMetroInterval();
+    const updated = this.sessionService.restart(s.id);
+    if (updated) {
+      this.session.set(updated);
+    }
+  }
+
+  deleteSession(): void {
+    const s = this.session();
+    if (!s) return;
+    if (!confirm('Vill du ta bort denna session? Detta kan inte ångras.')) return;
+    this.stopTimerInterval();
+    this.stopMetroInterval();
+    this.sessionService.delete(s.id);
+    this.router.navigate(['/practice']);
+  }
+
+  copyLink(): void {
+    const ex = this.currentExercise();
+    if (ex) {
+      navigator.clipboard.writeText(ex.url);
+      this.copied.set(true);
+      setTimeout(() => this.copied.set(false), 1500);
+    }
+  }
+
+  setTimerMinutes(event: Event): void {
+    const value = Math.max(0, Math.min(59, +(event.target as HTMLInputElement).value || 0));
+    this.timerInputMinutes.set(value);
+    this.timerRemaining.set(value * 60);
   }
 
   startTimer(): void {
@@ -594,268 +534,131 @@ export class SessionPage {
       this.timerRemaining.set(this.timerInputMinutes() * 60);
     }
     this.timerRunning.set(true);
-    this.timerPausedByUser.set(false);
-
-    this.timerIntervalId = window.setInterval(() => {
-      this.timerRemaining.update((val) => {
-        if (val <= 1) {
+    this.timerInterval = setInterval(() => {
+      this.timerRemaining.update(rem => {
+        if (rem <= 1) {
+          this.stopTimerInterval();
           this.timerRunning.set(false);
-          if (this.timerIntervalId !== null) {
-            clearInterval(this.timerIntervalId);
-            this.timerIntervalId = null;
-          }
-          this.playTimerSound();
           return 0;
         }
-        return val - 1;
+        return rem - 1;
       });
     }, 1000);
   }
 
-  next(): void {
-    const s = this.session();
-    if (!s) return;
-    const updated = this.sessionService.next(s.id);
-    if (updated?.status === 'completed') {
-      this.router.navigate(['/practice']);
-    } else if (updated) {
-      // Create new object to trigger signal update and re-evaluate computeds
-      this.session.set({...updated});
-    }
-  }
-
-  previous(): void {
-    const s = this.session();
-    if (!s) return;
-    const updated = this.sessionService.previous(s.id);
-    if (updated) {
-      // Create new object to trigger signal update and re-evaluate computeds
-      this.session.set({...updated});
-    }
-  }
-
-  pauseSession(): void {
-    const s = this.session();
-    if (!s) return;
-    this.sessionService.pause(s.id);
-    this.router.navigate(['/practice']);
-  }
-
-  goBack(): void {
-    this.router.navigate(['/practice']);
-  }
-
-  restartSession(): void {
-    const s = this.session();
-    if (!s) return;
-    if (!confirm('Vill du börja om denna session? All progress försvinner.')) {
-      return;
-    }
-    const updated = this.sessionService.restart(s.id);
-    if (updated) {
-      // Create new object to trigger signal update and re-evaluate computeds
-      this.session.set({...updated});
-    }
-  }
-
-  deleteSession(): void {
-    const s = this.session();
-    if (!s) return;
-    if (!confirm('Vill du ta bort denna session? Detta kan inte ångras.')) {
-      return;
-    }
-    this.sessionService.delete(s.id);
-    this.router.navigate(['/practice']);
-  }
-
   pauseTimer(): void {
+    this.stopTimerInterval();
     this.timerRunning.set(false);
-    this.timerPausedByUser.set(true);
-    if (this.timerIntervalId !== null) {
-      clearInterval(this.timerIntervalId);
-      this.timerIntervalId = null;
-    }
-  }
-
-  stopTimer(): void {
-    this.timerRunning.set(false);
-    this.timerPausedByUser.set(false);
-    if (this.timerIntervalId !== null) {
-      clearInterval(this.timerIntervalId);
-      this.timerIntervalId = null;
-    }
-    this.timerRemaining.set(0);
   }
 
   resetTimer(): void {
-    this.stopTimer();
+    this.stopTimerInterval();
+    this.timerRunning.set(false);
     this.timerRemaining.set(this.timerInputMinutes() * 60);
   }
 
-  startMetronome(): void {
-    if (!this.audioCtx)
-      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-    this.nextBeatIndex = 0;
-    this.nextBeatTime = this.audioCtx.currentTime + 0.05;
-    this.metronomeRunning.set(true);
-    this.metronomeTimerId = window.setInterval(() => this.scheduleBulk(), 25);
+  setMetroBpm(event: Event): void {
+    const value = Math.max(20, Math.min(300, +(event.target as HTMLInputElement).value || 100));
+    this.metroBpm.set(value);
   }
 
-  stopMetronome(): void {
-    this.metronomeRunning.set(false);
-    if (this.metronomeTimerId !== null) {
-      clearInterval(this.metronomeTimerId);
-      this.metronomeTimerId = null;
-    }
-    this.currentBeat.set(-1);
-  }
-
-  setMetroBpm(v: number): void {
-    this.metroBpm.set(Math.max(20, Math.min(300, v)));
-    this.saveMetronomeConfig();
-  }
-
-  setMetroNumerator(v: number): void {
-    const n = Math.max(1, Math.min(16, v));
+  setMetroNumerator(event: Event): void {
+    const n = Math.max(1, Math.min(16, +(event.target as HTMLInputElement).value || 4));
     this.metroNumerator.set(n);
-    // Anpassa beatProfile
-    const profile = [...this.beatProfile()];
-    while (profile.length < n) profile.push('svag');
-    this.beatProfile.set(profile.slice(0, n));
-    this.saveMetronomeConfig();
+    this.beatProfile.update(profile => {
+      while (profile.length < n) profile.push('svag');
+      return profile.slice(0, n);
+    });
   }
 
-  setMetroDenominator(v: number): void {
-    this.metroDenominator.set(v as 2 | 4 | 8);
-    this.saveMetronomeConfig();
-  }
-
-  cycleBeatStrength(idx: number): void {
+  cycleBeatStrength(index: number): void {
     const order: BeatStrength[] = ['stark', 'mellan', 'svag'];
-    const profile = [...this.beatProfile()];
-    const curr = order.indexOf(profile[idx]);
-    profile[idx] = order[(curr + 1) % 3];
-    this.beatProfile.set(profile);
-    this.saveMetronomeConfig();
+    this.beatProfile.update(profile => {
+      const newProfile = [...profile];
+      const current = newProfile[index];
+      newProfile[index] = order[(order.indexOf(current) + 1) % 3];
+      return newProfile;
+    });
   }
 
-  private defaultMetronomeConfig(): MetronomeConfig {
-    return {
-      bpm: 100,
-      numerator: 4,
-      denominator: 4,
-      beatProfile: ['stark', 'svag', 'svag', 'svag']
-    };
-  }
-
-  private saveMetronomeConfig(): void {
-    const s = this.session();
-    if (!s) return;
-    const c = s.exerciseState.find(e => e.exerciseId === s.currentExerciseId);
-    if (!c) return;
-    c.metronomeConfig = {
-      bpm: this.metroBpm(),
-      numerator: this.metroNumerator(),
-      denominator: this.metroDenominator(),
-      beatProfile: [...this.beatProfile()],
-    };
-    this.sessionService.save(s);
-  }
-
-  private scheduleBulk(): void {
-    if (!this.audioCtx) return;
-    const AHEAD = 0.1; // sekunder att schemalägga framåt
-    while (this.nextBeatTime < this.audioCtx.currentTime + AHEAD) {
-      this.scheduleBeat(this.nextBeatIndex, this.nextBeatTime);
-      // Visuell uppdatering vid exakt slagstidpunkt
-      const delayMs = (this.nextBeatTime - this.audioCtx.currentTime) * 1000;
-      const capturedBeat = this.nextBeatIndex;
-      setTimeout(() => this.currentBeat.set(capturedBeat), Math.max(0, delayMs - 5));
-      // Räkna ut nästa slags tidpunkt: beatInterval = 60/bpm * (4/denominator)
-      this.nextBeatTime += 60 / this.metroBpm() * (4 / this.metroDenominator());
-      this.nextBeatIndex = (this.nextBeatIndex + 1) % this.metroNumerator();
+  getBeatDotSize(beat: BeatStrength): number {
+    switch (beat) {
+      case 'stark':
+        return 20;
+      case 'mellan':
+        return 16;
+      case 'svag':
+        return 12;
     }
   }
 
-  private scheduleBeat(beatIdx: number, when: number): void {
-    if (!this.audioCtx) return;
-    const strength = this.beatProfile()[beatIdx] ?? 'svag';
-    const params: Record<BeatStrength, [number, number, number]> = {
-      stark: [1050, 0.05, 0.5],
-      mellan: [880, 0.04, 0.35],
-      svag: [660, 0.04, 0.2],
-    };
-    const [freq, dur, vol] = params[strength];
-    const osc = this.audioCtx.createOscillator();
-    const gain = this.audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(this.audioCtx.destination);
-    osc.frequency.setValueAtTime(freq, when);
-    gain.gain.setValueAtTime(vol, when);
-    gain.gain.exponentialRampToValueAtTime(0.001, when + dur);
-    osc.start(when);
-    osc.stop(when + dur);
+  getBeatDotColor(beat: BeatStrength): string {
+    switch (beat) {
+      case 'stark':
+        return 'var(--color-accent)';
+      case 'mellan':
+        return 'var(--color-neutral-600)';
+      case 'svag':
+        return 'var(--color-neutral-400)';
+    }
   }
 
-  private loadSession(id: string): void {
-    let s = this.sessionService.getById(id);
-    if (!s) return;
-
-    if (s.status === 'paused') {
-      this.sessionService.resume(id);
-      s = this.sessionService.getById(id);
+  toggleMetronome(): void {
+    if (this.metronomeRunning()) {
+      this.stopMetroInterval();
+      this.metronomeRunning.set(false);
+      this.currentBeat.set(-1);
+      return;
     }
 
-    this.session.set(s);
-    const p = s ? this.planService.getById(s.planId) : undefined;
-    this.plan.set(p);
-
-    if (p) {
-      this.exercises.set(
-        p.exerciseIds
-          .map((eid) => this.exerciseService.getById(eid))
-          .filter((e): e is Exercise => !!e),
-      );
-    }
-
-    // Set timer minutes from current exercise and start timer for initial exercise
-    const currentExerciseCompletion = s?.exerciseState.find((c) => c.exerciseId === s?.currentExerciseId);
-    const timerMinutes = currentExerciseCompletion?.timerMinutes ?? 5;
-    this.timerInputMinutes.set(timerMinutes);
-
-    setTimeout(() => {
-      if (this.currentExercise()) {
-        this.timerRemaining.set(this.timerInputMinutes() * 60);
-        this.timerPausedByUser.set(false);
-        this.startTimer();
+    if (!this.audioCtx) {
+      try {
+        this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      } catch (e) {
+        console.error('Web Audio API not supported');
+        return;
       }
-    }, 100);
+    }
+
+    let beat = -1;
+    this.metronomeRunning.set(true);
+
+    const tick = () => {
+      beat = (beat + 1) % this.metroNumerator();
+      this.currentBeat.set(beat);
+
+      if (this.audioCtx) {
+        const strength = this.beatProfile()[beat] || 'svag';
+        const freq = strength === 'stark' ? 1050 : strength === 'mellan' ? 880 : 660;
+        const vol = strength === 'stark' ? 0.5 : strength === 'mellan' ? 0.35 : 0.2;
+
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(vol, this.audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.05);
+        osc.start();
+        osc.stop(this.audioCtx.currentTime + 0.05);
+      }
+    };
+
+    tick();
+    this.metroInterval = setInterval(tick, (60000 / this.metroBpm()));
   }
 
-  private playTimerSound(): void {
-    try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const now = audioContext.currentTime;
+  private stopTimerInterval(): void {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+  }
 
-      // Create oscillator for bell sound
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-
-      osc.connect(gain);
-      gain.connect(audioContext.destination);
-
-      // Bell-like sound with two frequencies
-      osc.frequency.setValueAtTime(800, now);
-      osc.frequency.exponentialRampToValueAtTime(400, now + 0.3);
-
-      gain.gain.setValueAtTime(0.3, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-
-      osc.start(now);
-      osc.stop(now + 0.3);
-    } catch (e) {
-      // Fallback: silent if Web Audio API not available
-      console.log('Timer finished');
+  private stopMetroInterval(): void {
+    if (this.metroInterval) {
+      clearInterval(this.metroInterval);
+      this.metroInterval = null;
     }
   }
 }

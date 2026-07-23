@@ -1,0 +1,1327 @@
+{
+  "nodes": [
+    {
+      "id": "users_joel_kod_joelabs_jb_guitar_doc_kravspecifikation_md",
+      "label": "kravspecifikation.md",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "doc_kravspecifikation_kravspecifikation_jb_guitar",
+      "label": "Kravspecifikation: JB Guitar",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "doc_kravspecifikation_1_produkt\u00f6versikt",
+      "label": "1. Produkt\u00f6versikt",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "doc_kravspecifikation_1_1_syfte",
+      "label": "1.1 Syfte",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "doc_kravspecifikation_1_2_m\u00e5lgrupp",
+      "label": "1.2 M\u00e5lgrupp",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "doc_kravspecifikation_1_3_huvudm\u00e5l",
+      "label": "1.3 Huvudm\u00e5l",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "doc_kravspecifikation_2_funktionella_krav",
+      "label": "2. Funktionella Krav",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "doc_kravspecifikation_2_1_\u00f6vningshantering",
+      "label": "2.1 \u00d6vningshantering",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "doc_kravspecifikation_2_1_1_skapa_\u00f6vning",
+      "label": "2.1.1 Skapa \u00f6vning",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "doc_kravspecifikation_2_1_2_se_\u00f6vningar",
+      "label": "2.1.2 Se \u00f6vningar",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "doc_kravspecifikation_2_1_3_redigera_\u00f6vning",
+      "label": "2.1.3 Redigera \u00f6vning",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L53"
+    },
+    {
+      "id": "doc_kravspecifikation_2_1_4_ta_bort_\u00f6vning",
+      "label": "2.1.4 Ta bort \u00f6vning",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L59"
+    },
+    {
+      "id": "doc_kravspecifikation_2_2_\u00f6vningsplanhantering",
+      "label": "2.2 \u00d6vningsplanhantering",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "doc_kravspecifikation_2_2_1_skapa_\u00f6vningsplan",
+      "label": "2.2.1 Skapa \u00f6vningsplan",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L70"
+    },
+    {
+      "id": "doc_kravspecifikation_2_2_2_se_\u00f6vningsplaner",
+      "label": "2.2.2 Se \u00f6vningsplaner",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L80"
+    },
+    {
+      "id": "doc_kravspecifikation_2_2_3_redigera_\u00f6vningsplan",
+      "label": "2.2.3 Redigera \u00f6vningsplan",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L87"
+    },
+    {
+      "id": "doc_kravspecifikation_2_2_4_ta_bort_\u00f6vningsplan",
+      "label": "2.2.4 Ta bort \u00f6vningsplan",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_sessionshantering",
+      "label": "2.3 Sessionshantering",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_1_starta_session",
+      "label": "2.3.1 Starta session",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L109"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_2_se_sessioner_\u00f6va_sida",
+      "label": "2.3.2 Se sessioner (\u00d6va-sida)",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L121"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_3_se_landningssida",
+      "label": "2.3.3 Se landningssida",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L143"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_4_genomf\u00f6r_\u00f6vning_i_session",
+      "label": "2.3.4 Genomf\u00f6r \u00f6vning i session",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L151"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_5_pausa_session",
+      "label": "2.3.5 Pausa session",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L169"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_6_\u00e5teruppta_session",
+      "label": "2.3.6 \u00c5teruppta session",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L178"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_7_markera_\u00f6vning_som_slutf\u00f6rd",
+      "label": "2.3.7 Markera \u00f6vning som slutf\u00f6rd",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L187"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_8_slutf\u00f6r_session",
+      "label": "2.3.8 Slutf\u00f6r session",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L196"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_9_starta_om_session",
+      "label": "2.3.9 Starta om session",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L206"
+    },
+    {
+      "id": "doc_kravspecifikation_2_3_10_ta_bort_session",
+      "label": "2.3.10 Ta bort session",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L216"
+    },
+    {
+      "id": "doc_kravspecifikation_2_4_timer_funktionalitet",
+      "label": "2.4 Timer-funktionalitet",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L223"
+    },
+    {
+      "id": "doc_kravspecifikation_2_4_1_timer_per_\u00f6vning",
+      "label": "2.4.1 Timer per \u00f6vning",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L225"
+    },
+    {
+      "id": "doc_kravspecifikation_2_4_2_starta_pausa_timer",
+      "label": "2.4.2 Starta/Pausa timer",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L234"
+    },
+    {
+      "id": "doc_kravspecifikation_2_4_3_\u00e4ndra_timinst\u00e4llning",
+      "label": "2.4.3 \u00c4ndra timinst\u00e4llning",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L240"
+    },
+    {
+      "id": "doc_kravspecifikation_2_4_4_\u00e5terst\u00e4ll_timer",
+      "label": "2.4.4 \u00c5terst\u00e4ll timer",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L246"
+    },
+    {
+      "id": "doc_kravspecifikation_2_4_5_f\u00f6rv\u00e4ntad_tids\u00e5tg\u00e5ng",
+      "label": "2.4.5 F\u00f6rv\u00e4ntad tids\u00e5tg\u00e5ng",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L251"
+    },
+    {
+      "id": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "label": "2.5 Metronomfunktionalitet",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L262"
+    },
+    {
+      "id": "doc_kravspecifikation_2_5_1_metronom_i_session",
+      "label": "2.5.1 Metronom i session",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L264"
+    },
+    {
+      "id": "doc_kravspecifikation_2_5_2_bpm_inst\u00e4llning",
+      "label": "2.5.2 BPM-inst\u00e4llning",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L269"
+    },
+    {
+      "id": "doc_kravspecifikation_2_5_3_taktartsval",
+      "label": "2.5.3 Taktartsval",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L276"
+    },
+    {
+      "id": "doc_kravspecifikation_2_5_4_slag_styrka_profil",
+      "label": "2.5.4 Slag-styrka-profil",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L285"
+    },
+    {
+      "id": "doc_kravspecifikation_2_5_5_visuell_feedback",
+      "label": "2.5.5 Visuell feedback",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L298"
+    },
+    {
+      "id": "doc_kravspecifikation_2_5_6_start_stopp",
+      "label": "2.5.6 Start/Stopp",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L308"
+    },
+    {
+      "id": "doc_kravspecifikation_2_5_7_snabb_slag_styrka_anpassning",
+      "label": "2.5.7 Snabb slag-styrka-anpassning",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L316"
+    },
+    {
+      "id": "doc_kravspecifikation_2_6_navigation_och_breadcrumb",
+      "label": "2.6 Navigation och Breadcrumb",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L325"
+    },
+    {
+      "id": "doc_kravspecifikation_2_6_1_breadcrumb_navigering",
+      "label": "2.6.1 Breadcrumb-navigering",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L327"
+    },
+    {
+      "id": "doc_kravspecifikation_2_6_2_toppmeny",
+      "label": "2.6.2 Toppmeny",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L335"
+    },
+    {
+      "id": "doc_kravspecifikation_2_6_3_default_routing",
+      "label": "2.6.3 Default-routing",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L344"
+    },
+    {
+      "id": "doc_kravspecifikation_2_7_datapersistering_och_export_import",
+      "label": "2.7 Datapersistering och Export/Import",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L351"
+    },
+    {
+      "id": "doc_kravspecifikation_2_7_1_local_storage",
+      "label": "2.7.1 Local Storage",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L353"
+    },
+    {
+      "id": "doc_kravspecifikation_2_7_2_export_av_data",
+      "label": "2.7.2 Export av data",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L359"
+    },
+    {
+      "id": "doc_kravspecifikation_2_7_3_import_av_data",
+      "label": "2.7.3 Import av data",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L366"
+    },
+    {
+      "id": "doc_kravspecifikation_2_7_4_datamigration",
+      "label": "2.7.4 Datamigration",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L373"
+    },
+    {
+      "id": "doc_kravspecifikation_3_ux_design_krav",
+      "label": "3. UX/Design-Krav",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L383"
+    },
+    {
+      "id": "doc_kravspecifikation_3_1_\u00f6verordnad_design",
+      "label": "3.1 \u00d6verordnad design",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L385"
+    },
+    {
+      "id": "doc_kravspecifikation_3_1_1_layout",
+      "label": "3.1.1 Layout",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L387"
+    },
+    {
+      "id": "doc_kravspecifikation_3_1_2_visuell_hierarki",
+      "label": "3.1.2 Visuell hierarki",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L393"
+    },
+    {
+      "id": "doc_kravspecifikation_3_1_3_f\u00e4rgschema",
+      "label": "3.1.3 F\u00e4rgschema",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L399"
+    },
+    {
+      "id": "doc_kravspecifikation_3_1_4_komponenter",
+      "label": "3.1.4 Komponenter",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L405"
+    },
+    {
+      "id": "doc_kravspecifikation_3_2_\u00f6va_sida_sessionskord",
+      "label": "3.2 \u00d6va-sida (Sessionskord)",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L417"
+    },
+    {
+      "id": "doc_kravspecifikation_3_2_1_senaste_session_kort",
+      "label": "3.2.1 Senaste session-kort",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L419"
+    },
+    {
+      "id": "doc_kravspecifikation_3_2_2_\u00f6vriga_sessioner_grid",
+      "label": "3.2.2 \u00d6vriga sessioner-grid",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L434"
+    },
+    {
+      "id": "doc_kravspecifikation_3_2_3_tom_session_lista",
+      "label": "3.2.3 Tom session-lista",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L447"
+    },
+    {
+      "id": "doc_kravspecifikation_3_3_\u00f6vningssession_vy",
+      "label": "3.3 \u00d6vningssession-vy",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L452"
+    },
+    {
+      "id": "doc_kravspecifikation_3_3_1_layout",
+      "label": "3.3.1 Layout",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L454"
+    },
+    {
+      "id": "doc_kravspecifikation_3_3_2_navigering",
+      "label": "3.3.2 Navigering",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L467"
+    },
+    {
+      "id": "doc_kravspecifikation_3_3_3_timer_och_metronom",
+      "label": "3.3.3 Timer och Metronom",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L472"
+    },
+    {
+      "id": "doc_kravspecifikation_3_4_skapa_sida",
+      "label": "3.4 Skapa-sida",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L486"
+    },
+    {
+      "id": "doc_kravspecifikation_3_4_1_\u00f6vningssektion",
+      "label": "3.4.1 \u00d6vningssektion",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L488"
+    },
+    {
+      "id": "doc_kravspecifikation_3_4_2_\u00f6verartssektion",
+      "label": "3.4.2 \u00d6verartssektion",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L503"
+    },
+    {
+      "id": "doc_kravspecifikation_3_5_hj\u00e4lp_sida",
+      "label": "3.5 Hj\u00e4lp-sida",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L522"
+    },
+    {
+      "id": "doc_kravspecifikation_3_5_1_inneh\u00e5l",
+      "label": "3.5.1 Inneh\u00e5l",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L524"
+    },
+    {
+      "id": "doc_kravspecifikation_3_6_accessibility_wcag_aa",
+      "label": "3.6 Accessibility (WCAG AA)",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L536"
+    },
+    {
+      "id": "doc_kravspecifikation_3_6_1_f\u00e4rgkontrast",
+      "label": "3.6.1 F\u00e4rgkontrast",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L538"
+    },
+    {
+      "id": "doc_kravspecifikation_3_6_2_fokushantering",
+      "label": "3.6.2 Fokushantering",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L543"
+    },
+    {
+      "id": "doc_kravspecifikation_3_6_3_aria",
+      "label": "3.6.3 ARIA",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L548"
+    },
+    {
+      "id": "doc_kravspecifikation_3_6_4_tangentbordnavigation",
+      "label": "3.6.4 Tangentbordnavigation",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L554"
+    },
+    {
+      "id": "doc_kravspecifikation_4_tekniska_krav",
+      "label": "4. Tekniska Krav",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L561"
+    },
+    {
+      "id": "doc_kravspecifikation_4_1_arkitektur",
+      "label": "4.1 Arkitektur",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L563"
+    },
+    {
+      "id": "doc_kravspecifikation_4_2_data_modeller",
+      "label": "4.2 Data-modeller",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L570"
+    },
+    {
+      "id": "doc_kravspecifikation_4_3_persistering",
+      "label": "4.3 Persistering",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L612"
+    },
+    {
+      "id": "doc_kravspecifikation_4_4_performance",
+      "label": "4.4 Performance",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L618"
+    },
+    {
+      "id": "doc_kravspecifikation_4_5_browser_support",
+      "label": "4.5 Browser-support",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L624"
+    },
+    {
+      "id": "doc_kravspecifikation_5_framtida_features_inte_inkluderade_i_mvp",
+      "label": "5. Framtida Features (inte inkluderade i MVP)",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L632"
+    },
+    {
+      "id": "doc_kravspecifikation_6_acceptanskriterier_f\u00f6r_slutf\u00f6rande",
+      "label": "6. Acceptanskriterier f\u00f6r Slutf\u00f6rande",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L644"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_doc_kravspecifikation_md",
+      "target": "doc_kravspecifikation_kravspecifikation_jb_guitar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_kravspecifikation_jb_guitar",
+      "target": "doc_kravspecifikation_1_produkt\u00f6versikt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_1_produkt\u00f6versikt",
+      "target": "doc_kravspecifikation_1_1_syfte",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_1_produkt\u00f6versikt",
+      "target": "doc_kravspecifikation_1_2_m\u00e5lgrupp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_1_produkt\u00f6versikt",
+      "target": "doc_kravspecifikation_1_3_huvudm\u00e5l",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_kravspecifikation_jb_guitar",
+      "target": "doc_kravspecifikation_2_funktionella_krav",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_funktionella_krav",
+      "target": "doc_kravspecifikation_2_1_\u00f6vningshantering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_1_\u00f6vningshantering",
+      "target": "doc_kravspecifikation_2_1_1_skapa_\u00f6vning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_1_\u00f6vningshantering",
+      "target": "doc_kravspecifikation_2_1_2_se_\u00f6vningar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_1_\u00f6vningshantering",
+      "target": "doc_kravspecifikation_2_1_3_redigera_\u00f6vning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_1_\u00f6vningshantering",
+      "target": "doc_kravspecifikation_2_1_4_ta_bort_\u00f6vning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_funktionella_krav",
+      "target": "doc_kravspecifikation_2_2_\u00f6vningsplanhantering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_2_\u00f6vningsplanhantering",
+      "target": "doc_kravspecifikation_2_2_1_skapa_\u00f6vningsplan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_2_\u00f6vningsplanhantering",
+      "target": "doc_kravspecifikation_2_2_2_se_\u00f6vningsplaner",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_2_\u00f6vningsplanhantering",
+      "target": "doc_kravspecifikation_2_2_3_redigera_\u00f6vningsplan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_2_\u00f6vningsplanhantering",
+      "target": "doc_kravspecifikation_2_2_4_ta_bort_\u00f6vningsplan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_funktionella_krav",
+      "target": "doc_kravspecifikation_2_3_sessionshantering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_1_starta_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_2_se_sessioner_\u00f6va_sida",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_3_se_landningssida",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L143",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_4_genomf\u00f6r_\u00f6vning_i_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L151",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_5_pausa_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L169",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_6_\u00e5teruppta_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_7_markera_\u00f6vning_som_slutf\u00f6rd",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_8_slutf\u00f6r_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_9_starta_om_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_3_sessionshantering",
+      "target": "doc_kravspecifikation_2_3_10_ta_bort_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L216",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_funktionella_krav",
+      "target": "doc_kravspecifikation_2_4_timer_funktionalitet",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L223",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_4_timer_funktionalitet",
+      "target": "doc_kravspecifikation_2_4_1_timer_per_\u00f6vning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L225",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_4_timer_funktionalitet",
+      "target": "doc_kravspecifikation_2_4_2_starta_pausa_timer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_4_timer_funktionalitet",
+      "target": "doc_kravspecifikation_2_4_3_\u00e4ndra_timinst\u00e4llning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_4_timer_funktionalitet",
+      "target": "doc_kravspecifikation_2_4_4_\u00e5terst\u00e4ll_timer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_4_timer_funktionalitet",
+      "target": "doc_kravspecifikation_2_4_5_f\u00f6rv\u00e4ntad_tids\u00e5tg\u00e5ng",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L251",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_funktionella_krav",
+      "target": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L262",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "target": "doc_kravspecifikation_2_5_1_metronom_i_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L264",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "target": "doc_kravspecifikation_2_5_2_bpm_inst\u00e4llning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L269",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "target": "doc_kravspecifikation_2_5_3_taktartsval",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L276",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "target": "doc_kravspecifikation_2_5_4_slag_styrka_profil",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L285",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "target": "doc_kravspecifikation_2_5_5_visuell_feedback",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L298",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "target": "doc_kravspecifikation_2_5_6_start_stopp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L308",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_5_metronomfunktionalitet",
+      "target": "doc_kravspecifikation_2_5_7_snabb_slag_styrka_anpassning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L316",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_funktionella_krav",
+      "target": "doc_kravspecifikation_2_6_navigation_och_breadcrumb",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L325",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_6_navigation_och_breadcrumb",
+      "target": "doc_kravspecifikation_2_6_1_breadcrumb_navigering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L327",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_6_navigation_och_breadcrumb",
+      "target": "doc_kravspecifikation_2_6_2_toppmeny",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L335",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_6_navigation_och_breadcrumb",
+      "target": "doc_kravspecifikation_2_6_3_default_routing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_funktionella_krav",
+      "target": "doc_kravspecifikation_2_7_datapersistering_och_export_import",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L351",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_7_datapersistering_och_export_import",
+      "target": "doc_kravspecifikation_2_7_1_local_storage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_7_datapersistering_och_export_import",
+      "target": "doc_kravspecifikation_2_7_2_export_av_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L359",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_7_datapersistering_och_export_import",
+      "target": "doc_kravspecifikation_2_7_3_import_av_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L366",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_2_7_datapersistering_och_export_import",
+      "target": "doc_kravspecifikation_2_7_4_datamigration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L373",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_kravspecifikation_jb_guitar",
+      "target": "doc_kravspecifikation_3_ux_design_krav",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L383",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_ux_design_krav",
+      "target": "doc_kravspecifikation_3_1_\u00f6verordnad_design",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L385",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_1_\u00f6verordnad_design",
+      "target": "doc_kravspecifikation_3_1_1_layout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L387",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_1_\u00f6verordnad_design",
+      "target": "doc_kravspecifikation_3_1_2_visuell_hierarki",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L393",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_1_\u00f6verordnad_design",
+      "target": "doc_kravspecifikation_3_1_3_f\u00e4rgschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L399",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_1_\u00f6verordnad_design",
+      "target": "doc_kravspecifikation_3_1_4_komponenter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L405",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_ux_design_krav",
+      "target": "doc_kravspecifikation_3_2_\u00f6va_sida_sessionskord",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L417",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_2_\u00f6va_sida_sessionskord",
+      "target": "doc_kravspecifikation_3_2_1_senaste_session_kort",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L419",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_2_\u00f6va_sida_sessionskord",
+      "target": "doc_kravspecifikation_3_2_2_\u00f6vriga_sessioner_grid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L434",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_2_\u00f6va_sida_sessionskord",
+      "target": "doc_kravspecifikation_3_2_3_tom_session_lista",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L447",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_ux_design_krav",
+      "target": "doc_kravspecifikation_3_3_\u00f6vningssession_vy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L452",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_3_\u00f6vningssession_vy",
+      "target": "doc_kravspecifikation_3_3_1_layout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L454",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_3_\u00f6vningssession_vy",
+      "target": "doc_kravspecifikation_3_3_2_navigering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L467",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_3_\u00f6vningssession_vy",
+      "target": "doc_kravspecifikation_3_3_3_timer_och_metronom",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L472",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_ux_design_krav",
+      "target": "doc_kravspecifikation_3_4_skapa_sida",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L486",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_4_skapa_sida",
+      "target": "doc_kravspecifikation_3_4_1_\u00f6vningssektion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L488",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_4_skapa_sida",
+      "target": "doc_kravspecifikation_3_4_2_\u00f6verartssektion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L503",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_ux_design_krav",
+      "target": "doc_kravspecifikation_3_5_hj\u00e4lp_sida",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L522",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_5_hj\u00e4lp_sida",
+      "target": "doc_kravspecifikation_3_5_1_inneh\u00e5l",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L524",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_ux_design_krav",
+      "target": "doc_kravspecifikation_3_6_accessibility_wcag_aa",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L536",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_6_accessibility_wcag_aa",
+      "target": "doc_kravspecifikation_3_6_1_f\u00e4rgkontrast",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L538",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_6_accessibility_wcag_aa",
+      "target": "doc_kravspecifikation_3_6_2_fokushantering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L543",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_6_accessibility_wcag_aa",
+      "target": "doc_kravspecifikation_3_6_3_aria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L548",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_3_6_accessibility_wcag_aa",
+      "target": "doc_kravspecifikation_3_6_4_tangentbordnavigation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L554",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_kravspecifikation_jb_guitar",
+      "target": "doc_kravspecifikation_4_tekniska_krav",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L561",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_4_tekniska_krav",
+      "target": "doc_kravspecifikation_4_1_arkitektur",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L563",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_4_tekniska_krav",
+      "target": "doc_kravspecifikation_4_2_data_modeller",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L570",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_4_tekniska_krav",
+      "target": "doc_kravspecifikation_4_3_persistering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L612",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_4_tekniska_krav",
+      "target": "doc_kravspecifikation_4_4_performance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L618",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_4_tekniska_krav",
+      "target": "doc_kravspecifikation_4_5_browser_support",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L624",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_kravspecifikation_jb_guitar",
+      "target": "doc_kravspecifikation_5_framtida_features_inte_inkluderade_i_mvp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L632",
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation_kravspecifikation_jb_guitar",
+      "target": "doc_kravspecifikation_6_acceptanskriterier_f\u00f6r_slutf\u00f6rande",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": "L644",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

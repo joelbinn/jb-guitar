@@ -1,6 +1,6 @@
 export interface PracticePlan {
-    id: string;
-    name: string;
-    exerciseIds: string[];
-    createdAt: string;
+  id: string;
+  name: string;
+  exerciseIds: string[];
+  createdAt: string;
 }

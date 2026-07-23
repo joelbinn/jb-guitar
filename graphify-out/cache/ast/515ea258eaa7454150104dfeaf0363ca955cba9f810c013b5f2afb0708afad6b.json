@@ -1,0 +1,319 @@
+{
+  "nodes": [
+    {
+      "id": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "label": "SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "openspec_onboard_skill_preflight",
+      "label": "Preflight",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_1_welcome",
+      "label": "Phase 1: Welcome",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L37"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_2_task_selection",
+      "label": "Phase 2: Task Selection",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "openspec_onboard_skill_codebase_analysis",
+      "label": "Codebase Analysis",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "openspec_onboard_skill_present_suggestions",
+      "label": "Present Suggestions",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L86"
+    },
+    {
+      "id": "openspec_onboard_skill_scope_guardrail",
+      "label": "Scope Guardrail",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L120"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_3_explore_demo",
+      "label": "Phase 3: Explore Demo",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L142"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_4_create_the_change",
+      "label": "Phase 4: Create the Change",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L174"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_5_proposal",
+      "label": "Phase 5: Proposal",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L213"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_6_specs",
+      "label": "Phase 6: Specs",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L276"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_7_design",
+      "label": "Phase 7: Design",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L325"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_8_tasks",
+      "label": "Phase 8: Tasks",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L371"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_9_apply_implementation",
+      "label": "Phase 9: Apply (Implementation)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L410"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_10_archive",
+      "label": "Phase 10: Archive",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L445"
+    },
+    {
+      "id": "openspec_onboard_skill_phase_11_recap_next_steps",
+      "label": "Phase 11: Recap & Next Steps",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L473"
+    },
+    {
+      "id": "openspec_onboard_skill_graceful_exit_handling",
+      "label": "Graceful Exit Handling",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L522"
+    },
+    {
+      "id": "openspec_onboard_skill_user_wants_to_stop_mid_way",
+      "label": "User wants to stop mid-way",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L524"
+    },
+    {
+      "id": "openspec_onboard_skill_user_just_wants_command_reference",
+      "label": "User just wants command reference",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L540"
+    },
+    {
+      "id": "openspec_onboard_skill_guardrails",
+      "label": "Guardrails",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L572"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_preflight",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_1_welcome",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_2_task_selection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_phase_2_task_selection",
+      "target": "openspec_onboard_skill_codebase_analysis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_phase_2_task_selection",
+      "target": "openspec_onboard_skill_present_suggestions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_phase_2_task_selection",
+      "target": "openspec_onboard_skill_scope_guardrail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L120",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_3_explore_demo",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_4_create_the_change",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L174",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_5_proposal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L213",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_6_specs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L276",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_7_design",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L325",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_8_tasks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L371",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_9_apply_implementation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L410",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_10_archive",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L445",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_phase_11_recap_next_steps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L473",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_graceful_exit_handling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L522",
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_graceful_exit_handling",
+      "target": "openspec_onboard_skill_user_wants_to_stop_mid_way",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L524",
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_graceful_exit_handling",
+      "target": "openspec_onboard_skill_user_just_wants_command_reference",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L540",
+      "weight": 1.0
+    },
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_opencode_skills_openspec_onboard_skill_md",
+      "target": "openspec_onboard_skill_guardrails",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": "L572",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

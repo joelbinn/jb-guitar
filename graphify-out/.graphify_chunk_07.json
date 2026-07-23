@@ -1,0 +1,737 @@
+{
+  "nodes": [
+    {
+      "id": "claude_claude_typescript_best_practices",
+      "label": "TypeScript Best Practices",
+      "file_type": "rationale",
+      "source_file": "jb-guitar-frontend/.claude/CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "claude_claude_angular_best_practices",
+      "label": "Angular Best Practices",
+      "file_type": "rationale",
+      "source_file": "jb-guitar-frontend/.claude/CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "claude_claude_accessibility_requirements",
+      "label": "Accessibility Requirements",
+      "file_type": "rationale",
+      "source_file": "jb-guitar-frontend/.claude/CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "vscode_extensions_config",
+      "label": "VSCode Extension Recommendations",
+      "file_type": "document",
+      "source_file": "jb-guitar-frontend/.vscode/extensions.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "vscode_launch_config",
+      "label": "VSCode Launch Configurations",
+      "file_type": "document",
+      "source_file": "jb-guitar-frontend/.vscode/launch.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "vscode_mcp_config",
+      "label": "VSCode MCP Server Configuration",
+      "file_type": "document",
+      "source_file": "jb-guitar-frontend/.vscode/mcp.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "vscode_tasks_config",
+      "label": "VSCode Tasks Configuration",
+      "file_type": "document",
+      "source_file": "jb-guitar-frontend/.vscode/tasks.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_main_bootstrap",
+      "label": "Main Bootstrap Entrypoint",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/main.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_index_html",
+      "label": "Index HTML",
+      "file_type": "document",
+      "source_file": "jb-guitar-frontend/src/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_app_config_appconfig",
+      "label": "appConfig",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/app.config.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_app_routes_routes",
+      "label": "routes",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/app.routes.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_app_spec_test",
+      "label": "App Specs",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/app.spec.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_app_app",
+      "label": "App Component",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/app.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "label": "GitHubSyncModalComponent",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "components_top_bar_component_topbarcomponent",
+      "label": "TopBarComponent",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/components/top-bar.component.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_exercise_model_exercisesource",
+      "label": "ExerciseSource",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/exercise.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_exercise_model_exercise",
+      "label": "Exercise",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/exercise.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_github_sync_model_githubsyncsettings",
+      "label": "GitHubSyncSettings",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/github-sync.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_github_sync_model_syncstatus",
+      "label": "SyncStatus",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/github-sync.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_practice_plan_model_practiceplan",
+      "label": "PracticePlan",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/practice-plan.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_session_model_sessionstatus",
+      "label": "SessionStatus",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/session.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_session_model_beatstrength",
+      "label": "BeatStrength",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/session.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_session_model_metronomeconfig",
+      "label": "MetronomeConfig",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/session.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_session_model_exercisesessionstate",
+      "label": "ExerciseSessionState",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/session.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_session_model_session",
+      "label": "Session",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/models/session.model.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "create_create_page_createpage",
+      "label": "CreatePage",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/pages/create/create.page.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "exercise_edit_exercise_edit_page_exerciseeditpage",
+      "label": "ExerciseEditPage",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/pages/exercise-edit/exercise-edit.page.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "help_help_page_helppage",
+      "label": "HelpPage",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/pages/help/help.page.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "landing_landing_page_landingpage",
+      "label": "LandingPage",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/pages/landing/landing.page.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "services_github_sync_service_githubsyncservice",
+      "label": "GitHubSyncService",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/services/github-sync.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "services_storage_service_storageservice",
+      "label": "StorageService",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/services/storage.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "services_exercise_service_exerciseservice",
+      "label": "ExerciseService",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/services/exercise.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "services_plan_service_planservice",
+      "label": "PlanService",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/services/plan.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "services_session_service_sessionservice",
+      "label": "SessionService",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/src/app/services/session.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_main_bootstrap",
+      "target": "app_app_app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/main.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_main_bootstrap",
+      "target": "app_app_config_appconfig",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/main.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_index_html",
+      "target": "app_app_app",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_app_config_appconfig",
+      "target": "app_app_routes_routes",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/app.config.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_app_routes_routes",
+      "target": "landing_landing_page_landingpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/app.routes.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_app_routes_routes",
+      "target": "create_create_page_createpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/app.routes.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_app_routes_routes",
+      "target": "exercise_edit_exercise_edit_page_exerciseeditpage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/app.routes.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_app_routes_routes",
+      "target": "help_help_page_helppage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/app.routes.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_app_spec_test",
+      "target": "app_app_app",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/app.spec.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_app_app",
+      "target": "components_top_bar_component_topbarcomponent",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/app.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_top_bar_component_topbarcomponent",
+      "target": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/components/top-bar.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_top_bar_component_topbarcomponent",
+      "target": "services_storage_service_storageservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/components/top-bar.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "target": "services_github_sync_service_githubsyncservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "target": "services_storage_service_storageservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "target": "models_github_sync_model_githubsyncsettings",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "create_create_page_createpage",
+      "target": "services_exercise_service_exerciseservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/create/create.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "create_create_page_createpage",
+      "target": "services_plan_service_planservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/create/create.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "create_create_page_createpage",
+      "target": "models_exercise_model_exercise",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/create/create.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "create_create_page_createpage",
+      "target": "models_practice_plan_model_practiceplan",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/create/create.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "exercise_edit_exercise_edit_page_exerciseeditpage",
+      "target": "services_exercise_service_exerciseservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/exercise-edit/exercise-edit.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "exercise_edit_exercise_edit_page_exerciseeditpage",
+      "target": "models_exercise_model_exercise",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/exercise-edit/exercise-edit.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page_landingpage",
+      "target": "services_session_service_sessionservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/landing/landing.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page_landingpage",
+      "target": "services_plan_service_planservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/landing/landing.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page_landingpage",
+      "target": "services_exercise_service_exerciseservice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/landing/landing.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page_landingpage",
+      "target": "models_session_model_session",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/src/app/pages/landing/landing.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "vscode_launch_config",
+      "target": "vscode_tasks_config",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/.vscode/launch.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "claude_claude_angular_best_practices",
+      "target": "app_app_app",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/.claude/CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "claude_claude_typescript_best_practices",
+      "target": "src_main_bootstrap",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/.claude/CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "claude_claude_accessibility_requirements",
+      "target": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/.claude/CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "exercise_edit_exercise_edit_page_exerciseeditpage",
+      "target": "create_create_page_createpage",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/src/app/pages/exercise-edit/exercise-edit.page.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_github_sync_modal_component_githubsyncmodalcomponent",
+      "target": "components_top_bar_component_topbarcomponent",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/src/app/components/github-sync-modal.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "frontend_page_components",
+      "label": "Frontend Page Components",
+      "nodes": [
+        "create_create_page_createpage",
+        "exercise_edit_exercise_edit_page_exerciseeditpage",
+        "help_help_page_helppage",
+        "landing_landing_page_landingpage"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/src/app/app.routes.ts"
+    },
+    {
+      "id": "application_state_models",
+      "label": "Application State Models",
+      "nodes": [
+        "models_exercise_model_exercise",
+        "models_practice_plan_model_practiceplan",
+        "models_session_model_session",
+        "models_github_sync_model_githubsyncsettings"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/src/app/models/index.ts"
+    },
+    {
+      "id": "app_routing_mapping",
+      "label": "App Routing Mapping",
+      "nodes": [
+        "app_app_routes_routes",
+        "create_create_page_createpage",
+        "exercise_edit_exercise_edit_page_exerciseeditpage",
+        "help_help_page_helppage",
+        "landing_landing_page_landingpage"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "jb-guitar-frontend/src/app/app.routes.ts"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

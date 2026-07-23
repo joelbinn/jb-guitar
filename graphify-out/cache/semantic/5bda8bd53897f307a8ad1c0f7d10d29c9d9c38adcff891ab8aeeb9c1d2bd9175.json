@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {
+      "id": "jb_guitar_frontend_tsconfig",
+      "label": "tsconfig.json",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/tsconfig.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "jb_guitar_frontend_tsconfig",
+      "target": "jb_guitar_frontend_package",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/tsconfig.json",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "typescript_configurations",
+      "label": "TypeScript App & Spec Configurations",
+      "nodes": [
+        "jb_guitar_frontend_tsconfig",
+        "jb_guitar_frontend_tsconfig_app",
+        "jb_guitar_frontend_tsconfig_spec"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/tsconfig.json"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    {
+      "id": "opsx_archive_command",
+      "label": "OPSX Archive Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/archive.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "opsx_archive_command",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_archive_command",
+      "target": "opsx_sync_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/archive.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

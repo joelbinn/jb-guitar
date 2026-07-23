@@ -1,0 +1,982 @@
+{
+  "nodes": [
+    {
+      "id": "workflows_graphify_workflow",
+      "label": "Graphify Workflow",
+      "file_type": "document",
+      "source_file": ".agents/workflows/graphify.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_claude_settings_local_config",
+      "label": "Claude Local Settings",
+      "file_type": "document",
+      "source_file": ".claude/settings.local.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_apply_command",
+      "label": "OPSX Apply Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/apply.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_apply_actions_on_a_change",
+      "label": "Actions on a Change Model",
+      "file_type": "rationale",
+      "source_file": ".claude/commands/opsx/apply.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_archive_command",
+      "label": "OPSX Archive Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/archive.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_bulk_archive_command",
+      "label": "OPSX Bulk Archive Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/bulk-archive.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_bulk_archive_conflict_resolution",
+      "label": "Agentic Spec Conflict Resolution",
+      "file_type": "rationale",
+      "source_file": ".claude/commands/opsx/bulk-archive.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_continue_command",
+      "label": "OPSX Continue Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/continue.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_explore_command",
+      "label": "OPSX Explore Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/explore.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_explore_stance_over_workflow",
+      "label": "Explore Mode Stance",
+      "file_type": "rationale",
+      "source_file": ".claude/commands/opsx/explore.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_explore_explore_vs_implement",
+      "label": "Explore vs Implement Distinction",
+      "file_type": "rationale",
+      "source_file": ".claude/commands/opsx/explore.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_ff_command",
+      "label": "OPSX Fast Forward Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/ff.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_new_command",
+      "label": "OPSX New Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/new.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_onboard_command",
+      "label": "OPSX Onboard Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_sync_command",
+      "label": "OPSX Sync Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/sync.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_sync_intelligent_merging",
+      "label": "Intelligent Spec Merging",
+      "file_type": "rationale",
+      "source_file": ".claude/commands/opsx/sync.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_verify_command",
+      "label": "OPSX Verify Command",
+      "file_type": "document",
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_verify_three_dimensions",
+      "label": "Three-Dimensional Verification",
+      "file_type": "concept",
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opsx_verify_graceful_degradation",
+      "label": "Graceful Degradation of Verification",
+      "file_type": "rationale",
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "openspec_apply_change_skill_definition",
+      "label": "OpenSpec Apply Change Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_apply_change_skill_actions_on_a_change",
+      "label": "Actions on a Change Model (Skill)",
+      "file_type": "rationale",
+      "source_file": ".claude/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_archive_change_skill_definition",
+      "label": "OpenSpec Archive Change Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_bulk_archive_change_skill_definition",
+      "label": "OpenSpec Bulk Archive Change Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_bulk_archive_change_skill_conflict_resolution",
+      "label": "Agentic Spec Conflict Resolution (Skill)",
+      "file_type": "rationale",
+      "source_file": ".claude/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_continue_change_skill_definition",
+      "label": "OpenSpec Continue Change Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_definition",
+      "label": "OpenSpec Explore Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_stance_over_workflow",
+      "label": "Explore Mode Stance (Skill)",
+      "file_type": "rationale",
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_explore_vs_implement",
+      "label": "Explore vs Implement Distinction (Skill)",
+      "file_type": "rationale",
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_ff_change_skill_definition",
+      "label": "OpenSpec Fast Forward Change Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_new_change_skill_definition",
+      "label": "OpenSpec New Change Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_onboard_skill_definition",
+      "label": "OpenSpec Onboard Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_sync_specs_skill_definition",
+      "label": "OpenSpec Sync Specs Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-sync-specs/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_sync_specs_skill_intelligent_merging",
+      "label": "Intelligent Spec Merging (Skill)",
+      "file_type": "rationale",
+      "source_file": ".claude/skills/openspec-sync-specs/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_verify_change_skill_definition",
+      "label": "OpenSpec Verify Change Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_verify_change_skill_three_dimensions",
+      "label": "Three-Dimensional Verification (Skill)",
+      "file_type": "concept",
+      "source_file": ".claude/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_verify_change_skill_graceful_degradation",
+      "label": "Graceful Degradation of Verification (Skill)",
+      "file_type": "rationale",
+      "source_file": ".claude/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "workflows_graphify_workflow",
+      "target": "skills_graphify_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/workflows/graphify.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_apply_command",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/apply.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_archive_command",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_bulk_archive_command",
+      "target": "openspec_bulk_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/bulk-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_continue_command",
+      "target": "openspec_continue_change_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_explore_command",
+      "target": "openspec_explore_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/explore.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_ff_command",
+      "target": "openspec_ff_change_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/ff.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_new_command",
+      "target": "openspec_new_change_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/new.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "openspec_onboard_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_sync_command",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/sync.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_verify_command",
+      "target": "openspec_verify_change_skill_definition",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_apply_change_skill_definition",
+      "target": "openspec_continue_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_apply_change_skill_definition",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_archive_change_skill_definition",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_bulk_archive_change_skill_definition",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_continue_change_skill_definition",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_continue_change_skill_definition",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_new_change_skill_definition",
+      "target": "openspec_continue_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_ff_change_skill_definition",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_explore_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_new_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_verify_change_skill_definition",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_apply_command",
+      "target": "opsx_continue_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/apply.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_apply_command",
+      "target": "opsx_archive_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/apply.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_archive_command",
+      "target": "opsx_sync_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_bulk_archive_command",
+      "target": "opsx_sync_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/bulk-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_continue_command",
+      "target": "opsx_apply_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_continue_command",
+      "target": "opsx_archive_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_new_command",
+      "target": "opsx_continue_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/new.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_ff_command",
+      "target": "opsx_apply_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/ff.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "opsx_explore_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "opsx_new_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "opsx_apply_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_onboard_command",
+      "target": "opsx_archive_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_verify_command",
+      "target": "opsx_archive_command",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_apply_actions_on_a_change",
+      "target": "opsx_apply_command",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/apply.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_bulk_archive_conflict_resolution",
+      "target": "opsx_bulk_archive_command",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/bulk-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_explore_stance_over_workflow",
+      "target": "opsx_explore_command",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/explore.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_explore_explore_vs_implement",
+      "target": "opsx_explore_command",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/explore.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_sync_intelligent_merging",
+      "target": "opsx_sync_command",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/sync.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_verify_three_dimensions",
+      "target": "opsx_verify_command",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_verify_graceful_degradation",
+      "target": "opsx_verify_command",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_apply_change_skill_actions_on_a_change",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_bulk_archive_change_skill_conflict_resolution",
+      "target": "openspec_bulk_archive_change_skill_definition",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_explore_skill_stance_over_workflow",
+      "target": "openspec_explore_skill_definition",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_explore_skill_explore_vs_implement",
+      "target": "openspec_explore_skill_definition",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_sync_specs_skill_intelligent_merging",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-sync-specs/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_verify_change_skill_three_dimensions",
+      "target": "openspec_verify_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_verify_change_skill_graceful_degradation",
+      "target": "openspec_verify_change_skill_definition",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_apply_actions_on_a_change",
+      "target": "openspec_apply_change_skill_actions_on_a_change",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/apply.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_bulk_archive_conflict_resolution",
+      "target": "openspec_bulk_archive_change_skill_conflict_resolution",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/bulk-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_explore_stance_over_workflow",
+      "target": "openspec_explore_skill_stance_over_workflow",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/explore.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_explore_explore_vs_implement",
+      "target": "openspec_explore_skill_explore_vs_implement",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/explore.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_sync_intelligent_merging",
+      "target": "openspec_sync_specs_skill_intelligent_merging",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/sync.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_verify_three_dimensions",
+      "target": "openspec_verify_change_skill_three_dimensions",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opsx_verify_graceful_degradation",
+      "target": "openspec_verify_change_skill_graceful_degradation",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".claude/commands/opsx/verify.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ]
+}

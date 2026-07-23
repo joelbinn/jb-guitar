@@ -1,0 +1,807 @@
+{
+  "nodes": [
+    {
+      "id": "openspec_apply_change_skill",
+      "label": "openspec-apply-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_apply_change_skill_implementation_flow",
+      "label": "OpenSpec Apply Change Flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Enables a developer to implement pending tasks from a change spec sequentially in a loop, pausing on errors or blockers."
+    },
+    {
+      "id": "openspec_archive_change_skill",
+      "label": "openspec-archive-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_archive_change_skill_archiving_flow",
+      "label": "OpenSpec Archive Change Flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Moves completed change directories to an archive folder, ensuring the project's decision history is preserved and versioned."
+    },
+    {
+      "id": "openspec_bulk_archive_change_skill",
+      "label": "openspec-bulk-archive-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_bulk_archive_change_skill_conflict_resolution",
+      "label": "Batch Conflict Resolution",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Intelligently checks actual codebase implementation to resolve delta spec conflicts when batch archiving multiple changes."
+    },
+    {
+      "id": "openspec_continue_change_skill",
+      "label": "openspec-continue-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_continue_change_skill_artifact_sequence",
+      "label": "OpenSpec Artifact Sequence",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Guides the generation of spec artifacts in order (e.g. proposal, specs, design, tasks) depending on the active workflow schema."
+    },
+    {
+      "id": "openspec_explore_skill",
+      "label": "openspec-explore/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_explore_stance",
+      "label": "OpenSpec Explore Stance",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "A non-prescriptive, curious posture for thinking and mapping architecture, explicitly prohibiting codebase implementation."
+    },
+    {
+      "id": "openspec_ff_change_skill",
+      "label": "openspec-ff-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_ff_change_skill_fast_forward",
+      "label": "OpenSpec Fast-Forward Action",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Automatically loops and creates all required artifacts sequentially in one go to prep a change for immediate implementation."
+    },
+    {
+      "id": "openspec_new_change_skill",
+      "label": "openspec-new-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_new_change_skill_change_directory",
+      "label": "OpenSpec Change Directory Scaffold",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_onboard_skill",
+      "label": "openspec-onboard/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_onboard_skill_onboarding_tutorial",
+      "label": "OpenSpec Onboarding Tutorial",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Step-by-step guidance utilizing a real codebase task to narrate the full cycle from proposal to archive."
+    },
+    {
+      "id": "openspec_sync_specs_skill",
+      "label": "openspec-sync-specs/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-sync-specs/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_sync_specs_skill_intelligent_merging",
+      "label": "Intelligent Spec Merging",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-sync-specs/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Performs partial delta requirement updates (added/modified/removed/renamed) into the main capability specifications."
+    },
+    {
+      "id": "openspec_verify_change_skill",
+      "label": "openspec-verify-change/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_verify_change_skill_verification_report",
+      "label": "OpenSpec Verification Report",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Verifies correctness, completeness, and coherence of code implementations against change specifications before archiving."
+    },
+    {
+      "id": "doc_github_sync_guide",
+      "label": "github-sync-guide.md",
+      "file_type": "document",
+      "source_file": "doc/github-sync-guide.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_github_sync_guide_github_backend",
+      "label": "GitHub as Backend Database",
+      "file_type": "concept",
+      "source_file": "doc/github-sync-guide.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Uses Fine-grained Personal Access Tokens (PAT) to read/write JSON files in a private GitHub repository for offline-first cross-device sync."
+    },
+    {
+      "id": "doc_github_sync_guide_github_actions_deploy",
+      "label": "GitHub Actions Deploy Workflow",
+      "file_type": "concept",
+      "source_file": "doc/github-sync-guide.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_kravspecifikation",
+      "label": "kravspecifikation.md",
+      "file_type": "document",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_kravspecifikation_metronom_spec",
+      "label": "Metronome Requirements Specification",
+      "file_type": "concept",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Specifies support for customizable BPM, denominator, numerator, individual beat profiles (strong, middle, weak), and visual indicators."
+    },
+    {
+      "id": "doc_kravspecifikation_timer_spec",
+      "label": "Timer Requirements Specification",
+      "file_type": "concept",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_kravspecifikation_data_models",
+      "label": "JB Guitar Domain Data Models",
+      "file_type": "concept",
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Defines Exercise, PracticePlan, ExerciseSessionState, and Session TypeScript structures for persistent LocalStorage representation."
+    },
+    {
+      "id": "doc_nya_features",
+      "label": "nya-features.md",
+      "file_type": "document",
+      "source_file": "doc/nya-features.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_product_idea",
+      "label": "product-idea.md",
+      "file_type": "document",
+      "source_file": "doc/product-idea.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_ui_skiss_layout",
+      "label": "UI Sketch Layout Prototype",
+      "file_type": "image",
+      "source_file": "doc/ui-skiss.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Interactive HTML-based wireframes depicting standard viewport frames, dual panel session navigation, metronome settings, and create screens."
+    },
+    {
+      "id": "jb_guitar_frontend_postcssrc",
+      "label": "postcssrc.json",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/.postcssrc.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jb_guitar_frontend_angular",
+      "label": "angular.json",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/angular.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jb_guitar_frontend_package",
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/package.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jb_guitar_frontend_tsconfig_app",
+      "label": "tsconfig.app.json",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/tsconfig.app.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jb_guitar_frontend_tsconfig",
+      "label": "tsconfig.json",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/tsconfig.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jb_guitar_frontend_tsconfig_spec",
+      "label": "tsconfig.spec.json",
+      "file_type": "code",
+      "source_file": "jb-guitar-frontend/tsconfig.spec.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jb_guitar_frontend_readme",
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "jb-guitar-frontend/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "openspec_apply_change_skill",
+      "target": "openspec_apply_change_skill_implementation_flow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_archive_change_skill",
+      "target": "openspec_archive_change_skill_archiving_flow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_bulk_archive_change_skill",
+      "target": "openspec_bulk_archive_change_skill_conflict_resolution",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_continue_change_skill",
+      "target": "openspec_continue_change_skill_artifact_sequence",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_explore_skill",
+      "target": "openspec_explore_skill_explore_stance",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_ff_change_skill",
+      "target": "openspec_ff_change_skill_fast_forward",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_new_change_skill",
+      "target": "openspec_new_change_skill_change_directory",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill",
+      "target": "openspec_onboard_skill_onboarding_tutorial",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_sync_specs_skill",
+      "target": "openspec_sync_specs_skill_intelligent_merging",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-sync-specs/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_verify_change_skill",
+      "target": "openspec_verify_change_skill_verification_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_archive_change_skill_archiving_flow",
+      "target": "openspec_sync_specs_skill_intelligent_merging",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_bulk_archive_change_skill_conflict_resolution",
+      "target": "openspec_sync_specs_skill_intelligent_merging",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_bulk_archive_change_skill_conflict_resolution",
+      "target": "openspec_archive_change_skill_archiving_flow",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".opencode/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_ff_change_skill_fast_forward",
+      "target": "openspec_new_change_skill_change_directory",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_ff_change_skill_fast_forward",
+      "target": "openspec_continue_change_skill_artifact_sequence",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".opencode/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_new_change_skill_change_directory",
+      "target": "openspec_ff_change_skill_fast_forward",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".opencode/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_onboarding_tutorial",
+      "target": "openspec_explore_skill_explore_stance",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_onboarding_tutorial",
+      "target": "openspec_new_change_skill_change_directory",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_onboarding_tutorial",
+      "target": "openspec_apply_change_skill_implementation_flow",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_onboarding_tutorial",
+      "target": "openspec_archive_change_skill_archiving_flow",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_github_sync_guide",
+      "target": "doc_github_sync_guide_github_backend",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/github-sync-guide.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_github_sync_guide",
+      "target": "doc_github_sync_guide_github_actions_deploy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/github-sync-guide.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation",
+      "target": "doc_kravspecifikation_metronom_spec",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation",
+      "target": "doc_kravspecifikation_timer_spec",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_kravspecifikation",
+      "target": "doc_kravspecifikation_data_models",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/kravspecifikation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_nya_features",
+      "target": "doc_kravspecifikation",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/nya-features.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_product_idea",
+      "target": "doc_kravspecifikation",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "doc/product-idea.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_ui_skiss_layout",
+      "target": "doc_kravspecifikation",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/ui-skiss.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_github_sync_guide_github_actions_deploy",
+      "target": "jb_guitar_frontend_angular",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "doc/github-sync-guide.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "doc_github_sync_guide_github_backend",
+      "target": "doc_kravspecifikation_data_models",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "doc/github-sync-guide.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "jb_guitar_frontend_tsconfig_app",
+      "target": "jb_guitar_frontend_tsconfig",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/tsconfig.app.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "jb_guitar_frontend_tsconfig_spec",
+      "target": "jb_guitar_frontend_tsconfig",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/tsconfig.spec.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "jb_guitar_frontend_angular",
+      "target": "jb_guitar_frontend_package",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/angular.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "jb_guitar_frontend_postcssrc",
+      "target": "jb_guitar_frontend_package",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/.postcssrc.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "jb_guitar_frontend_tsconfig",
+      "target": "jb_guitar_frontend_package",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "jb-guitar-frontend/tsconfig.json",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "openspec_lifecycle_workflow",
+      "label": "OpenSpec Lifecycle Workflow",
+      "nodes": [
+        "openspec_new_change_skill_change_directory",
+        "openspec_continue_change_skill_artifact_sequence",
+        "openspec_apply_change_skill_implementation_flow",
+        "openspec_archive_change_skill_archiving_flow"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md"
+    },
+    {
+      "id": "typescript_configurations",
+      "label": "TypeScript App & Spec Configurations",
+      "nodes": [
+        "jb_guitar_frontend_tsconfig",
+        "jb_guitar_frontend_tsconfig_app",
+        "jb_guitar_frontend_tsconfig_spec"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "jb-guitar-frontend/tsconfig.json"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

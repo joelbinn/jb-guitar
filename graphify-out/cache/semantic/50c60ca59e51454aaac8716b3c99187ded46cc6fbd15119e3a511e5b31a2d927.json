@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    {
+      "id": "workflows_opsx_ff_workflow",
+      "label": "Fast-Forward Change Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-ff.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "workflows_opsx_ff_workflow",
+      "target": "openspec_ff_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-ff.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_ff_workflow",
+      "target": "workflows_opsx_apply_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-ff.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

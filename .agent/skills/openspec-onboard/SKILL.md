@@ -9,7 +9,9 @@ metadata:
   generatedBy: "1.3.0"
 ---
 
-Guide the user through their first complete OpenSpec workflow cycle. This is a teaching experience—you'll do real work in their codebase while explaining each step.
+Guide the user through their first complete OpenSpec workflow cycle. This is a
+teaching experience—you'll do real work in their codebase while explaining each
+step.
 
 ---
 
@@ -62,14 +64,18 @@ Let's start by finding something to work on.
 
 Scan the codebase for small improvement opportunities. Look for:
 
-1. **TODO/FIXME comments** - Search for `TODO`, `FIXME`, `HACK`, `XXX` in code files
-2. **Missing error handling** - `catch` blocks that swallow errors, risky operations without try-catch
+1. **TODO/FIXME comments** - Search for `TODO`, `FIXME`, `HACK`, `XXX` in code
+   files
+2. **Missing error handling** - `catch` blocks that swallow errors, risky
+   operations without try-catch
 3. **Functions without tests** - Cross-reference `src/` with test directories
 4. **Type issues** - `any` types in TypeScript files (`: any`, `as any`)
-5. **Debug artifacts** - `console.log`, `console.debug`, `debugger` statements in non-debug code
+5. **Debug artifacts** - `console.log`, `console.debug`, `debugger` statements
+   in non-debug code
 6. **Missing validation** - User input handlers without validation
 
 Also check recent git activity:
+
 ```bash
 # Unix/macOS
 git log --oneline -10 2>/dev/null || echo "No git history"
@@ -108,11 +114,13 @@ Which task interests you? (Pick a number or describe your own)
 ```
 
 **If nothing found:** Fall back to asking what the user wants to build:
-> I didn't find obvious quick wins in your codebase. What's something small you've been meaning to add or fix?
+> I didn't find obvious quick wins in your codebase. What's something small you'
+> ve been meaning to add or fix?
 
 ### Scope Guardrail
 
-If the user picks or describes something too large (major feature, multi-day work):
+If the user picks or describes something too large (major feature, multi-day
+work):
 
 ```
 That's a valuable task, but it's probably larger than ideal for your first OpenSpec run-through.
@@ -140,6 +148,7 @@ Before we create a change, let me quickly show you **explore mode**—it's how y
 ```
 
 Spend 1-2 minutes investigating the relevant code:
+
 - Read the file(s) involved
 - Draw a quick ASCII diagram if it helps
 - Note any considerations
@@ -165,6 +174,7 @@ Now let's create a change to hold our work.
 ## Phase 4: Create the Change
 
 **EXPLAIN:**
+
 ```
 ## Creating a Change
 
@@ -174,21 +184,25 @@ Let me create one for our task.
 ```
 
 **DO:** Create the change with a derived kebab-case name:
+
 ```bash
 openspec new change "<derived-name>"
 ```
 
 **SHOW:**
+
 ```
 Created: `openspec/changes/<name>/`
 
 The folder structure:
 ```
+
 openspec/changes/<name>/
-├── proposal.md    ← Why we're doing this (empty, we'll fill it)
-├── design.md      ← How we'll build it (empty)
-├── specs/         ← Detailed requirements (empty)
-└── tasks.md       ← Implementation checklist (empty)
+├── proposal.md ← Why we're doing this (empty, we'll fill it)
+├── design.md ← How we'll build it (empty)
+├── specs/ ← Detailed requirements (empty)
+└── tasks.md ← Implementation checklist (empty)
+
 ```
 
 Now let's fill in the first artifact—the proposal.
@@ -199,6 +213,7 @@ Now let's fill in the first artifact—the proposal.
 ## Phase 5: Proposal
 
 **EXPLAIN:**
+
 ```
 ## The Proposal
 
@@ -243,9 +258,11 @@ Does this capture the intent? I can adjust before we save it.
 **PAUSE** - Wait for user approval/feedback.
 
 After approval, save the proposal:
+
 ```bash
 openspec instructions proposal --change "<name>" --json
 ```
+
 Then write the content to `openspec/changes/<name>/proposal.md`.
 
 ```
@@ -259,6 +276,7 @@ Next up: specs.
 ## Phase 6: Specs
 
 **EXPLAIN:**
+
 ```
 ## Specs
 
@@ -268,6 +286,7 @@ For a small task like this, we might only need one spec file.
 ```
 
 **DO:** Create the spec file:
+
 ```bash
 # Unix/macOS
 mkdir -p openspec/changes/<name>/specs/<capability-name>
@@ -306,6 +325,7 @@ Save to `openspec/changes/<name>/specs/<capability>/spec.md`.
 ## Phase 7: Design
 
 **EXPLAIN:**
+
 ```
 ## Design
 
@@ -351,6 +371,7 @@ Save to `openspec/changes/<name>/design.md`.
 ## Phase 8: Tasks
 
 **EXPLAIN:**
+
 ```
 ## Tasks
 
@@ -389,6 +410,7 @@ Save to `openspec/changes/<name>/tasks.md`.
 ## Phase 9: Apply (Implementation)
 
 **EXPLAIN:**
+
 ```
 ## Implementation
 
@@ -423,6 +445,7 @@ The change is implemented! One more step—let's archive it.
 ## Phase 10: Archive
 
 **EXPLAIN:**
+
 ```
 ## Archiving
 
@@ -432,11 +455,13 @@ Archived changes become your project's decision history—you can always find th
 ```
 
 **DO:**
+
 ```bash
 openspec archive "<name>"
 ```
 
 **SHOW:**
+
 ```
 Archived to: `openspec/changes/archive/YYYY-MM-DD-<name>/`
 
@@ -546,9 +571,11 @@ Exit gracefully.
 
 ## Guardrails
 
-- **Follow the EXPLAIN → DO → SHOW → PAUSE pattern** at key transitions (after explore, after proposal draft, after tasks, after archive)
+- **Follow the EXPLAIN → DO → SHOW → PAUSE pattern** at key transitions (after
+  explore, after proposal draft, after tasks, after archive)
 - **Keep narration light** during implementation—teach without lecturing
-- **Don't skip phases** even if the change is small—the goal is teaching the workflow
+- **Don't skip phases** even if the change is small—the goal is teaching the
+  workflow
 - **Pause for acknowledgment** at marked points, but don't over-pause
 - **Handle exits gracefully**—never pressure the user to continue
 - **Use real codebase tasks**—don't simulate or use fake examples

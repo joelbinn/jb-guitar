@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy-to-github-pages": "npx ng build --configuration production --base-href /jb-guitar/ && npx angular-cli-ghpages --dir=dist/jb-guitar-frontend/browser"
   },
   "prettier": {
     "printWidth": 100,

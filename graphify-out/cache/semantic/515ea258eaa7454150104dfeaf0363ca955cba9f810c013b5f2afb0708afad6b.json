@@ -1,0 +1,95 @@
+{
+  "nodes": [
+    {
+      "id": "openspec_onboard_skill",
+      "label": "openspec-onboard/SKILL.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_onboard_skill_onboarding_tutorial",
+      "label": "OpenSpec Onboarding Tutorial",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null,
+      "rationale": "Step-by-step guidance utilizing a real codebase task to narrate the full cycle from proposal to archive."
+    }
+  ],
+  "edges": [
+    {
+      "source": "openspec_onboard_skill",
+      "target": "openspec_onboard_skill_onboarding_tutorial",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_onboarding_tutorial",
+      "target": "openspec_explore_skill_explore_stance",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_onboarding_tutorial",
+      "target": "openspec_new_change_skill_change_directory",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_onboarding_tutorial",
+      "target": "openspec_apply_change_skill_implementation_flow",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_onboarding_tutorial",
+      "target": "openspec_archive_change_skill_archiving_flow",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "openspec_lifecycle_workflow",
+      "label": "OpenSpec Lifecycle Workflow",
+      "nodes": [
+        "openspec_new_change_skill_change_directory",
+        "openspec_continue_change_skill_artifact_sequence",
+        "openspec_apply_change_skill_implementation_flow",
+        "openspec_archive_change_skill_archiving_flow"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/openspec-onboard/SKILL.md"
+    }
+  ]
+}

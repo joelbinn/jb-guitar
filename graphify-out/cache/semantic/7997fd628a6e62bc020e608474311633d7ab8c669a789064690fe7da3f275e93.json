@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "id": "workflows_opsx_explore_workflow",
+      "label": "Explore Mode Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-explore.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_explore_explore_mode",
+      "label": "Explore Mode Stance",
+      "file_type": "concept",
+      "source_file": ".agent/workflows/opsx-explore.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "workflows_opsx_explore_workflow",
+      "target": "openspec_explore_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-explore.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_explore_workflow",
+      "target": "workflows_opsx_explore_explore_mode",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-explore.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

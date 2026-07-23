@@ -1,0 +1,63 @@
+{
+  "nodes": [
+    {
+      "id": "users_joel_kod_joelabs_jb_guitar_graphify_out_memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_md",
+      "label": "query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller.md",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_q_beskriv_vad_denna_applikation_tillhandah\u00e5ller",
+      "label": "Q: beskriv vad denna applikation tillhandah\u00e5ller",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_answer",
+      "label": "Answer",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_source_nodes",
+      "label": "Source Nodes",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller.md",
+      "source_location": "L39"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_joel_kod_joelabs_jb_guitar_graphify_out_memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_md",
+      "target": "memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_q_beskriv_vad_denna_applikation_tillhandah\u00e5ller",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_q_beskriv_vad_denna_applikation_tillhandah\u00e5ller",
+      "target": "memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_answer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_q_beskriv_vad_denna_applikation_tillhandah\u00e5ller",
+      "target": "memory_query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller_source_nodes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260715_211423_beskriv_vad_denna_applikation_tillhandah\u00e5ller.md",
+      "source_location": "L39",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

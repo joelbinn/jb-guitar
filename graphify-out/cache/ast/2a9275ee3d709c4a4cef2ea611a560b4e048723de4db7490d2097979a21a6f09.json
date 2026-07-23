@@ -1,0 +1,14 @@
+{
+  "nodes": [
+    {
+      "id": "users_joel_kod_joelabs_jb_guitar_doc_nya_features_md",
+      "label": "nya-features.md",
+      "file_type": "document",
+      "source_file": "doc/nya-features.md",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
