@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, effect, inject, signal, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BeatStrength, Exercise, PracticePlan, Session } from '../../models';
@@ -20,13 +20,14 @@ import { ExerciseService, PlanService, SessionService } from '../../services';
         </div>
 
         <!-- Exercise Chips -->
-        <div class="session-chips-scroll">
+        <div class="session-chips-scroll" #chipsContainer>
           @for (ex of exercises(); track ex.id; let i = $index) {
             <div
               class="session-chip"
               [class.active]="ex.id === s.currentExerciseId"
               [class.completed]="isExerciseCompleted(s, ex.id)"
               (click)="goToExercise(ex.id)"
+              [attr.data-exercise-id]="ex.id"
             >
               {{ i + 1 }}. {{ ex.name }}
             </div>
@@ -185,6 +186,24 @@ import { ExerciseService, PlanService, SessionService } from '../../services';
       color: var(--color-neutral-500);
     }
 
+    .session-chips-scroll::-webkit-scrollbar {
+      display: block;
+      height: 6px;
+    }
+
+    .session-chips-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .session-chips-scroll::-webkit-scrollbar-thumb {
+      background: var(--color-neutral-400);
+      border-radius: 3px;
+    }
+
+    .session-chips-scroll::-webkit-scrollbar-thumb:hover {
+      background: var(--color-neutral-600);
+    }
+
     .session-beat-dot {
       background: var(--color-neutral-500);
     }
@@ -207,10 +226,8 @@ export class SessionPage {
   private readonly router = inject(Router);
 
   sessionId = signal<string | null>(null);
-  session = computed(() => {
-    const id = this.sessionId();
-    return id ? this.sessionService.getById(id) : undefined;
-  });
+  session = signal<Session | undefined>(undefined);
+
 
   plan = computed(() => {
     const s = this.session();
@@ -274,10 +291,32 @@ export class SessionPage {
 
   copied = signal(false);
 
+  @ViewChild('chipsContainer') chipsContainer?: ElementRef<HTMLDivElement>;
+
   constructor() {
     effect(() => {
       const id = this.route.snapshot.paramMap.get('id');
       if (id) this.sessionId.set(id);
+    });
+
+    effect(() => {
+      const id = this.sessionId();
+      if (id) {
+        this.session.set(this.sessionService.getById(id));
+      }
+    });
+
+    effect(() => {
+      // Auto-scroll chips to active exercise
+      const s = this.session();
+      if (!s || !this.chipsContainer) return;
+
+      setTimeout(() => {
+        const activeChip = this.chipsContainer?.nativeElement.querySelector('[data-exercise-id="' + s.currentExerciseId + '"]');
+        if (activeChip) {
+          activeChip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }, 0);
     });
   }
 
@@ -294,7 +333,10 @@ export class SessionPage {
     if (!s) return;
     this.stopTimerInterval();
     this.stopMetroInterval();
-    this.sessionService.setCurrentExerciseId(s.id, exerciseId);
+    const updated = this.sessionService.setCurrentExerciseId(s.id, exerciseId);
+    if (updated) {
+      this.session.set(updated);
+    }
   }
 
   next(): void {
@@ -303,7 +345,9 @@ export class SessionPage {
     this.stopTimerInterval();
     this.stopMetroInterval();
     const updated = this.sessionService.next(s.id);
-    if (!updated || updated.status === 'completed') {
+    if (updated && updated.status !== 'completed') {
+      this.session.set(updated);
+    } else {
       this.router.navigate(['/practice']);
     }
   }
@@ -313,7 +357,10 @@ export class SessionPage {
     if (!s || this.isFirstExercise()) return;
     this.stopTimerInterval();
     this.stopMetroInterval();
-    this.sessionService.previous(s.id);
+    const updated = this.sessionService.previous(s.id);
+    if (updated) {
+      this.session.set(updated);
+    }
   }
 
   pauseSession(): void {
@@ -331,7 +378,10 @@ export class SessionPage {
     if (!confirm('Vill du börja om denna session? All progress försvinner.')) return;
     this.stopTimerInterval();
     this.stopMetroInterval();
-    this.sessionService.restart(s.id);
+    const updated = this.sessionService.restart(s.id);
+    if (updated) {
+      this.session.set(updated);
+    }
   }
 
   deleteSession(): void {
