@@ -103,10 +103,12 @@ export class SessionService {
     const currentIdx = session.exerciseState.findIndex((c) => c.exerciseId === session.currentExerciseId);
     if (currentIdx <= 0) return session;
 
-    session.currentExerciseId = session.exerciseState[currentIdx - 1].exerciseId;
-    session.updatedAt = new Date().toISOString();
-    this.storage.saveSession(session);
-    return session;
+    // Create new reference to trigger signal updates
+    const updated = {...session};
+    updated.currentExerciseId = session.exerciseState[currentIdx - 1].exerciseId;
+    updated.updatedAt = new Date().toISOString();
+    this.storage.saveSession(updated);
+    return updated;
   }
 
   setCurrentExerciseId(sessionId: string, exerciseId: string): Session | undefined {
