@@ -1,0 +1,796 @@
+{
+  "nodes": [
+    {
+      "id": "agent_rules",
+      "label": "Agent Rules Guidelines",
+      "file_type": "document",
+      "source_file": "AGENT.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "rules_graphify_rules",
+      "label": "Graphify Query and Usage Rules",
+      "file_type": "document",
+      "source_file": ".agents/rules/graphify.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_apply_workflow",
+      "label": "Apply Change Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-apply.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_archive_workflow",
+      "label": "Archive Change Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-archive.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_bulk_archive_workflow",
+      "label": "Bulk Archive Changes Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-bulk-archive.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_continue_workflow",
+      "label": "Continue Change Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-continue.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_explore_workflow",
+      "label": "Explore Mode Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-explore.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_ff_workflow",
+      "label": "Fast-Forward Change Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-ff.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_new_workflow",
+      "label": "New Change Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-new.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_onboard_workflow",
+      "label": "Guided Onboarding Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_sync_workflow",
+      "label": "Sync Specs Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-sync.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_verify_workflow",
+      "label": "Verify Change Workflow",
+      "file_type": "document",
+      "source_file": ".agent/workflows/opsx-verify.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "openspec_apply_change_skill_definition",
+      "label": "openspec-apply-change Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-apply-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_archive_change_skill_definition",
+      "label": "openspec-archive-change Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_bulk_archive_change_skill_definition",
+      "label": "openspec-bulk-archive-change Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_continue_change_skill_definition",
+      "label": "openspec-continue-change Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_explore_skill_definition",
+      "label": "openspec-explore Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-explore/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_ff_change_skill_definition",
+      "label": "openspec-ff-change Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_new_change_skill_definition",
+      "label": "openspec-new-change Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_onboard_skill_definition",
+      "label": "openspec-onboard Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_sync_specs_skill_definition",
+      "label": "openspec-sync-specs Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-sync-specs/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "openspec_verify_change_skill_definition",
+      "label": "openspec-verify-change Skill",
+      "file_type": "document",
+      "source_file": ".agent/skills/openspec-verify-change/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "openspec",
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_continue_spec_driven_schema",
+      "label": "Spec-Driven Schema",
+      "file_type": "concept",
+      "source_file": ".agent/workflows/opsx-continue.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_sync_delta_spec_sync",
+      "label": "Delta Spec Synchronization",
+      "file_type": "concept",
+      "source_file": ".agent/workflows/opsx-sync.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_explore_explore_mode",
+      "label": "Explore Mode Stance",
+      "file_type": "concept",
+      "source_file": ".agent/workflows/opsx-explore.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_onboard_onboarding_cycle",
+      "label": "OpenSpec Onboarding Cycle",
+      "file_type": "concept",
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_verify_verification_report",
+      "label": "Verification Report Structure",
+      "file_type": "concept",
+      "source_file": ".agent/workflows/opsx-verify.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "workflows_opsx_bulk_archive_conflict_resolution",
+      "label": "Agentic Conflict Resolution",
+      "file_type": "concept",
+      "source_file": ".agent/workflows/opsx-bulk-archive.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "workflows_opsx_apply_workflow",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-apply.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_archive_workflow",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_bulk_archive_workflow",
+      "target": "openspec_bulk_archive_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-bulk-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_continue_workflow",
+      "target": "openspec_continue_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_explore_workflow",
+      "target": "openspec_explore_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-explore.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_ff_workflow",
+      "target": "openspec_ff_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-ff.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_new_workflow",
+      "target": "openspec_new_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-new.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "openspec_onboard_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_sync_workflow",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-sync.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_verify_workflow",
+      "target": "openspec_verify_change_skill_definition",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-verify.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_continue_workflow",
+      "target": "workflows_opsx_continue_spec_driven_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_sync_workflow",
+      "target": "workflows_opsx_sync_delta_spec_sync",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-sync.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_explore_workflow",
+      "target": "workflows_opsx_explore_explore_mode",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-explore.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "workflows_opsx_onboard_onboarding_cycle",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_verify_workflow",
+      "target": "workflows_opsx_verify_verification_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-verify.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_bulk_archive_workflow",
+      "target": "workflows_opsx_bulk_archive_conflict_resolution",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-bulk-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_archive_workflow",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_archive_change_skill_definition",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_bulk_archive_workflow",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-bulk-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_bulk_archive_change_skill_definition",
+      "target": "openspec_sync_specs_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-bulk-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "workflows_opsx_explore_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "workflows_opsx_new_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "workflows_opsx_continue_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "workflows_opsx_apply_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "workflows_opsx_archive_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "workflows_opsx_verify_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_onboard_workflow",
+      "target": "workflows_opsx_ff_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-onboard.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_explore_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_new_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_continue_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_verify_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_onboard_skill_definition",
+      "target": "openspec_ff_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-onboard/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_continue_workflow",
+      "target": "workflows_opsx_apply_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_continue_workflow",
+      "target": "workflows_opsx_archive_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-continue.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_continue_change_skill_definition",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_continue_change_skill_definition",
+      "target": "openspec_archive_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-continue-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_ff_workflow",
+      "target": "workflows_opsx_apply_workflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/workflows/opsx-ff.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_ff_change_skill_definition",
+      "target": "openspec_apply_change_skill_definition",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agent/skills/openspec-ff-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_archive_workflow",
+      "target": "workflows_opsx_bulk_archive_workflow",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".agent/workflows/opsx-archive.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_archive_change_skill_definition",
+      "target": "openspec_bulk_archive_change_skill_definition",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".agent/skills/openspec-archive-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "workflows_opsx_new_workflow",
+      "target": "workflows_opsx_ff_workflow",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".agent/workflows/opsx-new.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "openspec_new_change_skill_definition",
+      "target": "openspec_ff_change_skill_definition",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".agent/skills/openspec-new-change/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agent_rules",
+      "target": "rules_graphify_rules",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENT.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "openspec_core_workflows",
+      "label": "OpenSpec Core Workflows",
+      "nodes": [
+        "workflows_opsx_new_workflow",
+        "workflows_opsx_continue_workflow",
+        "workflows_opsx_apply_workflow",
+        "workflows_opsx_archive_workflow"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".agent/workflows/opsx-new.md"
+    },
+    {
+      "id": "openspec_core_skills",
+      "label": "OpenSpec Core Skills",
+      "nodes": [
+        "openspec_new_change_skill_definition",
+        "openspec_continue_change_skill_definition",
+        "openspec_apply_change_skill_definition",
+        "openspec_archive_change_skill_definition"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".agent/skills/openspec-new-change/SKILL.md"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

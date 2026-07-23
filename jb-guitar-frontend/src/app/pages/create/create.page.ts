@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exercise, PracticePlan } from '../../models';
 import { ExerciseService, PlanService } from '../../services';
@@ -6,50 +6,60 @@ import { ExerciseService, PlanService } from '../../services';
 @Component({
   selector: 'jbg-create',
   template: `
-    <div class="sect-label">Övningar</div>
-    <div class="grid-3" style="margin-bottom: 20px;">
+    <div class="create-label">Övningar</div>
+    <div class="create-exercises-list" [style.margin-bottom]="'var(--space-6)'">
       @for (ex of exercises(); track ex.id) {
-        <div class="card" style="padding: 10px; cursor: pointer;" (click)="editExercise(ex.id)">
-          <div class="ex-name">{{ ex.name }}</div>
-          <div class="tag">{{ sourceLabel(ex.source) }}</div>
-          <div class="card-bottom">
-            <div class="edit-link">Redigera →</div>
+        <div class="card mob-btn" [style.cursor]="'pointer'" [style.flex-direction]="'row'" [style.align-items]="'center'" [style.justify-content]="'space-between'" [style.gap]="'var(--space-3)'" (click)="editExercise(ex.id)">
+          <div>
+            <div class="card-title" [style.font-size]="'14px'">{{ ex.name }}</div>
+            <span class="tag tag-outline">{{ sourceLabel(ex.source) }}</span>
           </div>
+          <span [style.font-size]="'16px'" [style.color]="'var(--color-accent-700)'">→</span>
         </div>
       }
-      <div class="card-new" style="font-size: 11px;" (click)="newExercise()">+ Ny övning</div>
+      <div class="card mob-btn" [style.display]="'flex'" [style.align-items]="'center'" [style.justify-content]="'center'" [style.gap]="'var(--space-2)'" [style.cursor]="'pointer'" [style.color]="'var(--color-neutral-600)'" (click)="newExercise()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+        <span [style.font-size]="'13px'">Ny övning</span>
+      </div>
     </div>
 
-    <div class="sect-label">Övningsplaner</div>
-    <div class="grid-2">
+    <div class="create-label">Övningsplaner</div>
+    <div class="create-plans-list">
       @for (plan of plans(); track plan.id) {
-        <div class="card">
-          <div class="card-title" style="font-size: 12px;">{{ plan.name }}</div>
-          <div class="card-sub">{{ plan.exerciseIds.length }} övningar</div>
-          <div class="plan-preview">
-            @for (exId of plan.exerciseIds.slice(0, 3); track exId; let i = $index) {
-              {{ i + 1 }}. {{ getExerciseName(exId) }}<br>
-            }
-            @if (plan.exerciseIds.length > 3) { ··· }
-          </div>
-          <button class="btn btn-ghost btn-sm" (click)="editPlan(plan.id)">Redigera →</button>
+        <div class="card elev-sm">
+          <div class="card-title" [style.font-size]="'15px'">{{ plan.name }}</div>
+          <div [style.font-size]="'12px'" [style.color]="'var(--color-neutral-600)'">{{ plan.exerciseIds.length }} övningar</div>
+          <button type="button" class="btn btn-ghost btn-block mob-btn" (click)="editPlan(plan.id)">Redigera →</button>
         </div>
       }
-      <div class="card-new" (click)="newPlan()">+ Ny plan</div>
+      <div class="card mob-btn" [style.display]="'flex'" [style.align-items]="'center'" [style.justify-content]="'center'" [style.gap]="'var(--space-2)'" [style.cursor]="'pointer'" [style.color]="'var(--color-neutral-600)'" (click)="newPlan()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+        <span [style.font-size]="'13px'">Ny plan</span>
+      </div>
     </div>
   `,
   styles: `
-    .ex-name { font-size: 11px; font-weight: 600; margin-bottom: 4px; }
-    .card-bottom { margin-top: auto; padding-top: 8px; }
-    .edit-link { font-size: 10px; color: var(--txt3); }
-    .plan-preview {
-      margin: 8px 0; font-size: 10px; color: var(--txt3); line-height: 1.8;
+    .create-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent-700);
+      margin-bottom: var(--space-2);
     }
-    .btn-sm { font-size: 10px; padding: 4px 10px; }
-    .grid-3 > .card, .grid-2 > .card {
-      display: flex; flex-direction: column;
+
+    .create-exercises-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .create-plans-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatePage {
   private readonly exerciseService = inject(ExerciseService);
@@ -67,10 +77,6 @@ export class CreatePage {
       other: 'Annan',
     };
     return map[source] ?? source;
-  }
-
-  getExerciseName(id: string): string {
-    return this.exerciseService.getById(id)?.name ?? 'Borttagen';
   }
 
   editExercise(id: string): void {

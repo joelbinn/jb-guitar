@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, inject, signal, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {CdkDragDrop, DragDropModule, moveItemInArray} from '@angular/cdk/drag-drop';
@@ -15,101 +15,67 @@ interface PlanExerciseRow {
   selector: 'jbg-plan-edit',
   imports: [FormsModule, DragDropModule],
   template: `
-    <div class="breadcrumb" (click)="goBack()">← Skapa /
-      <span class="crumb-active">Övningsplan</span></div>
-    <div class="page-title">{{ isNew() ? 'Ny plan' : 'Redigera plan' }}</div>
+    <div [style.font-size]="'11px'" [style.color]="'var(--color-neutral-500)'" [style.cursor]="'pointer'" [style.margin-bottom]="'var(--space-2)'" (click)="goBack()">← Skapa</div>
+    <h2 [style.margin-bottom]="'var(--space-5)'">{{ isNew() ? 'Ny plan' : 'Redigera plan' }}</h2>
 
     <div class="field">
-      <label class="field-label" for="name">Namn</label>
-      <input class="field-input" id="name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
+      <label for="name">Namn</label>
+      <input class="input mob-btn" id="name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
     </div>
 
-    <div class="sect-label">Övningar i planen <span class="count">{{ rows().length }} st</span></div>
-
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <div [style.font-size]="'11px'" [style.letter-spacing]="'0.1em'" [style.text-transform]="'uppercase'" [style.color]="'var(--color-neutral-600)'" [style.margin-bottom]="'var(--space-2)'">Övningar · {{ rows().length }} st</div>
+    <div [style.display]="'flex'" [style.flex-direction]="'column'" [style.gap]="'var(--space-2)'" [style.margin-bottom]="'var(--space-2)'" cdkDropList (cdkDropListDropped)="drop($event)">
       @for (row of rows(); track row.exerciseId; let i = $index) {
-        <div class="plan-row" cdkDrag>
-          <span class="drag-handle" cdkDragHandle>⠿</span>
-          <span class="plan-num">{{ i + 1 }}.</span>
-          <span class="plan-name">{{ row.name }}</span>
-          <span class="tag" style="font-size: 9px;">{{ row.source }}</span>
-          <span class="plan-remove" (click)="removeExercise(i)">×</span>
+        <div [style.display]="'flex'" [style.align-items]="'center'" [style.gap]="'var(--space-2)'" [style.border]="'1px solid var(--color-divider)'" [style.padding]="'var(--space-2) var(--space-3)'" cdkDrag>
+          <span [style.flex]="'1'" [style.font-size]="'13px'">{{ i + 1 }}. {{ row.name }}</span>
+          <button type="button" class="btn btn-ghost btn-icon" [style.width]="'38px'" [style.height]="'38px'" (click)="moveUp(i)" [disabled]="i === 0" aria-label="Upp">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+          </button>
+          <button type="button" class="btn btn-ghost btn-icon" [style.width]="'38px'" [style.height]="'38px'" (click)="moveDown(i)" [disabled]="i === rows().length - 1" aria-label="Ner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <button type="button" class="btn btn-ghost btn-icon" [style.width]="'38px'" [style.height]="'38px'" (click)="removeExercise(i)" aria-label="Ta bort">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
         </div>
       }
     </div>
+    <div [style.border]="'1px dashed var(--color-divider)'" [style.text-align]="'center'" [style.padding]="'var(--space-3)'" [style.font-size]="'12px'" [style.color]="'var(--color-neutral-600)'" [style.cursor]="'pointer'" [style.margin-bottom]="'var(--space-5)'" (click)="showAddPicker.set(true)">+ Lägg till övning</div>
 
-    <div class="add-exercise" (click)="showAddPicker.set(true)">+ Lägg till övning</div>
-    <div class="drag-hint">⠿ Drag & drop för att sortera om</div>
-
-    <button class="btn btn-primary btn-full" style="margin-bottom: 8px;" (click)="save()">
-      Spara övningsplan
-    </button>
-    <div class="btn-row">
-      <button class="btn btn-ghost" style="flex: 1;" (click)="cancel()">Avbryt</button>
+    <div [style.display]="'flex'" [style.flex-direction]="'column'" [style.gap]="'var(--space-2)'">
+      <button type="button" class="btn btn-primary btn-block mob-btn" (click)="save()">Spara plan</button>
+      <button type="button" class="btn btn-secondary btn-block mob-btn" (click)="cancel()">Avbryt</button>
       @if (!isNew()) {
-        <button class="btn btn-danger" style="flex: 1;" (click)="remove()">Ta bort plan</button>
+        <button type="button" class="btn btn-secondary btn-block mob-btn" (click)="remove()">Ta bort plan</button>
       }
     </div>
 
     @if (showAddPicker()) {
-      <div class="picker-overlay" (click)="showAddPicker.set(false)">
-        <div class="picker" (click)="$event.stopPropagation()">
-          <div class="picker-title">Lägg till övning</div>
-          @for (ex of availableExercises(); track ex.id) {
-            <button class="picker-item" (click)="addExercise(ex)">
-              {{ ex.name }}
-              <span class="picker-source">{{ ex.source }}</span>
-            </button>
-          }
-          @if (availableExercises().length === 0) {
-            <div class="picker-empty">Alla övningar är redan tillagda, eller inga övningar finns.</div>
-          }
+      <div class="dialog-backdrop" (click)="showAddPicker.set(false)">
+        <div class="dialog" role="dialog" aria-modal="true" (click)="$event.stopPropagation()" [style.max-width]="'340px'">
+          <div class="dialog-title">Lägg till övning</div>
+          <div class="dialog-body" [style.max-height]="'60vh'" [style.overflow-y]="'auto'">
+            <div [style.display]="'flex'" [style.flex-direction]="'column'" [style.gap]="'var(--space-2)'">
+              @for (ex of availableExercises(); track ex.id) {
+                <button type="button" class="btn btn-secondary mob-btn" [style.justify-content]="'space-between'" [style.width]="'100%'" (click)="addExercise(ex)">
+                  <span>{{ ex.name }}</span>
+                  <span [style.color]="'var(--color-neutral-500)'" [style.font-size]="'12px'">{{ ex.source }}</span>
+                </button>
+              }
+              @if (availableExercises().length === 0) {
+                <div [style.font-size]="'12px'" [style.color]="'var(--color-neutral-500)'" [style.font-style]="'italic'" [style.text-align]="'center'" [style.padding]="'var(--space-4)'">Alla övningar är redan tillagda, eller inga övningar finns.</div>
+              }
+            </div>
+          </div>
+          <div class="dialog-actions">
+            <button type="button" class="btn btn-secondary mob-btn" (click)="showAddPicker.set(false)">Klar</button>
+          </div>
         </div>
       </div>
     }
   `,
-  styles: `
-    .breadcrumb { font-size: 10px; color: var(--txt3); margin-bottom: 16px; cursor: pointer; }
-    .crumb-active { color: var(--txt2); }
-    .page-title { font-size: 18px; font-weight: 700; color: var(--txt); margin-bottom: 20px; }
-    .count { color: var(--txt4); }
-    .plan-row {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--surf); border: 1px solid var(--border); border-radius: 6px;
-      padding: 8px 10px; margin-bottom: 6px; transition: border-color 0.15s, background 0.15s;
-    }
-    .plan-row:hover { border-color: var(--border2); }
-    .drag-handle { color: var(--border2); font-size: 14px; cursor: grab; flex-shrink: 0; }
-    .plan-num { font-size: 10px; color: var(--txt3); width: 18px; flex-shrink: 0; }
-    .plan-name { flex: 1; font-size: 12px; color: var(--txt); }
-    .plan-remove { font-size: 14px; color: var(--txt4); cursor: pointer; flex-shrink: 0; transition: color 0.15s; }
-    .plan-remove:hover { color: var(--danger); }
-    .add-exercise {
-      border: 1px dashed var(--border2); border-radius: 6px; padding: 10px;
-      text-align: center; font-size: 11px; color: var(--txt4); cursor: pointer;
-      margin: 10px 0; transition: border-color 0.15s, color 0.15s;
-    }
-    .add-exercise:hover { border-color: var(--accent); color: var(--txt3); }
-    .drag-hint { font-size: 9px; color: var(--txt4); margin-bottom: 16px; font-style: italic; }
-    .picker-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-      display: flex; align-items: center; justify-content: center; z-index: 100;
-    }
-    .picker {
-      background: var(--surf); border: 1px solid var(--border); border-radius: 10px;
-      padding: 20px; width: 340px; max-width: 90vw;
-    }
-    .picker-title { font-weight: 600; font-size: 14px; margin-bottom: 14px; color: var(--txt); }
-    .picker-item {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: var(--surf2); border: 1px solid var(--border);
-      border-radius: 6px; padding: 10px 12px; color: var(--txt); font-size: 12px;
-      cursor: pointer; margin-bottom: 6px; font-family: inherit; transition: border-color 0.15s;
-    }
-    .picker-item:hover { border-color: var(--accent); }
-    .picker-source { font-size: 10px; color: var(--txt3); }
-    .picker-empty { font-size: 11px; color: var(--txt4); font-style: italic; text-align: center; padding: 16px; }
-  `,
+  styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlanEditPage {
   private readonly route = inject(ActivatedRoute);
@@ -157,6 +123,24 @@ export class PlanEditPage {
 
   removeExercise(index: number): void {
     this.rows.update((r) => r.filter((_, i) => i !== index));
+  }
+
+  moveUp(index: number): void {
+    if (index <= 0) return;
+    this.rows.update((r) => {
+      const copy = [...r];
+      [copy[index - 1], copy[index]] = [copy[index], copy[index - 1]];
+      return copy;
+    });
+  }
+
+  moveDown(index: number): void {
+    if (index >= this.rows().length - 1) return;
+    this.rows.update((r) => {
+      const copy = [...r];
+      [copy[index], copy[index + 1]] = [copy[index + 1], copy[index]];
+      return copy;
+    });
   }
 
   drop(event: CdkDragDrop<PlanExerciseRow[]>): void {

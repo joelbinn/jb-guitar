@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, inject, signal, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {Exercise, ExerciseSource} from '../../models';
@@ -8,70 +8,45 @@ import {ExerciseService} from '../../services';
   selector: 'jbg-exercise-edit',
   imports: [FormsModule],
   template: `
-    <div class="breadcrumb" (click)="goBack()">← Skapa / <span class="crumb-active">Övning</span>
-    </div>
-    <div class="page-title">{{ isNew() ? 'Ny övning' : 'Redigera övning' }}</div>
+    <div [style.font-size]="'11px'" [style.color]="'var(--color-neutral-500)'" [style.cursor]="'pointer'" [style.margin-bottom]="'var(--space-2)'" (click)="goBack()">← Skapa</div>
+    <h2 [style.margin-bottom]="'var(--space-5)'">{{ isNew() ? 'Ny övning' : 'Redigera övning' }}</h2>
 
     <div class="field">
-      <label class="field-label" for="name">Namn</label>
-      <input class="field-input" id="name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
+      <label for="name">Namn</label>
+      <input class="input mob-btn" id="name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
     </div>
 
     <div class="field">
-      <div class="field-label">Källa</div>
-      <div class="source-pills">
+      <label>Källa</label>
+      <div [style.display]="'flex'" [style.gap]="'var(--space-2)'" [style.flex-wrap]="'wrap'">
         @for (s of sources; track s.value) {
-          <button class="spill" [class.active]="source() === s.value" (click)="source.set(s.value)">
+          <span class="tag" [style.cursor]="'pointer'" [style.padding]="'8px 12px'" [style.border]="source() === s.value ? '1px solid ' + 'var(--color-accent)' : '1px solid var(--color-divider)'" [style.color]="source() === s.value ? 'var(--color-accent)' : 'var(--color-neutral-600)'" [style.background]="source() === s.value ? 'var(--color-accent-100)' : 'transparent'" (click)="source.set(s.value)">
             {{ s.label }}
-          </button>
+          </span>
         }
       </div>
     </div>
 
     <div class="field">
-      <label class="field-label" for="url">URL</label>
-      <input class="field-input" id="url" [ngModel]="url()" (ngModelChange)="url.set($event)" placeholder="https://..." />
+      <label for="url">URL</label>
+      <input class="input mob-btn" id="url" [ngModel]="url()" (ngModelChange)="url.set($event)" placeholder="https://..." />
     </div>
-
-    @if (url()) {
-      <div class="field">
-        <div class="field-label">Förhandsgranskning</div>
-        <div class="preview">
-          <div class="preview-name">{{ name() || 'Övning' }} · {{ sourceDomain() }}</div>
-        </div>
-      </div>
-    }
 
     <div class="field">
-      <label class="field-label" for="description">Beskrivning (valfritt)</label>
-      <textarea class="field-input"
-                id="description"
-                [ngModel]="description()"
-                (ngModelChange)="description.set($event)"
-                placeholder="Ange beskrivning..."
-                rows="4"></textarea>
+      <label for="description">Beskrivning (valfritt)</label>
+      <textarea class="input" id="description" [ngModel]="description()" (ngModelChange)="description.set($event)" placeholder="Ange beskrivning..." rows="4"></textarea>
     </div>
 
-    <button class="btn btn-primary btn-full" style="margin-bottom: 8px;" (click)="save()">
-      Spara övning
-    </button>
-    <div class="btn-row">
-      <button class="btn btn-ghost" style="flex: 1;" (click)="cancel()">Avbryt</button>
+    <div [style.display]="'flex'" [style.flex-direction]="'column'" [style.gap]="'var(--space-2)'" [style.margin-top]="'var(--space-3)'">
+      <button type="button" class="btn btn-primary btn-block mob-btn" (click)="save()">Spara övning</button>
+      <button type="button" class="btn btn-secondary btn-block mob-btn" (click)="cancel()">Avbryt</button>
       @if (!isNew()) {
-        <button class="btn btn-danger" style="flex: 1;" (click)="remove()">Ta bort övning</button>
+        <button type="button" class="btn btn-secondary btn-block mob-btn" (click)="remove()">Ta bort övning</button>
       }
     </div>
   `,
-  styles: `
-    .breadcrumb { font-size: 10px; color: var(--txt3); margin-bottom: 16px; cursor: pointer; }
-    .crumb-active { color: var(--txt2); }
-    .page-title { font-size: 18px; font-weight: 700; color: var(--txt); margin-bottom: 20px; }
-    .preview {
-      background: #0c0c0c; border: 1px solid var(--border); border-radius: 6px;
-      height: 90px; display: flex; align-items: center; justify-content: center;
-    }
-    .preview-name { font-size: 10px; color: var(--txt4); }
-  `,
+  styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExerciseEditPage {
   private readonly route = inject(ActivatedRoute);

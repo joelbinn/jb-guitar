@@ -1,11 +1,10 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
   selector: 'jbg-help',
   template: `
-    <div class="breadcrumb" (click)="goBack()">← Hem</div>
-    <div class="page-title">Hjälp & Guide</div>
+    <h2 [style.margin-bottom]="'var(--space-5)'">Hjälp & guide</h2>
 
     <div class="help-section">
       <h2>Välkommen till JB Guitar!</h2>
@@ -109,34 +108,17 @@ import {Router} from '@angular/router';
     </div>
   `,
   styles: `
-    .breadcrumb { font-size: 10px; color: var(--txt3); margin-bottom: 16px; cursor: pointer; }
-    .page-title { font-size: 18px; font-weight: 700; color: var(--txt); margin-bottom: 20px; }
-    .help-section { margin-bottom: 24px; }
-    .help-section h2 {
-      font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 12px;
+    h4 {
+      color: var(--color-accent-700);
+      margin-bottom: var(--space-1);
     }
-    .help-section h3 {
-      font-size: 14px; font-weight: 600; color: var(--txt); margin-bottom: 8px;
-    }
-    .help-section h4 {
-      font-size: 12px; font-weight: 600; color: var(--txt2); margin-top: 12px; margin-bottom: 8px;
-    }
-    .help-section p {
-      font-size: 12px; color: var(--txt2); line-height: 1.5; margin-bottom: 10px;
-    }
-    .help-section ul {
-      font-size: 12px; color: var(--txt2); margin-left: 20px; line-height: 1.6;
-    }
-    .help-section li {
-      margin-bottom: 6px;
-    }
-    .help-section strong { color: var(--txt); }
-  `,
-})
-export class HelpPage {
-  private readonly router = inject(Router);
 
-  goBack(): void {
-    this.router.navigate(['/']);
-  }
-}
+    p {
+      color: var(--color-neutral-700);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class HelpPage {}

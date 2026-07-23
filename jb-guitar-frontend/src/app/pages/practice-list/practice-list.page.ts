@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, inject, signal, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from '@angular/router';
 import {PracticePlan, Session} from '../../models';
 import {PlanService, SessionService} from '../../services';
@@ -10,7 +10,6 @@ interface SessionView {
   totalCount: number;
   progressPercent: number;
   dateLabel: string;
-  timeLabel: string;
   estimatedMinutes: number;
 }
 
@@ -18,101 +17,100 @@ interface SessionView {
   selector: 'jbg-practice-list',
   template: `
     @if (latest(); as lat) {
-      <div class="sect-label">Senaste session</div>
-      <div class="card card-accent" style="margin-bottom: 20px;">
-        <div class="latest-row">
-          <div>
-            <div class="card-title">{{ lat.planName }}</div>
-            <div class="card-sub">{{ lat.completedCount }} av {{ lat.totalCount }} · {{
-                statusLabel(lat.session)
-              }} {{ lat.dateLabel }} {{ lat.timeLabel }} · ⏱ {{ lat.estimatedMinutes }} min
-            </div>
-          </div>
-          <button class="btn btn-primary" (click)="openSession(lat.session.id)">Fortsätt →</button>
+      <div class="practice-label">Senaste session</div>
+      <div class="card elev-sm" [style.margin-bottom]="'var(--space-6)'">
+        <div class="card-title">{{ lat.planName }}</div>
+        <div class="practice-status">{{ lat.completedCount }} av {{ lat.totalCount }} · {{ statusLabel(lat.session) }} {{ lat.dateLabel }} · {{ lat.estimatedMinutes }} min</div>
+        <div class="practice-progress-bar">
+          <div class="practice-progress-fill" [style.width.%]="lat.progressPercent"></div>
         </div>
-        <div class="prog-wrap">
-          <div class="prog-fill" [style.width.%]="lat.progressPercent"></div>
-        </div>
+        <button type="button" class="btn btn-primary btn-block mob-btn" (click)="openSession(lat.session.id)">
+          Fortsätt
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
       </div>
     }
 
-    <div class="sect-label">Pågående sessioner</div>
-    <div class="grid-2">
+    <div class="practice-label">Pågående sessioner</div>
+    <div class="practice-sessions-list">
       @for (sv of otherSessions(); track sv.session.id) {
-        <div class="card">
-          <div class="card-title" style="font-size: 12px;">{{ sv.planName }}</div>
-          <div class="card-sub" [class.completed]="sv.session.status === 'completed'">
-            {{ sv.completedCount }} av {{ sv.totalCount }} · ⏱ {{ sv.estimatedMinutes }} min
-            @if (sv.session.status === 'completed') { ✓ }
+        <div class="card elev-sm">
+          <div class="card-title" [style.font-size]="'15px'">{{ sv.planName }}</div>
+          <div [style.font-size]="'12px'" [style.color]="'var(--color-neutral-600)'">{{ sv.completedCount }} av {{ sv.totalCount }} · {{ sv.estimatedMinutes }} min@if (sv.session.status === 'completed') { · klar }</div>
+          <div class="practice-progress-bar">
+            <div class="practice-progress-fill" [style.width.%]="sv.progressPercent" [style.background]="sv.session.status === 'completed' ? 'var(--color-neutral-500)' : 'var(--color-accent)'"></div>
           </div>
-          <div class="prog-wrap">
-            <div class="prog-fill"
-              [style.width.%]="sv.progressPercent"
-              [style.background]="sv.session.status === 'completed' ? 'var(--accent)' : 'var(--txt3)'"
-            ></div>
-          </div>
-          <div class="card-bottom">
-            <div class="date-label">{{ sv.dateLabel }} {{ sv.timeLabel }}</div>
-            <button class="btn btn-ghost btn-sm" (click)="openSession(sv.session.id)">
-              {{ sv.session.status === 'completed' ? 'Se igen →' : 'Fortsätt →' }}
-            </button>
+          <div [style.display]="'flex'" [style.justify-content]="'space-between'" [style.align-items]="'center'">
+            <span [style.font-size]="'10px'" [style.color]="'var(--color-neutral-500)'">{{ sv.dateLabel }}</span>
+            <button type="button" class="btn btn-ghost mob-btn" (click)="openSession(sv.session.id)">{{ sv.session.status === 'completed' ? 'Se igen →' : 'Fortsätt →' }}</button>
           </div>
         </div>
       }
-      <div class="card-new" style="min-height: 104px;" (click)="startNewSession()">
-        <span class="plus">+</span>
-        <span>Ny session</span>
+      <div class="card mob-btn" [style.display]="'flex'" [style.align-items]="'center'" [style.justify-content]="'center'" [style.gap]="'var(--space-2)'" [style.cursor]="'pointer'" [style.color]="'var(--color-neutral-600)'" (click)="startNewSession()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+        <span [style.font-size]="'13px'">Ny session</span>
       </div>
     </div>
 
     @if (showPlanPicker()) {
-      <div class="picker-overlay" (click)="showPlanPicker.set(false)">
-        <div class="picker" (click)="$event.stopPropagation()">
-          <div class="picker-title">Välj övningsplan</div>
-          @for (plan of plans(); track plan.id) {
-            <button class="picker-item" (click)="createSession(plan)">
-              {{ plan.name }}
-              <span class="picker-count">{{ plan.exerciseIds.length }} övningar</span>
-            </button>
-          }
-          @if (plans().length === 0) {
-            <div class="picker-empty">Inga övningsplaner skapade. Gå till Skapa först.</div>
-          }
+      <div class="dialog-backdrop" (click)="showPlanPicker.set(false)">
+        <div class="dialog" role="dialog" aria-modal="true" (click)="$event.stopPropagation()" [style.max-width]="'340px'">
+          <div class="dialog-title">Välj övningsplan</div>
+          <div class="dialog-body" [style.max-height]="'60vh'" [style.overflow-y]="'auto'">
+            <div [style.display]="'flex'" [style.flex-direction]="'column'" [style.gap]="'var(--space-2)'">
+              @for (plan of plans(); track plan.id) {
+                <button type="button" class="btn btn-secondary mob-btn" [style.justify-content]="'space-between'" [style.width]="'100%'" (click)="createSession(plan)">
+                  <span>{{ plan.name }}</span>
+                  <span [style.color]="'var(--color-neutral-500)'" [style.font-size]="'12px'">{{ plan.exerciseIds.length }} övningar</span>
+                </button>
+              }
+              @if (plans().length === 0) {
+                <div [style.font-size]="'12px'" [style.color]="'var(--color-neutral-500)'" [style.font-style]="'italic'" [style.text-align]="'center'" [style.padding]="'var(--space-4)'">Inga övningsplaner skapade. Gå till Skapa först.</div>
+              }
+            </div>
+          </div>
+          <div class="dialog-actions">
+            <button type="button" class="btn btn-secondary mob-btn" (click)="showPlanPicker.set(false)">Avbryt</button>
+          </div>
         </div>
       </div>
     }
   `,
   styles: `
-    .latest-row {
-      display: flex; justify-content: space-between; align-items: flex-start;
+    .practice-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent-700);
+      margin-bottom: var(--space-2);
     }
-    .card-bottom { margin-top: auto; }
-    .date-label { font-size: 9px; color: var(--txt4); margin-bottom: 8px; }
-    .btn-sm { font-size: 10px; padding: 4px 10px; }
-    .plus { font-size: 20px; color: var(--border2); }
-    .completed { color: var(--success) !important; }
-    .picker-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-      display: flex; align-items: center; justify-content: center; z-index: 100;
+
+    .practice-status {
+      font-size: 12px;
+      color: var(--color-neutral-600);
     }
-    .picker {
-      background: var(--surf); border: 1px solid var(--border); border-radius: 10px;
-      padding: 20px; width: 340px; max-width: 90vw;
+
+    .practice-progress-bar {
+      background: var(--color-neutral-200);
+      border-radius: var(--radius-sm);
+      height: 6px;
+      margin: var(--space-2) 0;
     }
-    .picker-title {
-      font-weight: 600; font-size: 14px; margin-bottom: 14px; color: var(--txt);
+
+    .practice-progress-fill {
+      display: block;
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: var(--radius-sm);
     }
-    .picker-item {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: var(--surf2); border: 1px solid var(--border);
-      border-radius: 6px; padding: 10px 12px; color: var(--txt); font-size: 12px;
-      cursor: pointer; margin-bottom: 6px; font-family: inherit;
-      transition: border-color 0.15s;
+
+    .practice-sessions-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
     }
-    .picker-item:hover { border-color: var(--accent); }
-    .picker-count { font-size: 10px; color: var(--txt3); }
-    .picker-empty { font-size: 11px; color: var(--txt4); font-style: italic; text-align: center; padding: 16px; }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PracticeListPage {
   private readonly sessionService = inject(SessionService);
@@ -138,8 +136,7 @@ export class PracticeListPage {
         completedCount,
         totalCount,
         progressPercent: totalCount > 0 ? (completedCount / totalCount) * 100 : 0,
-        dateLabel: updatedDate.toLocaleDateString('sv', {day: 'numeric', month: 'short'}),
-        timeLabel: updatedDate.toLocaleTimeString('sv', {hour: '2-digit', minute: '2-digit'}),
+        dateLabel: updatedDate.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' }),
         estimatedMinutes,
       };
     });
@@ -154,7 +151,7 @@ export class PracticeListPage {
   statusLabel(session: Session): string {
     switch (session.status) {
       case 'active': return 'Pågående';
-      case 'paused': return 'Pausad ' + new Date(session.updatedAt).toLocaleDateString('sv', { day: 'numeric', month: 'short' });
+      case 'paused': return 'Pausad';
       case 'completed': return 'Klar';
     }
   }
