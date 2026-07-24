@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link href="https://fonts.googleapis.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap"
+              rel="stylesheet">
+        <style>
+          :root {
+            --color-bg: #f5efe2;
+            --color-text: #241f18;
+            --color-accent: #b1502e;
+            --color-accent-100: #f2ddd0;
+            --color-accent-700: #7c3319;
+            --color-accent-900: #3d1a0d;
+            --color-neutral-100: #ece4d4;
+            --color-neutral-200: #ddd2ba;
+            --color-neutral-300: #c8b99c;
+            --color-neutral-400: #a89a7c;
+            --color-neutral-500: #8a7c62;
+            --color-neutral-600: #6b5f4a;
+            --color-neutral-700: #4a4030;
+            --color-divider: #d6c8ab;
+            --font-heading: 'Bricolage Grotesque', sans-serif;
+            --font-body: 'Public Sans', sans-serif;
+            --font-heading-weight: 600;
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --radius-sm: 6px;
+            --radius: 10px;
+            --shadow-sm: 0 1px 3px rgba(36, 31, 24, 0.10);
+            --shadow-md: 0 6px 20px rgba(36, 31, 24, 0.14);
+            --shadow-lg: 0 14px 36px rgba(36, 31, 24, 0.18);
+          }
+
+          body {
+            margin: 0;
+            background: var(--color-bg);
+          }
+
+          * {
+            box-sizing: border-box;
+          }
+
+          a {
+            color: var(--color-accent-700);
+          }
+
+          a:hover {
+            color: var(--color-accent);
+          }
+
+          ::selection {
+            background: var(--color-accent-100);
+            color: var(--color-accent-900);
+          }
+
+          :focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+          }
+
+          input[type="number"]::-webkit-inner-spin-button {
+            opacity: 1;
+          }
+
+          h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--color-text);
+            margin: 0;
+          }
+
+          .nav {
+            display: flex;
+            align-items: center;
+            padding: 14px 24px;
+            font-family: var(--font-body);
+          }
+
+          .nav-brand {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 19px;
+            letter-spacing: 0.02em;
+            color: var(--color-text);
+          }
+
+          .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.01em;
+            padding: 10px 18px;
+            border-radius: var(--radius);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: background .15s, border-color .15s, color .15s, opacity .15s;
+          }
+
+          .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+          }
+
+          .btn-primary {
+            background: var(--color-accent);
+            color: #fbf3e8;
+          }
+
+          .btn-primary:hover:not(:disabled) {
+            background: var(--color-accent-700);
+          }
+
+          .btn-primary:active:not(:disabled) {
+            background: var(--color-accent-900);
+          }
+
+          .btn-secondary {
+            background: transparent;
+            color: var(--color-text);
+            border-color: var(--color-divider);
+          }
+
+          .btn-secondary:hover:not(:disabled) {
+            background: var(--color-neutral-100);
+            border-color: var(--color-neutral-300);
+          }
+
+          .btn-secondary:active:not(:disabled) {
+            background: var(--color-neutral-200);
+          }
+
+          .btn-ghost {
+            background: transparent;
+            color: var(--color-neutral-600);
+          }
+
+          .btn-ghost:hover:not(:disabled) {
+            color: var(--color-accent-700);
+            background: var(--color-accent-100);
+          }
+
+          .btn-icon {
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+          }
+
+          .btn-block {
+            width: 100%;
+          }
+
+          .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 11px;
+            border-radius: 999px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: var(--color-neutral-100);
+            color: var(--color-neutral-700);
+          }
+
+          .tag-accent, .tag-accent-2 {
+            background: var(--color-accent-100);
+            color: var(--color-accent-700);
+          }
+
+          .tag-neutral {
+            background: var(--color-neutral-200);
+            color: var(--color-neutral-700);
+          }
+
+          .tag-outline {
+            background: transparent;
+            border: 1px solid var(--color-divider);
+            color: var(--color-neutral-600);
+          }
+
+          .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: var(--space-4);
+          }
+
+          .field label {
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-neutral-600);
+            letter-spacing: 0.02em;
+          }
+
+          .input {
+            width: 100%;
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-text);
+            background: #fffdf7;
+            border: 1px solid var(--color-divider);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+          }
+
+          .input:focus {
+            border-color: var(--color-accent);
+          }
+
+          .card {
+            position: relative;
+            background: #fffdf7;
+            border: 1px solid var(--color-divider);
+            border-radius: var(--radius);
+            padding: var(--space-4);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+          }
+
+          .card.elev-sm {
+            box-shadow: var(--shadow-sm);
+          }
+
+          .card-kicker {
+            font-family: var(--font-body);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-accent-700);
+          }
+
+          .card-title {
+            font-family: var(--font-heading);
+            font-weight: var(--font-heading-weight);
+            font-size: 17px;
+            color: var(--color-text);
+          }
+
+          .dialog-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(36, 31, 24, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 50;
+          }
+
+          .dialog {
+            background: #fffdf7;
+            border: 1px solid var(--color-divider);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: var(--space-6);
+            max-width: 420px;
+            width: 100%;
+          }
+
+          .dialog-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 19px;
+            margin-bottom: var(--space-4);
+          }
+
+          .dialog-body {
+            margin-bottom: var(--space-4);
+          }
+
+          .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--space-2);
+          }
+        </style>
+      </helmet>
+
+      <div style="min-height:100vh;display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);font-size:15px;">
+
+        <nav class="nav"
+             style="border-bottom:1px solid var(--color-divider);justify-content:space-between;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:var(--space-6);">
+            <span class="nav-brand"
+                  onClick="{{ goLanding }}"
+                  style="cursor:pointer;">JB GUITAR</span>
+            <div style="display:flex;gap:var(--space-4);">
+              <a href="#" onClick="{{ goPractice }}" style="{{ navPracticeStyle }}">ÖVA</a>
+              <a href="#" onClick="{{ goCreate }}" style="{{ navCreateStyle }}">SKAPA</a>
+              <a href="#" onClick="{{ goHelp }}" style="{{ navHelpStyle }}">HJÄLP</a>
+            </div>
+          </div>
+          <button aria-label="Instrument"
+                  class="btn btn-ghost btn-icon"
+                  title="JB Guitar — övningsverktyg"
+                  type="button">
+            <svg fill="none"
+                 height="16"
+                 stroke="currentColor"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 stroke-width="1.5"
+                 viewBox="0 0 24 24"
+                 width="16">
+              <path d="M9 18V5l12-2v13"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+          </button>
+        </nav>
+
+        <main style="flex:1;width:100%;max-width:1080px;margin:0 auto;padding:var(--space-8) var(--space-4);box-sizing:border-box;">
+
+          <sc-if hint-placeholder-val="{{ true }}" value="{{ isLanding }}">
+            <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:var(--space-4);">
+              Senaste session
+            </div>
+            <sc-if value="{{ hasLatestSession }}">
+              <div class="card elev-sm" style="max-width:640px;">
+
+                <div class="card-kicker">Övningsplan</div>
+                <div class="card-title">{{ latestPlanName }}</div>
+                <div style="font-size:13px;color:var(--color-neutral-700);">{{ latestStatusLine }}
+                </div>
+                <div style="background:var(--color-neutral-200);border-radius:var(--radius-sm);height:6px;margin:var(--space-2) 0;">
+                  <div style="{{ latestProgressBarStyle }}"></div>
+                </div>
+                <div style="font-size:12px;color:var(--color-neutral-600);">{{ latestProgressText
+                  }}
+                </div>
+                <sc-if value="{{ hasLatestCurrentExercise }}">
+                  <div style="margin-top:var(--space-3);">
+                    <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);">
+                      Aktuell övning
+                    </div>
+                    <div style="font-size:14px;">{{ latestCurrentExerciseName }}</div>
+                    <div style="font-size:11px;color:var(--color-neutral-600);word-break:break-all;">
+                      {{ latestCurrentExerciseUrl }}
+                    </div>
+                  </div>
+                </sc-if>
+                <div style="display:flex;gap:var(--space-2);margin-top:var(--space-3);flex-wrap:wrap;">
+                  <button class="btn btn-primary" onClick="{{ continueLatest }}" type="button">
+
+                    Fortsätt
+                    <svg fill="none"
+                         height="14"
+                         stroke="currentColor"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         stroke-width="1.5"
+                         viewBox="0 0 24 24"
+                         width="14">
+                      <path d="M5 12h14"/>
+                      <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                  </button>
+                  <button class="btn btn-secondary" onClick="{{ goPractice }}" type="button">
+
+                    Starta ny session
+                  </button>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noLatestSession }}">
+              <div class="card" style="max-width:640px;text-align:center;padding:var(--space-8);">
+
+                <div style="font-size:13px;color:var(--color-neutral-600);font-style:italic;margin-bottom:var(--space-3);">
+                  Ingen övningssession påbörjad
+                </div>
+                <button class="btn btn-secondary" onClick="{{ startNewSession }}" type="button">
+
+                  + Starta övningssession
+                </button>
+              </div>
+            </sc-if>
+          </sc-if>
+
+          <sc-if hint-placeholder-val="{{ false }}" value="{{ isPractice }}">
+            <sc-if value="{{ hasLatestSession }}">
+              <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:var(--space-3);">
+                Senaste session
+              </div>
+              <div class="card elev-sm" style="margin-bottom:var(--space-8);">
+
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-4);flex-wrap:wrap;">
+                  <div>
+                    <div class="card-title">{{ latestPlanName }}</div>
+                    <div style="font-size:12px;color:var(--color-neutral-600);">{{ latestFullLine
+                      }}
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onClick="{{ continueLatest }}" type="button">
+
+                    Fortsätt
+                    <svg fill="none"
+                         height="14"
+                         stroke="currentColor"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         stroke-width="1.5"
+                         viewBox="0 0 24 24"
+                         width="14">
+                      <path d="M5 12h14"/>
+                      <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                  </button>
+                </div>
+                <div style="background:var(--color-neutral-200);border-radius:var(--radius-sm);height:6px;margin-top:var(--space-2);">
+                  <div style="{{ latestProgressBarStyle }}"></div>
+                </div>
+              </div>
+            </sc-if>
+
+            <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:var(--space-3);">
+              Pågående sessioner
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:var(--space-4);">
+              <sc-for as="sv" hint-placeholder-count="2" list="{{ otherSessionViews }}">
+                <div class="card elev-sm" style="display:flex;flex-direction:column;">
+
+                  <div class="card-title" style="font-size:15px;">{{ sv.planName }}</div>
+                  <div style="font-size:12px;color:var(--color-neutral-600);">{{ sv.summaryLine }}
+                  </div>
+                  <div style="background:var(--color-neutral-200);border-radius:var(--radius-sm);height:5px;margin:var(--space-2) 0;">
+                    <div style="{{ sv.progressBarStyle }}"></div>
+                  </div>
+                  <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:var(--space-2);">
+                    <span style="font-size:10px;color:var(--color-neutral-500);">{{ sv.dateLabel }}</span>
+                    <button class="btn btn-ghost" onClick="{{ sv.openHandler }}" type="button">{{
+                      sv.ctaLabel }}
+                    </button>
+                  </div>
+                </div>
+              </sc-for>
+              <div class="card"
+                   onClick="{{ startNewSession }}"
+                   style="display:flex;align-items:center;justify-content:center;gap:var(--space-2);cursor:pointer;min-height:120px;color:var(--color-neutral-600);">
+
+                <svg fill="none"
+                     height="16"
+                     stroke="currentColor"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     stroke-width="1.5"
+                     viewBox="0 0 24 24"
+                     width="16">
+                  <path d="M5 12h14"/>
+                  <path d="M12 5v14"/>
+                </svg>
+                <span style="font-size:13px;">Ny session</span>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if hint-placeholder-val="{{ false }}" value="{{ isSession }}">
+            <div onClick="{{ goPractice }}"
+                 style="font-size:11px;color:var(--color-neutral-500);cursor:pointer;margin-bottom:var(--space-4);">← Öva / <span style="color:var(--color-text);">{{ sessPlanName }}</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-4);padding:var(--space-3) var(--space-4);background:var(--color-neutral-100);border:1px solid var(--color-divider);">
+              <span style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:18px;">{{ sessPlanName }}</span>
+              <div style="display:flex;align-items:center;gap:var(--space-2);">
+                <div style="width:90px;height:6px;background:var(--color-neutral-300);border-radius:var(--radius-sm);">
+                  <div style="{{ sessProgressBarStyle }}"></div>
+                </div>
+                <span style="font-size:12px;color:var(--color-neutral-600);">{{ sessCompletedCount }}/{{ sessTotalCount }}</span>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:var(--space-6);align-items:flex-start;flex-wrap:wrap;">
+              <div style="width:220px;flex-shrink:0;border:1px solid var(--color-divider);">
+                <sc-for as="ex" hint-placeholder-count="3" list="{{ sessExercises }}">
+                  <div onClick="{{ ex.selectHandler }}" style="{{ ex.rowStyle }}">
+                    <div style="font-size:10px;color:var(--color-neutral-500);">{{ ex.indexLabel
+                      }}
+                    </div>
+                    <div style="{{ ex.nameStyle }}">{{ ex.name }}</div>
+                    <div style="font-size:10px;color:var(--color-neutral-500);">{{ ex.sourceLine
+                      }}
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="flex:1;min-width:280px;display:flex;flex-direction:column;gap:var(--space-4);">
+                <div class="card"
+                     style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);text-align:center;">
+
+                  <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:18px;">
+                    {{ sessCurrentName }}
+                  </div>
+                  <div style="font-size:11px;color:var(--color-neutral-600);word-break:break-all;max-width:80%;">
+                    {{ sessCurrentUrl }}
+                  </div>
+                  <div style="display:inline-flex;gap:var(--space-2);margin-top:var(--space-2);width:fit-content;">
+                    <a class="btn btn-primary"
+                       href="{{ sessCurrentUrl }}"
+                       rel="noreferrer"
+                       target="_blank">
+
+                      Öppna i nytt fönster
+                      <svg fill="none"
+                           height="14"
+                           stroke="currentColor"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="1.5"
+                           viewBox="0 0 24 24"
+                           width="14">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <path d="M15 3h6v6"/>
+                        <path d="M10 14 21 3"/>
+                      </svg>
+                    </a>
+                    <button aria-label="Kopiera länk"
+                            class="btn btn-secondary btn-icon"
+                            onClick="{{ copyLink }}"
+                            title="Kopiera länk"
+                            type="button">
+
+                      <sc-if hint-placeholder-val="{{ false }}" value="{{ copied }}">
+                        <svg fill="none"
+                             height="15"
+                             stroke="currentColor"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                             stroke-width="1.5"
+                             viewBox="0 0 24 24"
+                             width="15">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </sc-if>
+                      <sc-if hint-placeholder-val="{{ true }}" value="{{ notCopied }}">
+                        <svg fill="none"
+                             height="15"
+                             stroke="currentColor"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                             stroke-width="1.5"
+                             viewBox="0 0 24 24"
+                             width="15">
+                          <rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect>
+                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                      </sc-if>
+                    </button>
+                  </div>
+                </div>
+
+                <sc-if value="{{ sessHasDescription }}">
+                  <div style="font-size:13px;color:var(--color-neutral-700);white-space:pre-wrap;line-height:1.5;border-left:2px solid var(--color-divider);padding-left:var(--space-3);">
+                    {{ sessCurrentDescription }}
+                  </div>
+                </sc-if>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+                  <div class="card">
+
+                    <div class="card-kicker">Timer</div>
+                    <div style="font-family:ui-monospace,monospace;font-size:32px;text-align:center;color:var(--color-accent-700);">
+                      {{ timerDisplay }}
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:var(--space-2);">
+                      <input class="input"
+                             disabled="{{ timerRunning }}"
+                             max="59"
+                             min="0"
+                             onChange="{{ setTimerMinutes }}"
+                             style="width:64px;text-align:center;"
+                             type="number"
+                             value="{{ timerInputMinutes }}"/>
+                      <span style="font-size:12px;color:var(--color-neutral-600);">min</span>
+                    </div>
+                    <div style="display:flex;gap:var(--space-2);">
+                      <button class="btn btn-secondary"
+                              disabled="{{ timerRunning }}"
+                              onClick="{{ startTimer }}"
+                              style="flex:1;"
+                              type="button">Start
+                      </button>
+                      <button class="btn btn-secondary"
+                              disabled="{{ timerNotRunning }}"
+                              onClick="{{ pauseTimer }}"
+                              style="flex:1;"
+                              type="button">Pausa
+                      </button>
+                      <button class="btn btn-ghost"
+                              onClick="{{ resetTimer }}"
+                              style="flex:1;"
+                              type="button">Återställ
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="card">
+
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                      <div class="card-kicker">Metronom</div>
+                      <button class="btn btn-secondary"
+                              onClick="{{ toggleMetronome }}"
+                              type="button">{{ metroToggleLabel }}
+                      </button>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:var(--space-2);">
+                      <input class="input"
+                             disabled="{{ metroRunning }}"
+                             max="300"
+                             min="20"
+                             onChange="{{ setMetroBpm }}"
+                             style="width:60px;text-align:center;"
+                             type="number"
+                             value="{{ metroBpm }}"/>
+                      <span style="font-size:11px;color:var(--color-neutral-600);">BPM</span>
+                      <input class="input"
+                             disabled="{{ metroRunning }}"
+                             max="16"
+                             min="1"
+                             onChange="{{ setMetroNumerator }}"
+                             style="width:48px;text-align:center;"
+                             type="number"
+                             value="{{ metroNumerator }}"/>
+                      <span style="font-size:13px;color:var(--color-neutral-500);">/4</span>
+                    </div>
+                    <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:flex-end;min-height:22px;">
+                      <sc-for as="dot" hint-placeholder-count="4" list="{{ beatDots }}">
+                        <div onClick="{{ dot.cycleHandler }}" style="{{ dot.style }}"></div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:var(--space-3);">
+                  <button class="btn btn-secondary"
+                          disabled="{{ isFirstExercise }}"
+                          onClick="{{ previousExercise }}"
+                          style="flex:1;"
+                          type="button">← Föregående
+                  </button>
+                  <button class="btn btn-primary"
+                          onClick="{{ nextExercise }}"
+                          style="flex:1;"
+                          type="button">
+
+                    {{ nextLabel }}
+                  </button>
+                </div>
+                <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+                  <button class="btn btn-secondary"
+                          onClick="{{ pauseSession }}"
+                          style="flex:1;"
+                          type="button">Pausa session
+                  </button>
+                  <button class="btn btn-secondary"
+                          onClick="{{ restartSession }}"
+                          style="flex:1;"
+                          type="button">Börja om
+                  </button>
+                  <button class="btn btn-secondary"
+                          onClick="{{ deleteSession }}"
+                          style="flex:1;"
+                          type="button">Ta bort
+                  </button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if hint-placeholder-val="{{ false }}" value="{{ isCreate }}">
+            <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:var(--space-3);">
+              Övningar
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--space-4);margin-bottom:var(--space-8);">
+              <sc-for as="ex" hint-placeholder-count="3" list="{{ exerciseCards }}">
+                <div class="card" onClick="{{ ex.editHandler }}" style="cursor:pointer;">
+
+                  <div class="card-title" style="font-size:15px;">{{ ex.name }}</div>
+                  <span class="tag tag-outline"
+                        style="align-self:flex-start;">{{ ex.sourceLabel }}</span>
+                  <div style="margin-top:auto;font-size:12px;color:var(--color-accent-700);">
+                    Redigera →
+                  </div>
+                </div>
+              </sc-for>
+              <div class="card"
+                   onClick="{{ newExercise }}"
+                   style="display:flex;align-items:center;justify-content:center;gap:var(--space-2);cursor:pointer;min-height:110px;color:var(--color-neutral-600);">
+
+                <svg fill="none"
+                     height="15"
+                     stroke="currentColor"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     stroke-width="1.5"
+                     viewBox="0 0 24 24"
+                     width="15">
+                  <path d="M5 12h14"/>
+                  <path d="M12 5v14"/>
+                </svg>
+                <span style="font-size:13px;">Ny övning</span>
+              </div>
+            </div>
+
+            <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:var(--space-3);">
+              Övningsplaner
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-4);">
+              <sc-for as="p" hint-placeholder-count="2" list="{{ planCards }}">
+                <div class="card elev-sm" style="display:flex;flex-direction:column;">
+
+                  <div class="card-title" style="font-size:15px;">{{ p.name }}</div>
+                  <div style="font-size:12px;color:var(--color-neutral-600);">{{ p.countLabel }}
+                  </div>
+                  <div style="font-size:12px;color:var(--color-neutral-600);line-height:1.7;">
+                    <sc-for as="row" hint-placeholder-count="2" list="{{ p.previewRows }}">
+                      <div>{{ row.n }}. {{ row.name }}</div>
+                    </sc-for>
+                    <sc-if value="{{ p.hasMore }}">
+                      <div>···</div>
+                    </sc-if>
+                  </div>
+                  <button class="btn btn-ghost"
+                          onClick="{{ p.editHandler }}"
+                          style="align-self:flex-start;margin-top:auto;"
+                          type="button">Redigera →
+                  </button>
+                </div>
+              </sc-for>
+              <div class="card"
+                   onClick="{{ newPlan }}"
+                   style="display:flex;align-items:center;justify-content:center;gap:var(--space-2);cursor:pointer;min-height:120px;color:var(--color-neutral-600);">
+
+                <svg fill="none"
+                     height="15"
+                     stroke="currentColor"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     stroke-width="1.5"
+                     viewBox="0 0 24 24"
+                     width="15">
+                  <path d="M5 12h14"/>
+                  <path d="M12 5v14"/>
+                </svg>
+                <span style="font-size:13px;">Ny plan</span>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if hint-placeholder-val="{{ false }}" value="{{ isExerciseEdit }}">
+            <div onClick="{{ goCreate }}"
+                 style="font-size:11px;color:var(--color-neutral-500);cursor:pointer;margin-bottom:var(--space-2);">← Skapa /
+              <span style="color:var(--color-text);">Övning</span></div>
+            <h2 style="margin-bottom:var(--space-6);">{{ exerciseEditTitle }}</h2>
+
+            <div class="field" style="max-width:480px;">
+              <label for="ex-name">Namn</label>
+              <input class="input"
+                     id="ex-name"
+                     onChange="{{ setEditName }}"
+                     placeholder="Ange namn..."
+                     value="{{ editName }}"/>
+            </div>
+
+            <div class="field">
+              <label>Källa</label>
+              <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+                <sc-for as="opt" hint-placeholder-count="4" list="{{ sourceOptions }}">
+                  <span class="tag" onClick="{{ opt.selectHandler }}" style="{{ opt.style }}">{{ opt.label }}</span>
+                </sc-for>
+              </div>
+            </div>
+
+            <div class="field" style="max-width:480px;">
+              <label for="ex-url">URL</label>
+              <input class="input"
+                     id="ex-url"
+                     onChange="{{ setEditUrl }}"
+                     placeholder="https://..."
+                     value="{{ editUrl }}"/>
+            </div>
+
+            <sc-if value="{{ editHasUrl }}">
+              <div class="field" style="max-width:480px;">
+                <label>Förhandsgranskning</label>
+                <div class="card"
+                     style="height:80px;display:flex;align-items:center;justify-content:center;">
+
+                  <div style="font-size:11px;color:var(--color-neutral-600);">{{ editPreviewLabel
+                    }}
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+
+            <div class="field" style="max-width:480px;">
+              <label for="ex-desc">Beskrivning (valfritt)</label>
+              <textarea class="input"
+                        id="ex-desc"
+                        onChange="{{ setEditDescription }}"
+                        placeholder="Ange beskrivning..."
+                        rows="4"
+                        value="{{ editDescription }}"></textarea>
+            </div>
+
+            <div style="max-width:480px;display:flex;flex-direction:column;gap:var(--space-2);">
+              <button class="btn btn-primary btn-block" onClick="{{ saveExercise }}" type="button">
+
+                Spara övning
+              </button>
+              <div style="display:flex;gap:var(--space-2);">
+                <button class="btn btn-secondary"
+                        onClick="{{ goCreate }}"
+                        style="flex:1;"
+                        type="button">Avbryt
+                </button>
+                <sc-if value="{{ editIsExisting }}">
+                  <button class="btn btn-secondary"
+                          onClick="{{ removeExercise }}"
+                          style="flex:1;"
+                          type="button">Ta bort övning
+                  </button>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if hint-placeholder-val="{{ false }}" value="{{ isPlanEdit }}">
+            <div onClick="{{ goCreate }}"
+                 style="font-size:11px;color:var(--color-neutral-500);cursor:pointer;margin-bottom:var(--space-2);">← Skapa / <span style="color:var(--color-text);">Övningsplan</span>
+            </div>
+            <h2 style="margin-bottom:var(--space-6);">{{ planEditTitle }}</h2>
+
+            <div class="field" style="max-width:480px;">
+              <label for="plan-name">Namn</label>
+              <input class="input"
+                     id="plan-name"
+                     onChange="{{ setPlanName }}"
+                     placeholder="Ange namn..."
+                     value="{{ planEditName }}"/>
+            </div>
+
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:var(--space-2);">
+              Övningar i planen · {{ planRowCount }} st
+            </div>
+            <div style="max-width:560px;display:flex;flex-direction:column;gap:var(--space-2);margin-bottom:var(--space-2);">
+              <sc-for as="row" hint-placeholder-count="2" list="{{ planRows }}">
+                <div style="display:flex;align-items:center;gap:var(--space-2);border:1px solid var(--color-divider);padding:var(--space-2) var(--space-3);">
+                  <span style="font-size:11px;color:var(--color-neutral-500);width:18px;">{{ row.n }}.</span>
+                  <span style="flex:1;font-size:13px;">{{ row.name }}</span>
+                  <span class="tag tag-neutral">{{ row.sourceLabel }}</span>
+                  <button aria-label="Flytta upp"
+                          class="btn btn-ghost btn-icon"
+                          disabled="{{ row.isFirst }}"
+                          onClick="{{ row.upHandler }}"
+                          style="width:28px;height:28px;"
+                          type="button">
+                    <svg fill="none"
+                         height="14"
+                         stroke="currentColor"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         stroke-width="1.5"
+                         viewBox="0 0 24 24"
+                         width="14">
+                      <path d="m18 15-6-6-6 6"/>
+                    </svg>
+                  </button>
+                  <button aria-label="Flytta ner"
+                          class="btn btn-ghost btn-icon"
+                          disabled="{{ row.isLast }}"
+                          onClick="{{ row.downHandler }}"
+                          style="width:28px;height:28px;"
+                          type="button">
+                    <svg fill="none"
+                         height="14"
+                         stroke="currentColor"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         stroke-width="1.5"
+                         viewBox="0 0 24 24"
+                         width="14">
+                      <path d="m6 9 6 6 6-6"/>
+                    </svg>
+                  </button>
+                  <button aria-label="Ta bort"
+                          class="btn btn-ghost btn-icon"
+                          onClick="{{ row.removeHandler }}"
+                          style="width:28px;height:28px;"
+                          type="button">
+                    <svg fill="none"
+                         height="14"
+                         stroke="currentColor"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         stroke-width="1.5"
+                         viewBox="0 0 24 24"
+                         width="14">
+                      <path d="M18 6 6 18"/>
+                      <path d="m6 6 12 12"/>
+                    </svg>
+                  </button>
+                </div>
+              </sc-for>
+            </div>
+
+            <div onClick="{{ openAddExercise }}"
+                 style="max-width:560px;border:1px dashed var(--color-divider);text-align:center;padding:var(--space-3);font-size:12px;color:var(--color-neutral-600);cursor:pointer;margin-bottom:var(--space-6);">+ Lägg till övning
+            </div>
+
+            <div style="max-width:480px;display:flex;flex-direction:column;gap:var(--space-2);">
+              <button class="btn btn-primary btn-block" onClick="{{ savePlan }}" type="button">
+
+                Spara övningsplan
+              </button>
+              <div style="display:flex;gap:var(--space-2);">
+                <button class="btn btn-secondary"
+                        onClick="{{ goCreate }}"
+                        style="flex:1;"
+                        type="button">Avbryt
+                </button>
+                <sc-if value="{{ planEditIsExisting }}">
+                  <button class="btn btn-secondary"
+                          onClick="{{ removePlan }}"
+                          style="flex:1;"
+                          type="button">Ta bort plan
+                  </button>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if hint-placeholder-val="{{ false }}" value="{{ isHelp }}">
+            <div onClick="{{ goLanding }}"
+                 style="font-size:11px;color:var(--color-neutral-500);cursor:pointer;margin-bottom:var(--space-2);">← Hem
+            </div>
+            <h2 style="margin-bottom:var(--space-6);">Hjälp &amp; guide</h2>
+
+            <div style="max-width:640px;">
+              <h3 style="color:var(--color-accent-700);">Välkommen till JB Guitar</h3>
+              <p style="color:var(--color-neutral-700);">En app för att organisera och öva
+                gitarrövningar strukturerat.</p>
+
+              <h4 style="margin-top:var(--space-6);">Öva</h4>
+              <p style="color:var(--color-neutral-700);">Se dina övningsplaner och starta
+                träningspass.</p>
+              <ul style="color:var(--color-neutral-700);line-height:1.7;padding-left:1.2em;">
+                <li><strong>Starta övning:</strong> klicka på en plan för att börja ett
+                  träningspass.
+                </li>
+                <li><strong>Föregående/Nästa:</strong> navigera mellan övningar i planen.</li>
+                <li><strong>Pausa session:</strong> pausa och spara ditt framsteg.</li>
+                <li><strong>Börja om:</strong> starta om sessionen från början.</li>
+                <li><strong>Ta bort:</strong> radera sessionen helt.</li>
+              </ul>
+
+              <h4 style="margin-top:var(--space-6);">Timer</h4>
+              <p style="color:var(--color-neutral-700);">Varje övning har en inbyggd timer.</p>
+              <ul style="color:var(--color-neutral-700);line-height:1.7;padding-left:1.2em;">
+                <li><strong>Ställ tid:</strong> ändra antal minuter innan timern startar.</li>
+                <li><strong>Start/Pausa/Återställ:</strong> styr nedräkningen.</li>
+                <li><strong>Ljud:</strong> spelas när tiden är slut.</li>
+              </ul>
+
+              <h4 style="margin-top:var(--space-6);">Metronom</h4>
+              <p style="color:var(--color-neutral-700);">Håller takten under övning.</p>
+              <ul style="color:var(--color-neutral-700);line-height:1.7;padding-left:1.2em;">
+                <li><strong>BPM:</strong> 20–300 slag per minut.</li>
+                <li><strong>Taktart:</strong> täljare 1–16.</li>
+                <li><strong>Slag-nivåer:</strong> klicka en prick för att cykla stark / mellan /
+                  svag.
+                </li>
+              </ul>
+
+              <h4 style="margin-top:var(--space-6);">Skapa</h4>
+              <p style="color:var(--color-neutral-700);">Skapa och hantera övningar och
+                övningsplaner.</p>
+              <ul style="color:var(--color-neutral-700);line-height:1.7;padding-left:1.2em;">
+                <li><strong>Övningar:</strong> namn, källa (YouTube/JTC/Soundslice/Annan), URL,
+                  valfri beskrivning.
+                </li>
+                <li><strong>Övningsplaner:</strong> lägg till, ta bort och ordna om övningar i en
+                  ordnad lista.
+                </li>
+              </ul>
+
+              <h4 style="margin-top:var(--space-6);">Tips</h4>
+              <ul style="color:var(--color-neutral-700);line-height:1.7;padding-left:1.2em;">
+                <li>Använd beskrivningen för att anteckna svåra partier.</li>
+                <li>Skapa flera planer för olika nivåer eller fokusområden.</li>
+                <li>Pausa en session för att fortsätta senare.</li>
+              </ul>
+            </div>
+          </sc-if>
+
+        </main>
+
+        <sc-if hint-placeholder-val="{{ false }}" value="{{ planPickerOpen }}">
+          <div class="dialog-backdrop" onClick="{{ closePlanPicker }}">
+            <div aria-modal="true" class="dialog" onClick="{{ stopPropagation }}" role="dialog">
+
+              <div class="dialog-title">Välj övningsplan</div>
+              <div class="dialog-body">
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+                  <sc-for as="p" hint-placeholder-count="3" list="{{ pickerPlans }}">
+                    <button class="btn btn-secondary"
+                            onClick="{{ p.createHandler }}"
+                            style="justify-content:space-between;width:100%;"
+                            type="button">
+                      <span>{{ p.name }}</span>
+                      <span style="color:var(--color-neutral-500);font-size:12px;">{{ p.countLabel }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+              <div class="dialog-actions">
+                <button class="btn btn-secondary" onClick="{{ closePlanPicker }}" type="button">
+
+                  Avbryt
+                </button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if hint-placeholder-val="{{ false }}" value="{{ addExercisePickerOpen }}">
+          <div class="dialog-backdrop" onClick="{{ closeAddExercise }}">
+            <div aria-modal="true" class="dialog" onClick="{{ stopPropagation }}" role="dialog">
+
+              <div class="dialog-title">Lägg till övning</div>
+              <div class="dialog-body">
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+                  <sc-for as="ex" hint-placeholder-count="3" list="{{ availableExerciseOptions }}">
+                    <button class="btn btn-secondary"
+                            onClick="{{ ex.addHandler }}"
+                            style="justify-content:space-between;width:100%;"
+                            type="button">
+                      <span>{{ ex.name }}</span>
+                      <span style="color:var(--color-neutral-500);font-size:12px;">{{ ex.sourceLabel }}</span>
+                    </button>
+                  </sc-for>
+                  <sc-if value="{{ noAvailableExercises }}">
+                    <div style="font-size:12px;color:var(--color-neutral-500);font-style:italic;text-align:center;padding:var(--space-4);">
+                      Alla övningar är redan tillagda, eller inga övningar finns.
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+              <div class="dialog-actions">
+                <button class="btn btn-secondary" onClick="{{ closeAddExercise }}" type="button">
+
+                  Klar
+                </button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+
+    </x-dc>
+    <script data-dc-script type="text/x-dc">
+      const SOURCE_LABELS = { youtube: 'YouTube', jtc: 'JTC Guitar', soundslice: 'Soundslice', other: 'Annan' };
+
+      class Component extends DCLogic {
+        state = {
+          view: 'landing',
+          exercises: [
+            { id: 'e1', name: 'Pentatonisk skala – Box 1', source: 'jtc', url: 'https://jtcguitar.com/pentatonic-box-1', description: 'Fokusera på ren tonbildning i uppåtgående och nedåtgående rörelse.' },
+            { id: 'e2', name: 'Comping – Autumn Leaves', source: 'soundslice', url: 'https://www.soundslice.com/scores/autumn-leaves-comping', description: 'Öva komp med fyra olika voicings över formen.' },
+            { id: 'e3', name: 'Sweep picking – Arpeggiobas', source: 'youtube', url: 'https://www.youtube.com/watch?v=sweep-picking-basics', description: 'Långsam uppbyggnad — öka tempo i steg om 10 BPM.' },
+            { id: 'e4', name: 'Fingerstyle – Blackbird', source: 'youtube', url: 'https://www.youtube.com/watch?v=blackbird-fingerstyle', description: '' },
+            { id: 'e5', name: 'Modal improvisation – Dorisk', source: 'jtc', url: 'https://jtcguitar.com/dorian-modal-improv', description: 'Improvisera över ett statiskt doriskt komp.' },
+            { id: 'e6', name: 'Metronomövning 120 BPM', source: 'other', url: 'https://example.com/metronome-subdivisions', description: 'Subdivision-övning: åttondelar, trioler, sextondelar.' },
+          ],
+          plans: [
+            { id: 'p1', name: 'Teknikpass', exerciseIds: ['e1', 'e3', 'e6'] },
+            { id: 'p2', name: 'Jazzcomping vecka 1', exerciseIds: ['e2', 'e5'] },
+            { id: 'p3', name: 'Fingerstyle-fokus', exerciseIds: ['e4'] },
+          ],
+          sessions: [
+            { id: 's1', planId: 'p1', status: 'paused', currentExerciseId: 'e3', updatedAt: '2026-07-22T19:40:00', exerciseState: [
+              { exerciseId: 'e1', completed: true, timerMinutes: 5 },
+              { exerciseId: 'e3', completed: false, timerMinutes: 8 },
+              { exerciseId: 'e6', completed: false, timerMinutes: 10 },
+            ] },
+            { id: 's2', planId: 'p2', status: 'active', currentExerciseId: 'e2', updatedAt: '2026-07-20T09:15:00', exerciseState: [
+              { exerciseId: 'e2', completed: false, timerMinutes: 15 },
+              { exerciseId: 'e5', completed: false, timerMinutes: 10 },
+            ] },
+            { id: 's3', planId: 'p3', status: 'completed', currentExerciseId: 'e4', updatedAt: '2026-07-15T18:00:00', exerciseState: [
+              { exerciseId: 'e4', completed: true, timerMinutes: 20 },
+            ] },
+          ],
+          activeSessionId: 's1',
+          planPickerOpen: false,
+          addExercisePickerOpen: false,
+          editingExercise: null,
+          editingPlan: null,
+          copied: false,
+          timerRunning: false,
+          timerRemaining: 8 * 60,
+          timerInputMinutes: 8,
+          metroRunning: false,
+          metroBpm: 100,
+          metroNumerator: 4,
+          beatProfile: ['stark', 'svag', 'svag', 'svag'],
+          currentBeat: -1,
+        };
+
+        timerInterval = null;
+        metroInterval = null;
+        audioCtx = null;
+
+        // ---------- helpers ----------
+        sourceLabel(s) { return SOURCE_LABELS[s] || s; }
+        getExercise(id) { return this.state.exercises.find(e => e.id === id); }
+        getPlan(id) { return this.state.plans.find(p => p.id === id); }
+        getSession(id) { return this.state.sessions.find(s => s.id === id); }
+
+        dateLabel(iso) {
+          const d = new Date(iso);
+          return d.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        sessionCompleted(s) { return s.exerciseState.filter(e => e.completed).length; }
+        sessionTotal(s) { return s.exerciseState.length; }
+        sessionMinutes(s) { return s.exerciseState.reduce((sum, e) => sum + e.timerMinutes, 0); }
+        sessionProgressPct(s) { const t = this.sessionTotal(s); return t > 0 ? (this.sessionCompleted(s) / t) * 100 : 0; }
+
+        sortedSessions() {
+          return [...this.state.sessions].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        }
+        latestSession() {
+          return this.sortedSessions().find(s => s.status !== 'completed');
+        }
+
+        // ---------- navigation ----------
+        goLanding = () => this.setState({ view: 'landing' });
+        goPractice = () => this.setState({ view: 'practice' });
+        goCreate = () => this.setState({ view: 'create' });
+        goHelp = () => this.setState({ view: 'help' });
+        stopPropagation = (e) => e && e.stopPropagation && e.stopPropagation();
+
+        continueLatest = () => {
+          const s = this.latestSession();
+          if (s) this.openSession(s.id);
+        };
+        startNewSession = () => this.setState({ planPickerOpen: true });
+        closePlanPicker = () => this.setState({ planPickerOpen: false });
+
+        createSessionFromPlan(plan) {
+          const id = 's' + Date.now();
+          const session = {
+            id, planId: plan.id, status: 'active',
+            currentExerciseId: plan.exerciseIds[0],
+            updatedAt: new Date().toISOString(),
+            exerciseState: plan.exerciseIds.map(eid => ({ exerciseId: eid, completed: false, timerMinutes: 5 })),
+          };
+          this.setState(st => ({ sessions: [...st.sessions, session], planPickerOpen: false }));
+          this.openSession(id);
+        }
+
+        openSession(id) {
+          const s = this.getSession(id);
+          if (!s) return;
+          const completion = s.exerciseState.find(e => e.exerciseId === s.currentExerciseId);
+          const minutes = completion ? completion.timerMinutes : 5;
+          this.stopTimerInterval();
+          this.stopMetroInterval();
+          this.setState({
+            activeSessionId: id, view: 'session',
+            timerInputMinutes: minutes, timerRemaining: minutes * 60, timerRunning: false,
+            metroRunning: false, currentBeat: -1,
+          });
+        }
+
+        // ---------- create / editing ----------
+        newExercise = () => this.setState({ view: 'exerciseEdit', editingExercise: { id: null, name: '', source: 'youtube', url: '', description: '' } });
+        editExercise(id) {
+          const ex = this.getExercise(id);
+          this.setState({ view: 'exerciseEdit', editingExercise: { ...ex, description: ex.description || '' } });
+        }
+        setEditName = (e) => this.setState(st => ({ editingExercise: { ...st.editingExercise, name: e.target.value } }));
+        setEditUrl = (e) => this.setState(st => ({ editingExercise: { ...st.editingExercise, url: e.target.value } }));
+        setEditDescription = (e) => this.setState(st => ({ editingExercise: { ...st.editingExercise, description: e.target.value } }));
+        selectSource(source) { this.setState(st => ({ editingExercise: { ...st.editingExercise, source } })); }
+
+        saveExercise = () => {
+          const ed = this.state.editingExercise;
+          if (!ed.name.trim() || !ed.url.trim()) return;
+          this.setState(st => {
+            const exists = st.exercises.some(e => e.id === ed.id);
+            const exercises = exists
+              ? st.exercises.map(e => e.id === ed.id ? { ...ed } : e)
+              : [...st.exercises, { ...ed, id: 'e' + Date.now() }];
+            return { exercises, view: 'create', editingExercise: null };
+          });
+        };
+        removeExercise = () => {
+          const id = this.state.editingExercise.id;
+          this.setState(st => ({ exercises: st.exercises.filter(e => e.id !== id), view: 'create', editingExercise: null }));
+        };
+
+        newPlan = () => this.setState({ view: 'planEdit', editingPlan: { id: null, name: '', exerciseIds: [] } });
+        editPlan(id) {
+          const p = this.getPlan(id);
+          this.setState({ view: 'planEdit', editingPlan: { ...p } });
+        }
+        setPlanName = (e) => this.setState(st => ({ editingPlan: { ...st.editingPlan, name: e.target.value } }));
+        openAddExercise = () => this.setState({ addExercisePickerOpen: true });
+        closeAddExercise = () => this.setState({ addExercisePickerOpen: false });
+        addExerciseToPlan(exId) {
+          this.setState(st => ({ editingPlan: { ...st.editingPlan, exerciseIds: [...st.editingPlan.exerciseIds, exId] } }));
+        }
+        removePlanRow(idx) {
+          this.setState(st => ({ editingPlan: { ...st.editingPlan, exerciseIds: st.editingPlan.exerciseIds.filter((_, i) => i !== idx) } }));
+        }
+        movePlanRow(idx, dir) {
+          this.setState(st => {
+            const ids = [...st.editingPlan.exerciseIds];
+            const j = idx + dir;
+            if (j < 0 || j >= ids.length) return {};
+            [ids[idx], ids[j]] = [ids[j], ids[idx]];
+            return { editingPlan: { ...st.editingPlan, exerciseIds: ids } };
+          });
+        }
+        savePlan = () => {
+          const ed = this.state.editingPlan;
+          if (!ed.name.trim()) return;
+          this.setState(st => {
+            const exists = st.plans.some(p => p.id === ed.id);
+            const plans = exists
+              ? st.plans.map(p => p.id === ed.id ? { ...ed } : p)
+              : [...st.plans, { ...ed, id: 'p' + Date.now() }];
+            return { plans, view: 'create', editingPlan: null };
+          });
+        };
+        removePlan = () => {
+          const id = this.state.editingPlan.id;
+          this.setState(st => ({ plans: st.plans.filter(p => p.id !== id), view: 'create', editingPlan: null }));
+        };
+
+        // ---------- session player ----------
+        goToExercise(exId) {
+          const s = this.getSession(this.state.activeSessionId);
+          const completion = s.exerciseState.find(e => e.exerciseId === exId);
+          this.stopTimerInterval();
+          this.stopMetroInterval();
+          this.setState(st => ({
+            sessions: st.sessions.map(sess => sess.id === s.id ? { ...sess, currentExerciseId: exId } : sess),
+            timerInputMinutes: completion ? completion.timerMinutes : 5,
+            timerRemaining: (completion ? completion.timerMinutes : 5) * 60,
+            timerRunning: false, metroRunning: false, currentBeat: -1,
+          }));
+        }
+
+        nextExercise = () => {
+          const s = this.getSession(this.state.activeSessionId);
+          const ids = this.getPlan(s.planId).exerciseIds;
+          const idx = ids.indexOf(s.currentExerciseId);
+          this.setState(st => ({
+            sessions: st.sessions.map(sess => {
+              if (sess.id !== s.id) return sess;
+              const exerciseState = sess.exerciseState.map(e => e.exerciseId === s.currentExerciseId ? { ...e, completed: true } : e);
+              if (idx >= ids.length - 1) return { ...sess, exerciseState, status: 'completed', updatedAt: new Date().toISOString() };
+              return { ...sess, exerciseState, currentExerciseId: ids[idx + 1], updatedAt: new Date().toISOString() };
+            }),
+          }));
+          if (idx >= ids.length - 1) { this.goPractice(); return; }
+          this.goToExercise(ids[idx + 1]);
+        };
+        previousExercise = () => {
+          const s = this.getSession(this.state.activeSessionId);
+          const ids = this.getPlan(s.planId).exerciseIds;
+          const idx = ids.indexOf(s.currentExerciseId);
+          if (idx <= 0) return;
+          this.goToExercise(ids[idx - 1]);
+        };
+        pauseSession = () => {
+          const id = this.state.activeSessionId;
+          this.setState(st => ({ sessions: st.sessions.map(s => s.id === id ? { ...s, status: 'paused', updatedAt: new Date().toISOString() } : s) }));
+          this.goPractice();
+        };
+        restartSession = () => {
+          if (!confirm('Vill du börja om denna session? All progress försvinner.')) return;
+          const id = this.state.activeSessionId;
+          this.setState(st => ({
+            sessions: st.sessions.map(s => {
+              if (s.id !== id) return s;
+              const plan = this.getPlan(s.planId);
+              return { ...s, status: 'active', currentExerciseId: plan.exerciseIds[0], exerciseState: s.exerciseState.map(e => ({ ...e, completed: false })) };
+            }),
+          }));
+          this.openSession(id);
+        };
+        deleteSession = () => {
+          if (!confirm('Vill du ta bort denna session? Detta kan inte ångras.')) return;
+          const id = this.state.activeSessionId;
+          this.setState(st => ({ sessions: st.sessions.filter(s => s.id !== id) }));
+          this.goPractice();
+        };
+
+        copyLink = () => {
+          this.setState({ copied: true });
+          setTimeout(() => this.setState({ copied: false }), 1500);
+        };
+
+        // timer
+        stopTimerInterval() { if (this.timerInterval) { clearInterval(this.timerInterval); this.timerInterval = null; } }
+        startTimer = () => {
+          if (this.state.timerRunning) return;
+          if (this.state.timerRemaining === 0) this.setState({ timerRemaining: this.state.timerInputMinutes * 60 });
+          this.setState({ timerRunning: true });
+          this.timerInterval = setInterval(() => {
+            this.setState(st => {
+              if (st.timerRemaining <= 1) { this.stopTimerInterval(); return { timerRemaining: 0, timerRunning: false }; }
+              return { timerRemaining: st.timerRemaining - 1 };
+            });
+          }, 1000);
+        };
+        pauseTimer = () => { this.stopTimerInterval(); this.setState({ timerRunning: false }); };
+        resetTimer = () => { this.stopTimerInterval(); this.setState(st => ({ timerRunning: false, timerRemaining: st.timerInputMinutes * 60 })); };
+        setTimerMinutes = (e) => {
+          const v = Math.max(0, Math.min(59, +e.target.value || 0));
+          this.setState({ timerInputMinutes: v, timerRemaining: v * 60 });
+        };
+
+        // metronome
+        stopMetroInterval() { if (this.metroInterval) { clearInterval(this.metroInterval); this.metroInterval = null; } }
+        toggleMetronome = () => {
+          if (this.state.metroRunning) { this.stopMetroInterval(); this.setState({ metroRunning: false, currentBeat: -1 }); return; }
+          if (!this.audioCtx) { try { this.audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} }
+          let beat = -1;
+          this.setState({ metroRunning: true });
+          const tick = () => {
+            beat = (beat + 1) % this.state.metroNumerator;
+            this.setState({ currentBeat: beat });
+            if (this.audioCtx) {
+              const strength = this.state.beatProfile[beat] || 'svag';
+              const freq = strength === 'stark' ? 1050 : strength === 'mellan' ? 880 : 660;
+              const vol = strength === 'stark' ? 0.5 : strength === 'mellan' ? 0.35 : 0.2;
+              const osc = this.audioCtx.createOscillator(); const gain = this.audioCtx.createGain();
+              osc.connect(gain); gain.connect(this.audioCtx.destination);
+              osc.frequency.value = freq; gain.gain.setValueAtTime(vol, this.audioCtx.currentTime);
+              gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.05);
+              osc.start(); osc.stop(this.audioCtx.currentTime + 0.05);
+            }
+          };
+          tick();
+          this.metroInterval = setInterval(tick, 60000 / this.state.metroBpm);
+        };
+        setMetroBpm = (e) => this.setState({ metroBpm: Math.max(20, Math.min(300, +e.target.value || 100)) });
+        setMetroNumerator = (e) => {
+          const n = Math.max(1, Math.min(16, +e.target.value || 4));
+          this.setState(st => {
+            const profile = [...st.beatProfile];
+            while (profile.length < n) profile.push('svag');
+            return { metroNumerator: n, beatProfile: profile.slice(0, n) };
+          });
+        };
+        cycleBeat(idx) {
+          const order = ['stark', 'mellan', 'svag'];
+          this.setState(st => {
+            const profile = [...st.beatProfile];
+            profile[idx] = order[(order.indexOf(profile[idx]) + 1) % 3];
+            return { beatProfile: profile };
+          });
+        }
+
+        // ---------- render ----------
+        renderVals() {
+          const st = this.state;
+          const view = st.view;
+          const accent = 'var(--color-accent)';
+          const linkStyle = (active) => ({ fontSize: '13px', letterSpacing: '0.04em', textTransform: 'uppercase', textDecoration: 'none', paddingBottom: '2px', color: active ? accent : 'var(--color-text)', borderBottom: active ? `2px solid ${accent}` : '2px solid transparent' });
+
+          const latest = this.latestSession();
+          const hasLatestSession = !!latest;
+          let latestVals = {};
+          if (latest) {
+            const plan = this.getPlan(latest.planId);
+            const ex = this.getExercise(latest.currentExerciseId);
+            const completed = this.sessionCompleted(latest), total = this.sessionTotal(latest);
+            const statusText = latest.status === 'paused' ? 'Pausad' : 'Pågående';
+            latestVals = {
+              latestPlanName: plan ? plan.name : 'Okänd plan',
+              latestStatusLine: `${statusText} · ${this.dateLabel(latest.updatedAt)} · ${this.sessionMinutes(latest)} min`,
+              latestFullLine: `${completed} av ${total} · ${statusText} ${this.dateLabel(latest.updatedAt)} · ${this.sessionMinutes(latest)} min`,
+              latestProgressBarStyle: { width: this.sessionProgressPct(latest) + '%', height: '100%', background: accent, borderRadius: 'var(--radius-sm)' },
+              latestProgressText: `${completed} av ${total} övningar`,
+              hasLatestCurrentExercise: !!ex,
+              latestCurrentExerciseName: ex ? ex.name : '',
+              latestCurrentExerciseUrl: ex ? ex.url : '',
+              continueLatest: this.continueLatest,
+            };
+          }
+
+          const otherSessionViews = this.sortedSessions().filter(s => !latest || s.id !== latest.id).map(s => {
+            const plan = this.getPlan(s.planId);
+            const completed = this.sessionCompleted(s), total = this.sessionTotal(s);
+            const isCompleted = s.status === 'completed';
+            return {
+              planName: plan ? plan.name : 'Okänd plan',
+              summaryLine: `${completed} av ${total} · ${this.sessionMinutes(s)} min${isCompleted ? ' · klar' : ''}`,
+              progressBarStyle: { width: this.sessionProgressPct(s) + '%', height: '100%', background: isCompleted ? 'var(--color-neutral-500)' : accent, borderRadius: 'var(--radius-sm)' },
+              dateLabel: this.dateLabel(s.updatedAt),
+              ctaLabel: isCompleted ? 'Se igen →' : 'Fortsätt →',
+              openHandler: () => this.openSession(s.id),
+            };
+          });
+
+          // session view
+          let sessVals = {};
+          if (view === 'session') {
+            const s = this.getSession(st.activeSessionId);
+            const plan = this.getPlan(s.planId);
+            const exs = plan.exerciseIds.map(id => this.getExercise(id));
+            const idx = plan.exerciseIds.indexOf(s.currentExerciseId);
+            const cur = this.getExercise(s.currentExerciseId);
+            const completed = this.sessionCompleted(s), total = this.sessionTotal(s);
+            sessVals = {
+              sessPlanName: plan.name,
+              sessProgressBarStyle: { width: this.sessionProgressPct(s) + '%', height: '100%', background: accent, borderRadius: 'var(--radius-sm)' },
+              sessCompletedCount: completed, sessTotalCount: total,
+              sessExercises: exs.map((ex, i) => {
+                const done = s.exerciseState.find(e => e.exerciseId === ex.id).completed;
+                const active = ex.id === s.currentExerciseId;
+                return {
+                  indexLabel: (i + 1) + '.',
+                  name: ex.name,
+                  sourceLine: this.sourceLabel(ex.source) + (done ? ' ✓' : ''),
+                  rowStyle: { padding: 'var(--space-2) var(--space-3)', borderBottom: '1px solid var(--color-divider)', cursor: 'pointer', background: active ? 'var(--color-accent-100)' : 'transparent', borderLeft: active ? `3px solid ${accent}` : '3px solid transparent' },
+                  nameStyle: { fontSize: '13px', color: done ? 'var(--color-neutral-500)' : 'var(--color-text)', textDecoration: done ? 'line-through' : 'none', fontWeight: active ? '600' : '400' },
+                  selectHandler: () => this.goToExercise(ex.id),
+                };
+              }),
+              sessCurrentName: cur.name,
+              sessCurrentUrl: cur.url,
+              sessHasDescription: !!cur.description,
+              sessCurrentDescription: cur.description,
+              copyLink: this.copyLink,
+              copied: st.copied, notCopied: !st.copied,
+              timerDisplay: `${String(Math.floor(st.timerRemaining / 60)).padStart(2, '0')}:${String(st.timerRemaining % 60).padStart(2, '0')}`,
+              timerInputMinutes: st.timerInputMinutes,
+              timerRunning: st.timerRunning,
+              timerNotRunning: !st.timerRunning,
+              setTimerMinutes: this.setTimerMinutes,
+              startTimer: this.startTimer, pauseTimer: this.pauseTimer, resetTimer: this.resetTimer,
+              metroToggleLabel: st.metroRunning ? 'Stoppa' : 'Starta',
+              metroBpm: st.metroBpm, metroNumerator: st.metroNumerator, metroRunning: st.metroRunning,
+              setMetroBpm: this.setMetroBpm, setMetroNumerator: this.setMetroNumerator, toggleMetronome: this.toggleMetronome,
+              beatDots: st.beatProfile.map((strength, i) => {
+                const size = strength === 'stark' ? 18 : strength === 'mellan' ? 14 : 10;
+                const active = st.currentBeat === i;
+                return {
+                  style: { width: size + 'px', height: size + 'px', borderRadius: '50%', background: strength === 'stark' ? accent : strength === 'mellan' ? 'var(--color-neutral-600)' : 'var(--color-neutral-400)', cursor: 'pointer', transform: active ? 'scale(1.3)' : 'scale(1)', transition: 'transform 0.05s' },
+                  cycleHandler: () => this.cycleBeat(i),
+                };
+              }),
+              isFirstExercise: idx === 0,
+              previousExercise: this.previousExercise,
+              nextExercise: this.nextExercise,
+              nextLabel: idx === plan.exerciseIds.length - 1 ? 'Slutför' : 'Nästa →',
+              pauseSession: this.pauseSession, restartSession: this.restartSession, deleteSession: this.deleteSession,
+            };
+          }
+
+          // create view
+          const exerciseCards = st.exercises.map(ex => ({
+            name: ex.name, sourceLabel: this.sourceLabel(ex.source),
+            editHandler: () => this.editExercise(ex.id),
+          }));
+          const planCards = st.plans.map(p => {
+            const names = p.exerciseIds.map(id => this.getExercise(id)).filter(Boolean);
+            return {
+              name: p.name, countLabel: `${p.exerciseIds.length} övningar`,
+              previewRows: names.slice(0, 3).map((ex, i) => ({ n: i + 1, name: ex.name })),
+              hasMore: names.length > 3,
+              editHandler: () => this.editPlan(p.id),
+            };
+          });
+
+          // exercise edit
+          let exEditVals = {};
+          if (view === 'exerciseEdit' && st.editingExercise) {
+            const ed = st.editingExercise;
+            let domain = ed.source;
+            try { domain = new URL(ed.url).hostname; } catch (e) {}
+            exEditVals = {
+              exerciseEditTitle: ed.id ? 'Redigera övning' : 'Ny övning',
+              editName: ed.name, setEditName: this.setEditName,
+              editUrl: ed.url, setEditUrl: this.setEditUrl,
+              editHasUrl: !!ed.url,
+              editPreviewLabel: `${ed.name || 'Övning'} · ${domain}`,
+              editDescription: ed.description, setEditDescription: this.setEditDescription,
+              editIsExisting: !!ed.id,
+              saveExercise: this.saveExercise, removeExercise: this.removeExercise,
+              sourceOptions: [
+                { value: 'youtube', label: 'YouTube' },
+                { value: 'jtc', label: 'JTC Guitar' },
+                { value: 'soundslice', label: 'Soundslice' },
+                { value: 'other', label: 'Annan' },
+              ].map(o => ({
+                label: o.label,
+                style: { cursor: 'pointer', border: `1px solid ${ed.source === o.value ? accent : 'var(--color-divider)'}`, color: ed.source === o.value ? accent : 'var(--color-neutral-600)', background: ed.source === o.value ? 'var(--color-accent-100)' : 'transparent' },
+                selectHandler: () => this.selectSource(o.value),
+              })),
+            };
+          }
+
+          // plan edit
+          let planEditVals = {};
+          if (view === 'planEdit' && st.editingPlan) {
+            const ed = st.editingPlan;
+            const rows = ed.exerciseIds.map(id => this.getExercise(id)).filter(Boolean);
+            planEditVals = {
+              planEditTitle: ed.id ? 'Redigera plan' : 'Ny plan',
+              planEditName: ed.name, setPlanName: this.setPlanName,
+              planRowCount: ed.exerciseIds.length,
+              planRows: rows.map((ex, i) => ({
+                n: i + 1, name: ex.name, sourceLabel: this.sourceLabel(ex.source),
+                isFirst: i === 0, isLast: i === rows.length - 1,
+                upHandler: () => this.movePlanRow(i, -1),
+                downHandler: () => this.movePlanRow(i, 1),
+                removeHandler: () => this.removePlanRow(i),
+              })),
+              openAddExercise: this.openAddExercise,
+              savePlan: this.savePlan, removePlan: this.removePlan,
+              planEditIsExisting: !!ed.id,
+            };
+          }
+
+          const pickerPlans = st.plans.map(p => ({ name: p.name, countLabel: `${p.exerciseIds.length} övningar`, createHandler: () => this.createSessionFromPlan(p) }));
+
+          let availableExerciseOptions = [];
+          if (st.editingPlan) {
+            const used = new Set(st.editingPlan.exerciseIds);
+            availableExerciseOptions = st.exercises.filter(e => !used.has(e.id)).map(e => ({
+              name: e.name, sourceLabel: this.sourceLabel(e.source),
+              addHandler: () => this.addExerciseToPlan(e.id),
+            }));
+          }
+
+          return {
+            isLanding: view === 'landing', isPractice: view === 'practice', isSession: view === 'session',
+            isCreate: view === 'create', isExerciseEdit: view === 'exerciseEdit', isPlanEdit: view === 'planEdit', isHelp: view === 'help',
+            goLanding: this.goLanding, goPractice: this.goPractice, goCreate: this.goCreate, goHelp: this.goHelp,
+            navPracticeStyle: linkStyle(view === 'practice' || view === 'session'),
+            navCreateStyle: linkStyle(view === 'create' || view === 'exerciseEdit' || view === 'planEdit'),
+            navHelpStyle: linkStyle(view === 'help'),
+            hasLatestSession, noLatestSession: !hasLatestSession, startNewSession: this.startNewSession,
+            ...latestVals,
+            otherSessionViews,
+            ...sessVals,
+            exerciseCards, planCards, newExercise: this.newExercise, newPlan: this.newPlan,
+            ...exEditVals, ...planEditVals,
+            planPickerOpen: st.planPickerOpen, closePlanPicker: this.closePlanPicker, pickerPlans,
+            addExercisePickerOpen: st.addExercisePickerOpen, closeAddExercise: this.closeAddExercise,
+            availableExerciseOptions, noAvailableExercises: availableExerciseOptions.length === 0,
+            stopPropagation: this.stopPropagation,
+          };
+        }
+      }
+
+    </script>
+  </body>
+</html>
