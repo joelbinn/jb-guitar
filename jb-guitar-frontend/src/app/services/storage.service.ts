@@ -1,6 +1,6 @@
-import { Injectable, inject, signal } from '@angular/core';
-import { Exercise, PracticePlan, Session, SyncStatus } from '../models';
-import { GitHubSyncService } from './github-sync.service';
+import {inject, Injectable, signal} from '@angular/core';
+import {Exercise, PracticePlan, Session, SyncStatus} from '../models';
+import {GitHubSyncService} from './github-sync.service';
 
 export interface AppData {
     exercises: Exercise[];
@@ -13,9 +13,9 @@ const STORAGE_KEY = 'jb-guitar-data';
 @Injectable({ providedIn: 'root' })
 export class StorageService {
     private readonly gitSync = inject(GitHubSyncService);
-    
+
     private data: AppData = { exercises: [], plans: [], sessions: [] };
-    
+
     syncStatus = signal<SyncStatus>('unconfigured');
     metronomeVolume = signal<number>(this.loadMetronomeVolume());
     private currentSha?: string;
@@ -27,7 +27,16 @@ export class StorageService {
         this.initSync();
     }
 
+  setMetronomeVolume(volume: number): void {
+    const val = Math.max(0, Math.min(100, Math.round(volume)));
+    this.metronomeVolume.set(val);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('jbguitar:metronome-volume', String(val));
+    }
+    }
+
     private loadMetronomeVolume(): number {
+      if (typeof localStorage === 'undefined') return 50;
         const raw = localStorage.getItem('jbguitar:metronome-volume');
         if (raw !== null) {
             const val = parseInt(raw, 10);
@@ -38,13 +47,8 @@ export class StorageService {
         return 50; // default 50%
     }
 
-    setMetronomeVolume(vol: number): void {
-        const clamped = Math.max(0, Math.min(100, vol));
-        this.metronomeVolume.set(clamped);
-        localStorage.setItem('jbguitar:metronome-volume', clamped.toString());
-    }
-
     private load(): void {
+      if (typeof localStorage === 'undefined') return;
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
             try {
@@ -56,7 +60,9 @@ export class StorageService {
     }
 
     private persist(): void {
+      if (typeof localStorage !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+      }
         this.pushToGitHubBackground();
     }
 

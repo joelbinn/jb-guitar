@@ -8,69 +8,89 @@ import {ExerciseService} from '../../services';
   selector: 'jbg-exercise-edit',
   imports: [FormsModule],
   template: `
-    <div class="breadcrumb" (click)="goBack()">← Skapa / <span class="crumb-active">Övning</span>
+    <div class="breadcrumb" (click)="goBack()">
+      ← Skapa / <span class="crumb-active">Övning</span>
     </div>
-    <div class="page-title">{{ isNew() ? 'Ny övning' : 'Redigera övning' }}</div>
+    <h2 class="page-title">{{ isNew() ? 'Ny övning' : 'Redigera övning' }}</h2>
 
-    <div class="field">
-      <label class="field-label" for="name">Namn</label>
-      <input class="field-input" id="name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
+    <div class="field" style="max-width: 480px;">
+      <label for="name">Namn</label>
+      <input class="input" id="name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
     </div>
 
-    <div class="field">
-      <div class="field-label">Källa</div>
+    <div class="field" style="max-width: 480px;">
+      <label>Källa</label>
       <div class="source-pills">
         @for (s of sources; track s.value) {
-          <button class="spill" [class.active]="source() === s.value" (click)="source.set(s.value)">
+          <button type="button" class="spill" [class.active]="source() === s.value" (click)="source.set(s.value)">
             {{ s.label }}
           </button>
         }
       </div>
     </div>
 
-    <div class="field">
-      <label class="field-label" for="url">URL</label>
-      <input class="field-input" id="url" [ngModel]="url()" (ngModelChange)="url.set($event)" placeholder="https://..." />
+    <div class="field" style="max-width: 480px;">
+      <label for="url">URL</label>
+      <input class="input" id="url" [ngModel]="url()" (ngModelChange)="url.set($event)" placeholder="https://..." />
     </div>
 
     @if (url()) {
-      <div class="field">
-        <div class="field-label">Förhandsgranskning</div>
-        <div class="preview">
-          <div class="preview-name">{{ name() || 'Övning' }} · {{ sourceDomain() }}</div>
+      <div class="field" style="max-width: 480px;">
+        <label>Förhandsgranskning</label>
+        <div class="card preview-card">
+          <div class="preview-text">{{ name() || 'Övning' }} · {{ sourceDomain() }}</div>
         </div>
       </div>
     }
 
-    <div class="field">
-      <label class="field-label" for="description">Beskrivning (valfritt)</label>
-      <textarea class="field-input"
-                id="description"
-                [ngModel]="description()"
-                (ngModelChange)="description.set($event)"
-                placeholder="Ange beskrivning..."
-                rows="4"></textarea>
+    <div class="field" style="max-width: 480px;">
+      <label for="description">Beskrivning (valfritt)</label>
+      <textarea
+        class="input"
+        id="description"
+        [ngModel]="description()"
+        (ngModelChange)="description.set($event)"
+        placeholder="Ange beskrivning..."
+        rows="4"
+      ></textarea>
     </div>
 
-    <button class="btn btn-primary btn-full" style="margin-bottom: 8px;" (click)="save()">
-      Spara övning
-    </button>
-    <div class="btn-row">
-      <button class="btn btn-ghost" style="flex: 1;" (click)="cancel()">Avbryt</button>
-      @if (!isNew()) {
-        <button class="btn btn-danger" style="flex: 1;" (click)="remove()">Ta bort övning</button>
-      }
+    <div style="max-width: 480px; display: flex; flex-direction: column; gap: var(--space-2);">
+      <button type="button" class="btn btn-primary btn-block" (click)="save()">
+        Spara övning
+      </button>
+      <div style="display: flex; gap: var(--space-2);">
+        <button type="button" class="btn btn-secondary" style="flex: 1;" (click)="cancel()">Avbryt</button>
+        @if (!isNew()) {
+          <button type="button" class="btn btn-secondary" style="flex: 1;" (click)="remove()">Ta bort övning</button>
+        }
+      </div>
     </div>
   `,
   styles: `
-    .breadcrumb { font-size: 10px; color: var(--txt3); margin-bottom: 16px; cursor: pointer; }
-    .crumb-active { color: var(--txt2); }
-    .page-title { font-size: 18px; font-weight: 700; color: var(--txt); margin-bottom: 20px; }
-    .preview {
-      background: #0c0c0c; border: 1px solid var(--border); border-radius: 6px;
-      height: 90px; display: flex; align-items: center; justify-content: center;
+    .breadcrumb {
+      font-size: 11px;
+      color: var(--color-neutral-500);
+      cursor: pointer;
+      margin-bottom: var(--space-2);
     }
-    .preview-name { font-size: 10px; color: var(--txt4); }
+    .crumb-active {
+      color: var(--color-text);
+    }
+    .page-title {
+      margin-bottom: var(--space-6);
+      font-size: 24px;
+    }
+    .preview-card {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .preview-text {
+      font-size: 11px;
+      color: var(--color-neutral-600);
+    }
   `,
 })
 export class ExerciseEditPage {

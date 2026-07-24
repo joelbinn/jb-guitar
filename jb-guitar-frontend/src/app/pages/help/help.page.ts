@@ -5,132 +5,100 @@ import {Router} from '@angular/router';
   selector: 'jbg-help',
   template: `
     <div class="breadcrumb" (click)="goBack()">← Hem</div>
-    <div class="page-title">Hjälp & Guide</div>
+    <h2 class="page-title">Hjälp & guide</h2>
 
-    <div class="help-section">
-      <h2>Välkommen till JB Guitar!</h2>
+    <div class="help-content">
+      <h3 style="color: var(--color-accent-700);">Välkommen till JB Guitar</h3>
       <p>En app för att organisera och öva gitarrövningar strukturerat.</p>
-    </div>
 
-    <div class="help-section">
-      <h3>🎯 Öva</h3>
-      <p>Här kan du se dina övningsplaner och starta träningspass.</p>
+      <h4>Öva</h4>
+      <p>Se dina övningsplaner och starta träningspass.</p>
       <ul>
-        <li><strong>Starta övning:</strong> Klicka på en plan för att börja ett träningspass</li>
-        <li><strong>Föregående/Nästa:</strong> Navigera mellan övningar i planen</li>
-        <li><strong>Pausa session:</strong> Pausa och spara ditt framsteg</li>
-        <li><strong>Börja om:</strong> Starta om sessionen från början (nollställer framsteg)</li>
-        <li><strong>Ta bort:</strong> Radera sessionen helt</li>
-      </ul>
-    </div>
-
-    <div class="help-section">
-      <h3>⏱️ Timer</h3>
-      <p>Varje övning har en inbyggd timer för att hålla tiden.</p>
-      <ul>
-        <li><strong>Ställ tid:</strong> Ändr antal minuter innan timern startar</li>
-        <li><strong>Start/Pausa:</strong> Starta eller pausa timern</li>
-        <li><strong>Återställ:</strong> Nollställ timern till inställd tid</li>
-        <li><strong>Ljud:</strong> Ett ljud spelas när tiden är slut</li>
-        <li><strong>Sparad inställning:</strong> Din timinställning sparas per session</li>
-      </ul>
-    </div>
-
-    <div class="help-section">
-      <h3>🎵 Metronom</h3>
-      <p>En inbyggd metronom för att hålla takten under övning.</p>
-      <ul>
-        <li><strong>BPM:</strong> Ställ in tempo från 20 till 300 slag per minut</li>
-        <li><strong>Taktarts-inställning:</strong> Välj taktart med två spinners
-          <ul>
-            <li>Täljare: 1-16 (hur många slag per takt)</li>
-            <li>Nämnare: 2, 4 eller 8 (noter per slag)</li>
-            <li>Exempel: 4/4, 3/4, 7/8</li>
-          </ul>
-        </li>
-        <li><strong>Slag-nivåer:</strong> Anpassa varje slag individuellt:
-          <ul>
-            <li><strong>Stark</strong> (1050 Hz, stor prick) - vanligtvis första slaget</li>
-            <li><strong>Mellan</strong> (880 Hz, mellan prick) - betoning på vissa slag</li>
-            <li><strong>Svag</strong> (660 Hz, liten prick) - vanliga slag</li>
-          </ul>
-        </li>
-        <li><strong>Visuell feedback:</strong> Prickar animeras synkroniserat med ljud</li>
-        <li><strong>Start/Stopp:</strong> Knapp för att starta och stoppa metronomen</li>
-        <li><strong>Snabb anpassning:</strong> Klicka på en prick för att snabbt ändra dess styrka
-        </li>
-        <li><strong>Sparad inställning:</strong> Metronominställningar sparas per övning</li>
-      </ul>
-    </div>
-
-    <div class="help-section">
-      <h3>✏️ Skapa</h3>
-      <p>Här kan du skapa och hantera övningar och övningsplaner.</p>
-
-      <h4>Övningar</h4>
-      <ul>
-        <li><strong>Ny övning:</strong> Klicka "+ Ny övning" för att skapa en</li>
-        <li><strong>Namn:</strong> Namn på övningen</li>
-        <li><strong>Källa:</strong> Välj från YouTube, JTC Guitar, Soundslice eller Annan</li>
-        <li><strong>URL:</strong> Länk till övningen (obligatoriskt)</li>
-        <li><strong>Beskrivning:</strong> Valfri anteckning om övningen (stöder radbrytningar)</li>
-        <li><strong>Redigera:</strong> Klicka på en övning för att ändra</li>
-        <li><strong>Ta bort:</strong> Radera övningen</li>
+        <li><strong>Starta övning:</strong> klicka på en plan för att börja ett träningspass.</li>
+        <li><strong>Föregående/Nästa:</strong> navigera mellan övningar i planen.</li>
+        <li><strong>Pausa session:</strong> pausa och spara ditt framsteg.</li>
+        <li><strong>Börja om:</strong> starta om sessionen från början.</li>
+        <li><strong>Ta bort:</strong> radera sessionen helt.</li>
       </ul>
 
-      <h4>Övningsplaner</h4>
+      <h4>Timer</h4>
+      <p>Varje övning har en inbyggd timer.</p>
       <ul>
-        <li><strong>Ny plan:</strong> Klicka "+ Ny plan" för att skapa en</li>
-        <li><strong>Lägg till övningar:</strong> Klicka "+ Lägg till övning" för att välja vilka övningar planen ska innehålla</li>
-        <li><strong>Sortera:</strong> Dra & drop (⠿) för att ändra ordning på övningar</li>
-        <li><strong>Ta bort övning:</strong> Klicka × för att ta bort en övning från planen</li>
-        <li><strong>Redigera:</strong> Klicka på en plan för att ändra</li>
-        <li><strong>Ta bort:</strong> Radera hela planen</li>
+        <li><strong>Ställ tid:</strong> ändra antal minuter innan timern startar.</li>
+        <li><strong>Start/Pausa/Återställ:</strong> styr nedräkningen.</li>
+        <li><strong>Ljud:</strong> spelas när tiden är slut.</li>
       </ul>
-    </div>
 
-    <div class="help-section">
-      <h3>💾 Data</h3>
-      <p>Hantera dina data och säkerhetskopior.</p>
+      <h4>Metronom</h4>
+      <p>Håller takten under övning.</p>
       <ul>
-        <li><strong>Exportera:</strong> Spara all data till en JSON-fil på din dator</li>
-        <li><strong>Importera:</strong> Ladda in data från en tidigare sparad fil</li>
+        <li><strong>BPM:</strong> 20–300 slag per minut.</li>
+        <li><strong>Taktart:</strong> täljare 1–16.</li>
+        <li><strong>Slag-nivåer:</strong> klicka en prick för att cykla stark / mellan / svag.</li>
       </ul>
-    </div>
 
-    <div class="help-section">
-      <h3>💡 Tips & Tricks</h3>
+      <h4>Skapa</h4>
+      <p>Skapa och hantera övningar och övningsplaner.</p>
       <ul>
-        <li>Använd beskrivningen för att anteckna svåra delar eller special-fokus</li>
-        <li>Skapa flera planer för olika nivåer eller fokusområden</li>
-        <li>Pausera en session för att spara ditt framsteg och fortsätta senare</li>
-        <li>Exportera dina data regelbundet för säkerhetskopia</li>
+        <li><strong>Övningar:</strong> namn, källa (YouTube/JTC/Soundslice/Annan), URL, valfri beskrivning.</li>
+        <li><strong>Övningsplaner:</strong> lägg till, ta bort och ordna om övningar i en ordnad lista.</li>
+      </ul>
+
+      <h4>Tips</h4>
+      <ul>
+        <li>Använd beskrivningen för att anteckna svåra partier.</li>
+        <li>Skapa flera planer för olika nivåer eller fokusområden.</li>
+        <li>Pausera en session för att fortsätta senare.</li>
       </ul>
     </div>
   `,
   styles: `
-    .breadcrumb { font-size: 10px; color: var(--txt3); margin-bottom: 16px; cursor: pointer; }
-    .page-title { font-size: 18px; font-weight: 700; color: var(--txt); margin-bottom: 20px; }
-    .help-section { margin-bottom: 24px; }
-    .help-section h2 {
-      font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 12px;
+    .breadcrumb {
+      font-size: 11px;
+      color: var(--color-neutral-500);
+      cursor: pointer;
+      margin-bottom: var(--space-2);
     }
-    .help-section h3 {
-      font-size: 14px; font-weight: 600; color: var(--txt); margin-bottom: 8px;
+    .page-title {
+      margin-bottom: var(--space-6);
+      font-size: 24px;
     }
-    .help-section h4 {
-      font-size: 12px; font-weight: 600; color: var(--txt2); margin-top: 12px; margin-bottom: 8px;
+    .help-content {
+      max-width: 640px;
     }
-    .help-section p {
-      font-size: 12px; color: var(--txt2); line-height: 1.5; margin-bottom: 10px;
+    .help-content h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: var(--space-2);
     }
-    .help-section ul {
-      font-size: 12px; color: var(--txt2); margin-left: 20px; line-height: 1.6;
+    .help-content h4 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--color-text);
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-2);
     }
-    .help-section li {
-      margin-bottom: 6px;
+    .help-content p {
+      color: var(--color-neutral-700);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: var(--space-2);
     }
-    .help-section strong { color: var(--txt); }
+    .help-content ul {
+      color: var(--color-neutral-700);
+      font-size: 14px;
+      line-height: 1.7;
+      padding-left: 1.2em;
+      margin-bottom: var(--space-4);
+    }
+    .help-content li {
+      margin-bottom: var(--space-1);
+    }
+    .help-content strong {
+      color: var(--color-text);
+    }
   `,
 })
 export class HelpPage {

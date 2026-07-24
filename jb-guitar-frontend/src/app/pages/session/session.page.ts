@@ -11,18 +11,37 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
   template: `
     @if (session(); as s) {
       @if (plan(); as p) {
-        <div class="breadcrumb" (click)="goBack()">← Öva /
-          <span class="crumb-active">{{ p.name }}</span></div>
-        <div class="sess-header">
-          <span class="sh-title">{{ p.name }}</span>
-          <div class="mini-prog">
-            <div class="mini-bar">
-              <div class="mini-fill" [style.width.%]="progressPercent()"></div>
+        <div class="breadcrumb" (click)="goBack()">
+          ← Öva / <span class="crumb-active">{{ p.name }}</span>
+        </div>
+
+        <div class="sess-header-bar">
+          <span class="sess-title">{{ p.name }}</span>
+          <div class="sess-progress-wrap">
+            <div class="sess-bar-track">
+              <div class="sess-bar-fill" [style.width.%]="progressPercent()"></div>
             </div>
-            <span class="mini-text">{{ completedCount() }}/{{ totalCount() }}</span>
+            <span class="sess-count-label">{{ completedCount() }}/{{ totalCount() }}</span>
           </div>
         </div>
+
+        <!-- Mobile exercise chips scroller -->
+        <div class="mobile-exercise-chips">
+          @for (ex of exercises(); track ex.id; let i = $index) {
+            <button
+              type="button"
+              class="chip"
+              [class.active]="ex.id === s.currentExerciseId"
+              [class.done]="isExerciseCompleted(s, ex.id)"
+              (click)="goToExercise(ex.id)"
+            >
+              {{ i + 1 }}. {{ ex.name }}
+            </button>
+          }
+        </div>
+
         <div class="sess-layout">
+          <!-- Desktop sidebar -->
           <div class="sess-sidebar">
             @for (ex of exercises(); track ex.id; let i = $index) {
               <div
@@ -33,135 +52,133 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
               >
                 <div class="n">{{ i + 1 }}</div>
                 <div class="nm">{{ ex.name }}</div>
-                <div class="src">{{ ex.source }}{{
-                    isExerciseCompleted(s, ex.id) ? ' ✓' : ''
-                  }}
-                </div>
+                <div class="src">{{ sourceLabel(ex.source) }}{{ isExerciseCompleted(s, ex.id) ? ' ✓' : '' }}</div>
               </div>
             }
           </div>
+
           <div class="sess-main">
             @if (currentExercise(); as ex) {
-              <div class="iframe-area">
-                @if (embedUrl(); as url) {
+              @if (embedUrl(); as url) {
+                <div class="iframe-container">
                   <iframe [src]="url" class="exercise-iframe" allowfullscreen></iframe>
-                } @else {
-                  <div class="iframe-placeholder">
-                    <div class="iframe-label">{{ ex.name }}</div>
-                    <div class="iframe-url">{{ ex.url }}</div>
-                    <div style="display: flex; gap: 8px; margin-top: 12px; align-items: center;">
-                      <a [href]="ex.url"
-                         class="btn btn-primary"
-                         target="selected-exercise">
-                        Öppna i nytt fönster ↗
-                      </a>
-                      <button
-                         class="btn btn-ghost"
-                         (click)="copyToClipboard(ex.url)"
-                         [title]="copied() ? 'Kopierad!' : 'Kopiera länk'"
-                         aria-label="Kopiera länk"
-                         style="padding: 8px; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-width: 34px;">
-                        @if (copied()) {
-                          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--success); display: block;">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        } @else {
-                          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                          </svg>
-                        }
-                      </button>
-                    </div>
+                </div>
+              } @else {
+                <div class="card current-ex-card">
+                  <div class="current-ex-title">{{ ex.name }}</div>
+                  <div class="current-ex-url">{{ ex.url }}</div>
+                  <div class="link-actions">
+                    <a [href]="ex.url" target="_blank" rel="noreferrer" class="btn btn-primary">
+                      Öppna i nytt fönster
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/>
+                      </svg>
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-secondary btn-icon"
+                      (click)="copyToClipboard(ex.url)"
+                      [title]="copied() ? 'Kopierad!' : 'Kopiera länk'"
+                      aria-label="Kopiera länk"
+                    >
+                      @if (copied()) {
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      } @else {
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                      }
+                    </button>
                   </div>
-                }
-              </div>
-              @if (ex.description) {
-                <div class="description-area">
-                  <div class="description-text">{{ ex.description }}</div>
                 </div>
               }
-              <div class="sess-footer">
-                <div class="exercise-info">
-                  <div class="exercise-name">{{ ex.name }}</div>
-                  <div class="exercise-pos">Övning {{ currentExerciseIndex() }}
-                    av {{ totalCount() }}
-                  </div>
+
+              @if (ex.description) {
+                <div class="description-block">
+                  {{ ex.description }}
                 </div>
-                <div class="timer-section">
+              }
+
+              <div class="tools-grid">
+                <!-- Timer Card -->
+                <div class="card">
+                  <div class="card-kicker">Timer</div>
                   <div class="timer-display">{{ timerDisplay() }}</div>
                   <div class="timer-input-row">
-                    <input class="timer-input"
-                           type="number"
-                           min="0"
-                           max="59"
-                           [value]="timerInputMinutes()"
-                           (change)="timerInputMinutes.set(+$event.target!.value)"
-                           [disabled]="timerRunning()"/>
-                    <span class="timer-label">min</span>
+                    <input
+                      class="input"
+                      type="number"
+                      min="0"
+                      max="59"
+                      style="width: 64px; text-align: center;"
+                      [value]="timerInputMinutes()"
+                      (change)="timerInputMinutes.set(+$any($event.target).value)"
+                      [disabled]="timerRunning()"
+                    />
+                    <span class="unit-label">min</span>
                   </div>
-                  <div class="timer-btns">
-                    <button class="btn btn-sm" [disabled]="timerRunning()" (click)="startTimer()">
-                      Start
-                    </button>
-                    <button class="btn btn-sm" [disabled]="!timerRunning()" (click)="pauseTimer()">
-                      Pausa
-                    </button>
-                    <button class="btn btn-sm" (click)="resetTimer()">Återställ</button>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" style="flex: 1;" [disabled]="timerRunning()" (click)="startTimer()">Start</button>
+                    <button type="button" class="btn btn-secondary" style="flex: 1;" [disabled]="!timerRunning()" (click)="pauseTimer()">Pausa</button>
+                    <button type="button" class="btn btn-ghost" style="flex: 1;" (click)="resetTimer()">Återställ</button>
                   </div>
                 </div>
-                <div class="metro-section">
-                  <div class="metro-top-row">
-                    <span class="metro-label">Metronom</span>
-                    <button class="btn btn-sm" (click)="toggleMetronome()">
-                      {{ metronomeRunning() ? '⏹ Stoppa' : '▶ Starta' }}
+
+                <!-- Metronome Card -->
+                <div class="card">
+                  <div class="metro-header">
+                    <div class="card-kicker">Metronom</div>
+                    <button type="button" class="btn btn-secondary" (click)="toggleMetronome()">
+                      {{ metronomeRunning() ? 'Stoppa' : 'Starta' }}
                     </button>
                   </div>
-                  <div class="metro-controls-row">
-                    <input class="metro-input" type="number" min="20" max="300"
-                           [value]="metroBpm()" (change)="setMetroBpm(+$any($event.target).value)"
-                           [disabled]="metronomeRunning()"/>
-                    <span class="metro-unit">BPM</span>
-                    <input class="metro-input metro-sig"
-                           type="number"
-                           min="1"
-                           max="16"
-                           [value]="metroNumerator()"
-                           (change)="setMetroNumerator(+$any($event.target).value)"
-                           [disabled]="metronomeRunning()"/>
-                    <span class="metro-sep">/</span>
-                    <select class="metro-select" [value]="metroDenominator()"
-                            (change)="setMetroDenominator(+$any($event.target).value)"
-                            [disabled]="metronomeRunning()">
-                      <option value="2">2</option>
-                      <option value="4">4</option>
-                      <option value="8">8</option>
-                    </select>
+                  <div class="metro-inputs">
+                    <input
+                      class="input"
+                      type="number"
+                      min="20"
+                      max="300"
+                      style="width: 60px; text-align: center;"
+                      [value]="metroBpm()"
+                      (change)="setMetroBpm(+$any($event.target).value)"
+                      [disabled]="metronomeRunning()"
+                    />
+                    <span class="unit-label">BPM</span>
+                    <input
+                      class="input"
+                      type="number"
+                      min="1"
+                      max="16"
+                      style="width: 48px; text-align: center;"
+                      [value]="metroNumerator()"
+                      (change)="setMetroNumerator(+$any($event.target).value)"
+                      [disabled]="metronomeRunning()"
+                    />
+                    <span class="metro-sep">/4</span>
                   </div>
-                  <div class="metro-dots">
+                  <div class="beat-dots">
                     @for (beat of beatProfile(); track $index; let i = $index) {
-                      <div class="metro-dot"
-                           [class]="'metro-dot dot-' + beat + (currentBeat() === i ? ' dot-active' : '')"
-                           (click)="cycleBeatStrength(i)">
-                      </div>
+                      <div
+                        class="beat-dot"
+                        [class]="'dot-' + beat + (currentBeat() === i ? ' dot-active' : '')"
+                        (click)="cycleBeatStrength(i)"
+                      ></div>
                     }
                   </div>
                 </div>
-                <div class="nav-btns">
-                  <button class="btn btn-ghost"
-                          [disabled]="currentExerciseIndex() === 1"
-                          (click)="previous()">
-                    ← Föregående
-                  </button>
-                  <button class="btn btn-primary" (click)="next()">
-                    {{ currentExerciseIndex() === totalCount() ? 'Slutför ✓' : 'Nästa →' }}
-                  </button>
-                </div>
-                <div class="btn-row">
-                  <button class="btn btn-ghost" (click)="pauseSession()">⏸ Pausa session</button>
-                  <button class="btn btn-ghost" (click)="restartSession()">↻ Börja om</button>
-                  <button class="btn btn-danger" (click)="deleteSession()">🗑 Ta bort</button>
-                </div>
+              </div>
+
+              <div class="nav-controls">
+                <button type="button" class="btn btn-secondary" style="flex: 1;" [disabled]="currentExerciseIndex() === 1" (click)="previous()">
+                  ← Föregående
+                </button>
+                <button type="button" class="btn btn-primary" style="flex: 1;" (click)="next()">
+                  {{ currentExerciseIndex() === totalCount() ? 'Slutför ✓' : 'Nästa →' }}
+                </button>
+              </div>
+
+              <div class="session-actions">
+                <button type="button" class="btn btn-secondary" style="flex: 1;" (click)="pauseSession()">Pausa session</button>
+                <button type="button" class="btn btn-secondary" style="flex: 1;" (click)="restartSession()">Börja om</button>
+                <button type="button" class="btn btn-secondary" style="flex: 1;" (click)="deleteSession()">Ta bort</button>
               </div>
             }
           </div>
@@ -170,245 +187,306 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
     }
   `,
   styles: `
-    :host { display: flex; flex-direction: column; position: fixed; top: 48px; left: 0; right: 0; bottom: 0; }
-
     .breadcrumb {
-      font-size: 10px;
-      color: var(--txt3);
-      padding: 8px 16px;
-      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--color-neutral-500);
       cursor: pointer;
+      margin-bottom: var(--space-4);
+    }
+    .crumb-active {
+      color: var(--color-text);
+    }
+    .sess-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-neutral-100);
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-sm);
+    }
+    .sess-title {
+      font-family: var(--font-heading);
+      font-weight: var(--font-heading-weight);
+      font-size: 18px;
+      color: var(--color-text);
+    }
+    .sess-progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .sess-bar-track {
+      width: 90px;
+      height: 6px;
+      background: var(--color-neutral-300);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .sess-bar-fill {
+      height: 100%;
+      background: var(--color-accent);
+      transition: width 0.3s ease;
+    }
+    .sess-count-label {
+      font-size: 12px;
+      color: var(--color-neutral-600);
     }
 
-    .crumb-active {
-      color: var(--txt2);
+    .mobile-exercise-chips {
+      display: none;
+      gap: var(--space-2);
+      overflow-x: auto;
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-1);
     }
-    .sess-header {
-      background: #141414; border-bottom: 1px solid var(--border);
-      padding: 7px 16px; display: flex; align-items: center; justify-content: space-between;
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--color-divider);
+      background: #fffdf7;
+      font-size: 12px;
+      font-family: var(--font-body);
+      color: var(--color-text);
+      cursor: pointer;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
-    .sh-title { font-size: 12px; font-weight: 600; color: var(--txt); }
-    .mini-prog { display: flex; align-items: center; gap: 6px; }
-    .mini-bar { width: 70px; height: 5px; background: var(--border); border-radius: 3px; }
-    .mini-fill { height: 5px; border-radius: 3px; background: var(--accent); opacity: 0.7; transition: width 0.3s ease; }
-    .mini-text { font-size: 10px; color: var(--txt3); }
-    .sess-layout { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+    .chip.active {
+      background: var(--color-accent-100);
+      border-color: var(--color-accent);
+      color: var(--color-accent-700);
+      font-weight: 600;
+    }
+    .chip.done {
+      background: var(--color-neutral-100);
+      color: var(--color-neutral-500);
+      text-decoration: line-through;
+    }
+
+    .sess-layout {
+      display: flex;
+      gap: var(--space-6);
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
     .sess-sidebar {
-      width: 150px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; min-height: 0;
+      width: 220px;
+      flex-shrink: 0;
+      border: 1px solid var(--color-divider);
+      background: #fffdf7;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
     }
     .sess-item {
-      padding: 9px 10px; border-bottom: 1px solid var(--border); cursor: pointer;
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--color-divider);
+      cursor: pointer;
       transition: background 0.15s;
     }
-    .sess-item:hover { background: var(--surf); }
-    .sess-item .n { font-size: 9px; color: var(--txt3); margin-bottom: 2px; }
-    .sess-item .nm { font-size: 11px; color: var(--txt3); }
-    .sess-item .src { font-size: 9px; color: var(--txt4); }
-    .sess-item.done .nm { color: var(--txt4); text-decoration: line-through; }
-    .sess-item.active { background: var(--accent-dim); border-left: 3px solid var(--accent); }
-    .sess-item.active .nm { color: var(--txt); font-weight: 600; }
-    .sess-item.active .src { color: var(--accent); }
-    .sess-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
-    .iframe-area { flex: 1; display: flex; background: #0a0a0a; border-bottom: 1px solid var(--border); }
-    .exercise-iframe { width: 100%; height: 100%; border: none; }
-
-    .description-area {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surf);
-      max-height: 120px;
-      overflow-y: auto;
+    .sess-item:last-child {
+      border-bottom: none;
+    }
+    .sess-item:hover {
+      background: var(--color-neutral-100);
+    }
+    .sess-item .n {
+      font-size: 10px;
+      color: var(--color-neutral-500);
+    }
+    .sess-item .nm {
+      font-size: 13px;
+      color: var(--color-text);
+    }
+    .sess-item .src {
+      font-size: 10px;
+      color: var(--color-neutral-500);
+    }
+    .sess-item.done .nm {
+      color: var(--color-neutral-500);
+      text-decoration: line-through;
+    }
+    .sess-item.active {
+      background: var(--color-accent-100);
+      border-left: 3px solid var(--color-accent);
+    }
+    .sess-item.active .nm {
+      color: var(--color-accent-700);
+      font-weight: 600;
+    }
+    .sess-item.active .src {
+      color: var(--color-accent-700);
     }
 
-    .description-text {
-      font-size: 11px;
-      color: var(--txt3);
-      white-space: pre-wrap;
-      line-height: 1.4;
-    }
-    .iframe-placeholder {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 6px;
-    }
-    .iframe-label { font-size: 12px; color: var(--txt3); }
-    .iframe-url { font-size: 9px; color: var(--txt4); }
-    .sess-footer { padding: 12px; border-top: 1px solid var(--border); }
-    .exercise-info { margin-bottom: 8px; }
-    .exercise-name { font-size: 11px; font-weight: 600; color: var(--txt); margin-bottom: 2px; }
-    .exercise-pos { font-size: 10px; color: var(--txt3); }
-    .nav-btns { display: flex; gap: 8px; margin-bottom: 8px; }
-    .nav-btns .btn { flex: 1; }
-
-    .btn-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-row .btn {
+    .sess-main {
       flex: 1;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
     }
 
-    .timer-section {
-      margin-bottom: 12px;
-      padding: 8px;
-      background: var(--surf2);
-      border-radius: 4px;
-      border: 1px solid var(--border);
+    .iframe-container {
+      width: 100%;
+      height: 380px;
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #000;
+    }
+    .exercise-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .current-ex-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      text-align: center;
+    }
+    .current-ex-title {
+      font-family: var(--font-heading);
+      font-weight: var(--font-heading-weight);
+      font-size: 18px;
+      color: var(--color-text);
+    }
+    .current-ex-url {
+      font-size: 11px;
+      color: var(--color-neutral-600);
+      word-break: break-all;
+      max-width: 80%;
+    }
+    .link-actions {
+      display: inline-flex;
+      gap: var(--space-2);
+      margin-top: var(--space-2);
+      width: fit-content;
+    }
+
+    .description-block {
+      font-size: 13px;
+      color: var(--color-neutral-700);
+      white-space: pre-wrap;
+      line-height: 1.5;
+      border-left: 2px solid var(--color-divider);
+      padding-left: var(--space-3);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
     }
 
     .timer-display {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--accent);
+      font-family: ui-monospace, monospace;
+      font-size: 32px;
       text-align: center;
-      margin-bottom: 8px;
-      font-family: monospace;
+      color: var(--color-accent-700);
+      font-weight: 700;
     }
-
     .timer-input-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      margin-bottom: 8px;
+      gap: var(--space-2);
     }
-
-    .timer-input {
-      width: 50px;
-      padding: 4px;
-      font-size: 11px;
-      background: var(--surf);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--txt);
-      text-align: center;
+    .unit-label {
+      font-size: 12px;
+      color: var(--color-neutral-600);
     }
-
-    .timer-label {
-      font-size: 10px;
-      color: var(--txt3);
-    }
-
-    .timer-btns {
+    .btn-group {
       display: flex;
-      gap: 4px;
+      gap: var(--space-2);
+      margin-top: var(--space-2);
     }
 
-    .timer-btns .btn {
-      flex: 1;
-      font-size: 10px;
-      padding: 4px 8px;
-    }
-
-    .metro-section {
-      margin-bottom: 12px;
-      padding: 8px;
-      background: var(--surf2);
-      border-radius: 4px;
-      border: 1px solid var(--border);
-    }
-
-    .metro-top-row {
+    .metro-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
     }
-
-    .metro-label {
-      font-size: 10px;
-      color: var(--txt3);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .metro-controls-row {
+    .metro-inputs {
       display: flex;
       align-items: center;
-      gap: 4px;
-      margin-bottom: 8px;
+      gap: var(--space-2);
     }
-
-    .metro-input {
-      width: 48px;
-      padding: 3px;
-      font-size: 11px;
-      background: var(--surf);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--txt);
-      text-align: center;
-    }
-
-    .metro-sig {
-      width: 36px;
-    }
-
-    .metro-unit {
-      font-size: 10px;
-      color: var(--txt3);
-      margin-right: 4px;
-    }
-
     .metro-sep {
-      font-size: 14px;
-      color: var(--txt3);
+      font-size: 13px;
+      color: var(--color-neutral-500);
     }
-
     .metro-select {
-      padding: 3px;
-      font-size: 11px;
-      background: var(--surf);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--txt);
+      width: 48px;
+      padding: 6px;
     }
 
-    .metro-dots {
+    .beat-dots {
       display: flex;
-      gap: 6px;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      align-items: flex-end;
+      min-height: 22px;
+      margin-top: var(--space-2);
+    }
+    .beat-dot {
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.1s, background 0.1s;
+    }
+    .dot-stark {
+      width: 16px;
+      height: 16px;
+      background: var(--color-accent);
+    }
+    .dot-mellan {
+      width: 12px;
+      height: 12px;
+      background: var(--color-accent-700);
+      margin-bottom: 2px;
+    }
+    .dot-svag {
+      width: 8px;
+      height: 8px;
+      background: var(--color-neutral-300);
+      margin-bottom: 4px;
+    }
+    .dot-active {
+      outline: 2px solid var(--color-accent-700);
+      outline-offset: 2px;
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: var(--space-3);
+    }
+    .session-actions {
+      display: flex;
+      gap: var(--space-2);
       flex-wrap: wrap;
     }
 
-    .metro-dot {
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background 0.05s, transform 0.05s;
+    @media (max-width: 640px) {
+      .sess-sidebar {
+        display: none;
+      }
+      .mobile-exercise-chips {
+        display: flex;
+      }
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+      .sess-layout {
+        gap: var(--space-4);
+      }
     }
-
-    .dot-stark {
-      width: 18px;
-      height: 18px;
-      background: var(--accent);
-      opacity: 0.6;
-    }
-
-    .dot-mellan {
-      width: 14px;
-      height: 14px;
-      background: var(--txt2);
-      opacity: 0.5;
-      margin-top: 2px;
-    }
-
-    .dot-svag {
-      width: 10px;
-      height: 10px;
-      background: var(--txt4);
-      opacity: 0.5;
-      margin-top: 4px;
-    }
-
-    .dot-active {
-      opacity: 1 !important;
-      transform: scale(1.3);
-    }
-
-    .btn-sm {
-      font-size: 10px;
-      padding: 4px 8px;
-    }
-    .btn:disabled { opacity: 0.3; cursor: not-allowed; }
   `,
 })
 export class SessionPage {
@@ -482,7 +560,7 @@ export class SessionPage {
   metroNumerator = signal(4);
   metroDenominator = signal<2 | 4 | 8>(4);
   beatProfile = signal<BeatStrength[]>(['stark', 'svag', 'svag', 'svag']);
-  currentBeat = signal(-1);   // -1 = inget aktivt slag
+  currentBeat = signal(-1);
   private audioCtx: AudioContext | null = null;
   private nextBeatTime = 0;
   private nextBeatIndex = 0;
@@ -492,13 +570,11 @@ export class SessionPage {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.loadSession(id);
 
-    // Reset timer when input minutes change (but not if paused by user)
     effect(() => {
       const minutes = this.timerInputMinutes();
       if (!this.timerRunning() && !this.timerPausedByUser()) {
         this.timerRemaining.set(minutes * 60);
       }
-      // Save timer minutes to current exercise in session
       const s = this.session();
       if (s && s.currentExerciseId) {
         const completion = s.exerciseState.find((c) => c.exerciseId === s.currentExerciseId);
@@ -509,23 +585,18 @@ export class SessionPage {
       }
     });
 
-    // Load timer and start automatically when exercise changes
     effect(() => {
       const exerciseId = this.currentExerciseId();
 
-      // Only run if exercise ID changed and is not empty
       if (exerciseId && exerciseId !== this.previousExerciseId) {
         this.previousExerciseId = exerciseId;
 
-        // Verify exercise exists
         if (this.currentExercise()) {
-          // Load timer minutes and metronome config for this exercise
           const s = this.session();
           if (s) {
             const completion = s.exerciseState.find((c) => c.exerciseId === exerciseId);
             if (completion) {
               this.timerInputMinutes.set(completion.timerMinutes);
-              // Load metronome config
               const mc = completion.metronomeConfig ?? this.defaultMetronomeConfig();
               this.metroBpm.set(mc.bpm);
               this.metroNumerator.set(mc.numerator);
@@ -533,24 +604,30 @@ export class SessionPage {
               this.beatProfile.set([...mc.beatProfile]);
             }
           }
-          // Reset timer to loaded value and clear paused flag
           this.timerRemaining.set(this.timerInputMinutes() * 60);
           this.timerPausedByUser.set(false);
-          // Stop metronome when exercise changes
           this.stopMetronome();
           if (this.timerRunning()) {
-            // Stop current timer if running
             if (this.timerIntervalId !== null) {
               clearInterval(this.timerIntervalId);
               this.timerIntervalId = null;
             }
             this.timerRunning.set(false);
           }
-          // Start new timer for this exercise with a small delay to ensure proper cleanup
           setTimeout(() => this.startTimer(), 50);
         }
       }
     });
+  }
+
+  sourceLabel(source: string): string {
+    const map: Record<string, string> = {
+      youtube: 'YouTube',
+      jtc: 'JTC Guitar',
+      soundslice: 'Soundslice',
+      other: 'Annan',
+    };
+    return map[source] ?? source;
   }
 
   goToExercise(exerciseId: string): void {
@@ -558,23 +635,18 @@ export class SessionPage {
     if (!s) return;
     const updated = this.sessionService.setCurrentExerciseId(s.id, exerciseId);
     if (updated) {
-      // Create new object to trigger signal update
       this.session.set({...updated});
-      // Load the timer value and metronome config for this exercise
       const completion = updated.exerciseState.find((c) => c.exerciseId === exerciseId);
       if (completion) {
         this.timerInputMinutes.set(completion.timerMinutes);
-        // Load metronome config
         const mc = completion.metronomeConfig ?? this.defaultMetronomeConfig();
         this.metroBpm.set(mc.bpm);
         this.metroNumerator.set(mc.numerator);
         this.metroDenominator.set(mc.denominator as 2 | 4 | 8);
         this.beatProfile.set([...mc.beatProfile]);
       }
-      // Reset and auto-start timer when exercise changes
       this.timerRemaining.set(this.timerInputMinutes() * 60);
       this.timerPausedByUser.set(false);
-      // Stop metronome when exercise changes
       this.stopMetronome();
       if (this.timerRunning()) {
         if (this.timerIntervalId !== null) {
@@ -639,7 +711,6 @@ export class SessionPage {
     if (updated?.status === 'completed') {
       this.router.navigate(['/practice']);
     } else if (updated) {
-      // Create new object to trigger signal update and re-evaluate computeds
       this.session.set({...updated});
     }
   }
@@ -649,7 +720,6 @@ export class SessionPage {
     if (!s) return;
     const updated = this.sessionService.previous(s.id);
     if (updated) {
-      // Create new object to trigger signal update and re-evaluate computeds
       this.session.set({...updated});
     }
   }
@@ -673,7 +743,6 @@ export class SessionPage {
     }
     const updated = this.sessionService.restart(s.id);
     if (updated) {
-      // Create new object to trigger signal update and re-evaluate computeds
       this.session.set({...updated});
     }
   }
@@ -738,7 +807,6 @@ export class SessionPage {
   setMetroNumerator(v: number): void {
     const n = Math.max(1, Math.min(16, v));
     this.metroNumerator.set(n);
-    // Anpassa beatProfile
     const profile = [...this.beatProfile()];
     while (profile.length < n) profile.push('svag');
     this.beatProfile.set(profile.slice(0, n));
@@ -784,14 +852,12 @@ export class SessionPage {
 
   private scheduleBulk(): void {
     if (!this.audioCtx) return;
-    const AHEAD = 0.1; // sekunder att schemalägga framåt
+    const AHEAD = 0.1;
     while (this.nextBeatTime < this.audioCtx.currentTime + AHEAD) {
       this.scheduleBeat(this.nextBeatIndex, this.nextBeatTime);
-      // Visuell uppdatering vid exakt slagstidpunkt
       const delayMs = (this.nextBeatTime - this.audioCtx.currentTime) * 1000;
       const capturedBeat = this.nextBeatIndex;
       setTimeout(() => this.currentBeat.set(capturedBeat), Math.max(0, delayMs - 5));
-      // Räkna ut nästa slags tidpunkt: beatInterval = 60/bpm * (4/denominator)
       this.nextBeatTime += 60 / this.metroBpm() * (4 / this.metroDenominator());
       this.nextBeatIndex = (this.nextBeatIndex + 1) % this.metroNumerator();
     }
@@ -851,7 +917,6 @@ export class SessionPage {
       );
     }
 
-    // Set timer minutes from current exercise and start timer for initial exercise
     const currentExerciseCompletion = s?.exerciseState.find((c) => c.exerciseId === s?.currentExerciseId);
     const timerMinutes = currentExerciseCompletion?.timerMinutes ?? 5;
     this.timerInputMinutes.set(timerMinutes);
@@ -870,14 +935,12 @@ export class SessionPage {
       const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
       const now = audioContext.currentTime;
 
-      // Create oscillator for bell sound
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
 
       osc.connect(gain);
       gain.connect(audioContext.destination);
 
-      // Bell-like sound with two frequencies
       osc.frequency.setValueAtTime(800, now);
       osc.frequency.exponentialRampToValueAtTime(400, now + 0.3);
 
@@ -887,7 +950,6 @@ export class SessionPage {
       osc.start(now);
       osc.stop(now + 0.3);
     } catch (e) {
-      // Fallback: silent if Web Audio API not available
       console.log('Timer finished');
     }
   }

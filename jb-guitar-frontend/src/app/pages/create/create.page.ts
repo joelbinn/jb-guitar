@@ -1,53 +1,83 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { Exercise, PracticePlan } from '../../models';
-import { ExerciseService, PlanService } from '../../services';
+import {Component, inject, signal} from '@angular/core';
+import {Router} from '@angular/router';
+import {Exercise, PracticePlan} from '../../models';
+import {ExerciseService, PlanService} from '../../services';
 
 @Component({
   selector: 'jbg-create',
   template: `
     <div class="sect-label">Övningar</div>
-    <div class="grid-3" style="margin-bottom: 20px;">
+    <div class="exercises-grid">
       @for (ex of exercises(); track ex.id) {
-        <div class="card" style="padding: 10px; cursor: pointer;" (click)="editExercise(ex.id)">
-          <div class="ex-name">{{ ex.name }}</div>
-          <div class="tag">{{ sourceLabel(ex.source) }}</div>
-          <div class="card-bottom">
-            <div class="edit-link">Redigera →</div>
-          </div>
+        <div class="card" style="cursor: pointer; display: flex; flex-direction: column;" (click)="editExercise(ex.id)">
+          <div class="card-title" style="font-size: 15px;">{{ ex.name }}</div>
+          <span class="tag tag-outline" style="align-self: flex-start;">{{ sourceLabel(ex.source) }}</span>
+          <div class="edit-link">Redigera →</div>
         </div>
       }
-      <div class="card-new" style="font-size: 11px;" (click)="newExercise()">+ Ny övning</div>
+      <div class="card-new" style="min-height: 110px;" (click)="newExercise()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/><path d="M12 5v14"/>
+        </svg>
+        <span>Ny övning</span>
+      </div>
     </div>
 
     <div class="sect-label">Övningsplaner</div>
-    <div class="grid-2">
+    <div class="plans-grid">
       @for (plan of plans(); track plan.id) {
-        <div class="card">
-          <div class="card-title" style="font-size: 12px;">{{ plan.name }}</div>
-          <div class="card-sub">{{ plan.exerciseIds.length }} övningar</div>
+        <div class="card elev-sm" style="display: flex; flex-direction: column;">
+          <div class="card-title" style="font-size: 15px;">{{ plan.name }}</div>
+          <div class="plan-count">{{ plan.exerciseIds.length }} övningar</div>
           <div class="plan-preview">
             @for (exId of plan.exerciseIds.slice(0, 3); track exId; let i = $index) {
-              {{ i + 1 }}. {{ getExerciseName(exId) }}<br>
+              <div>{{ i + 1 }}. {{ getExerciseName(exId) }}</div>
             }
-            @if (plan.exerciseIds.length > 3) { ··· }
+            @if (plan.exerciseIds.length > 3) {
+              <div>···</div>
+            }
           </div>
-          <button class="btn btn-ghost btn-sm" (click)="editPlan(plan.id)">Redigera →</button>
+          <button type="button" class="btn btn-ghost" style="align-self: flex-start; margin-top: auto;" (click)="editPlan(plan.id)">
+            Redigera →
+          </button>
         </div>
       }
-      <div class="card-new" (click)="newPlan()">+ Ny plan</div>
+      <div class="card-new" style="min-height: 120px;" (click)="newPlan()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/><path d="M12 5v14"/>
+        </svg>
+        <span>Ny plan</span>
+      </div>
     </div>
   `,
   styles: `
-    .ex-name { font-size: 11px; font-weight: 600; margin-bottom: 4px; }
-    .card-bottom { margin-top: auto; padding-top: 8px; }
-    .edit-link { font-size: 10px; color: var(--txt3); }
-    .plan-preview {
-      margin: 8px 0; font-size: 10px; color: var(--txt3); line-height: 1.8;
+    .exercises-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
     }
-    .btn-sm { font-size: 10px; padding: 4px 10px; }
-    .grid-3 > .card, .grid-2 > .card {
-      display: flex; flex-direction: column;
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-4);
+    }
+    .edit-link {
+      margin-top: auto;
+      font-size: 12px;
+      color: var(--color-accent-700);
+      font-weight: 500;
+      padding-top: var(--space-2);
+    }
+    .plan-count {
+      font-size: 12px;
+      color: var(--color-neutral-600);
+    }
+    .plan-preview {
+      font-size: 12px;
+      color: var(--color-neutral-600);
+      line-height: 1.7;
+      margin: var(--space-2) 0;
     }
   `,
 })

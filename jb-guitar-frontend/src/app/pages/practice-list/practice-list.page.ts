@@ -19,16 +19,18 @@ interface SessionView {
   template: `
     @if (latest(); as lat) {
       <div class="sect-label">Senaste session</div>
-      <div class="card card-accent" style="margin-bottom: 20px;">
-        <div class="latest-row">
+      <div class="card elev-sm" style="margin-bottom: var(--space-8);">
+        <div class="latest-header">
           <div>
             <div class="card-title">{{ lat.planName }}</div>
-            <div class="card-sub">{{ lat.completedCount }} av {{ lat.totalCount }} · {{
-                statusLabel(lat.session)
-              }} {{ lat.dateLabel }} {{ lat.timeLabel }} · ⏱ {{ lat.estimatedMinutes }} min
-            </div>
+            <div class="card-sub">{{ lat.completedCount }} av {{ lat.totalCount }} · {{ statusLabel(lat.session) }} {{ lat.dateLabel }} {{ lat.timeLabel }} · ⏱ {{ lat.estimatedMinutes }} min</div>
           </div>
-          <button class="btn btn-primary" (click)="openSession(lat.session.id)">Fortsätt →</button>
+          <button type="button" class="btn btn-primary" (click)="openSession(lat.session.id)">
+            Fortsätt
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
+          </button>
         </div>
         <div class="prog-wrap">
           <div class="prog-fill" [style.width.%]="lat.progressPercent"></div>
@@ -37,81 +39,111 @@ interface SessionView {
     }
 
     <div class="sect-label">Pågående sessioner</div>
-    <div class="grid-2">
+    <div class="sessions-grid">
       @for (sv of otherSessions(); track sv.session.id) {
-        <div class="card">
-          <div class="card-title" style="font-size: 12px;">{{ sv.planName }}</div>
+        <div class="card elev-sm">
+          <div class="card-title" style="font-size: 15px;">{{ sv.planName }}</div>
           <div class="card-sub" [class.completed]="sv.session.status === 'completed'">
             {{ sv.completedCount }} av {{ sv.totalCount }} · ⏱ {{ sv.estimatedMinutes }} min
             @if (sv.session.status === 'completed') { ✓ }
           </div>
           <div class="prog-wrap">
-            <div class="prog-fill"
+            <div
+              class="prog-fill"
               [style.width.%]="sv.progressPercent"
-              [style.background]="sv.session.status === 'completed' ? 'var(--accent)' : 'var(--txt3)'"
+              [style.background]="sv.session.status === 'completed' ? 'var(--color-neutral-500)' : 'var(--color-accent)'"
             ></div>
           </div>
-          <div class="card-bottom">
-            <div class="date-label">{{ sv.dateLabel }} {{ sv.timeLabel }}</div>
-            <button class="btn btn-ghost btn-sm" (click)="openSession(sv.session.id)">
+          <div class="card-footer">
+            <span class="date-label">{{ sv.dateLabel }} {{ sv.timeLabel }}</span>
+            <button type="button" class="btn btn-ghost" (click)="openSession(sv.session.id)">
               {{ sv.session.status === 'completed' ? 'Se igen →' : 'Fortsätt →' }}
             </button>
           </div>
         </div>
       }
-      <div class="card-new" style="min-height: 104px;" (click)="startNewSession()">
-        <span class="plus">+</span>
+      <div class="card-new" style="min-height: 120px;" (click)="startNewSession()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/><path d="M12 5v14"/>
+        </svg>
         <span>Ny session</span>
       </div>
     </div>
 
     @if (showPlanPicker()) {
-      <div class="picker-overlay" (click)="showPlanPicker.set(false)">
-        <div class="picker" (click)="$event.stopPropagation()">
-          <div class="picker-title">Välj övningsplan</div>
-          @for (plan of plans(); track plan.id) {
-            <button class="picker-item" (click)="createSession(plan)">
-              {{ plan.name }}
-              <span class="picker-count">{{ plan.exerciseIds.length }} övningar</span>
+      <div class="dialog-backdrop" (click)="showPlanPicker.set(false)">
+        <div class="dialog" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+          <div class="dialog-title">Välj övningsplan</div>
+          <div class="dialog-body">
+            <div class="picker-list">
+              @for (plan of plans(); track plan.id) {
+                <button type="button" class="btn btn-secondary picker-btn" (click)="createSession(plan)">
+                  <span>{{ plan.name }}</span>
+                  <span class="picker-count">{{ plan.exerciseIds.length }} övningar</span>
+                </button>
+              }
+              @if (plans().length === 0) {
+                <div class="picker-empty">Inga övningsplaner skapade. Gå till Skapa först.</div>
+              }
+            </div>
+          </div>
+          <div class="dialog-actions">
+            <button type="button" class="btn btn-secondary" (click)="showPlanPicker.set(false)">
+              Avbryt
             </button>
-          }
-          @if (plans().length === 0) {
-            <div class="picker-empty">Inga övningsplaner skapade. Gå till Skapa först.</div>
-          }
+          </div>
         </div>
       </div>
     }
   `,
   styles: `
-    .latest-row {
-      display: flex; justify-content: space-between; align-items: flex-start;
+    .latest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-4);
+      flex-wrap: wrap;
     }
-    .card-bottom { margin-top: auto; }
-    .date-label { font-size: 9px; color: var(--txt4); margin-bottom: 8px; }
-    .btn-sm { font-size: 10px; padding: 4px 10px; }
-    .plus { font-size: 20px; color: var(--border2); }
-    .completed { color: var(--success) !important; }
-    .picker-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-      display: flex; align-items: center; justify-content: center; z-index: 100;
+    .sessions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-4);
     }
-    .picker {
-      background: var(--surf); border: 1px solid var(--border); border-radius: 10px;
-      padding: 20px; width: 340px; max-width: 90vw;
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: var(--space-2);
     }
-    .picker-title {
-      font-weight: 600; font-size: 14px; margin-bottom: 14px; color: var(--txt);
+    .date-label {
+      font-size: 11px;
+      color: var(--color-neutral-500);
     }
-    .picker-item {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: var(--surf2); border: 1px solid var(--border);
-      border-radius: 6px; padding: 10px 12px; color: var(--txt); font-size: 12px;
-      cursor: pointer; margin-bottom: 6px; font-family: inherit;
-      transition: border-color 0.15s;
+    .completed {
+      color: var(--success) !important;
     }
-    .picker-item:hover { border-color: var(--accent); }
-    .picker-count { font-size: 10px; color: var(--txt3); }
-    .picker-empty { font-size: 11px; color: var(--txt4); font-style: italic; text-align: center; padding: 16px; }
+    .picker-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .picker-btn {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .picker-count {
+      color: var(--color-neutral-500);
+      font-size: 12px;
+      font-weight: normal;
+    }
+    .picker-empty {
+      font-size: 12px;
+      color: var(--color-neutral-600);
+      font-style: italic;
+      text-align: center;
+      padding: var(--space-4);
+    }
   `,
 })
 export class PracticeListPage {

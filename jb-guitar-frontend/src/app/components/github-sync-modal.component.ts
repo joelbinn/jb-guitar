@@ -1,8 +1,7 @@
-import { Component, inject, signal, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { GitHubSyncSettings } from '../models';
-import { GitHubSyncService } from '../services/github-sync.service';
-import { StorageService } from '../services/storage.service';
+import {Component, inject, output, signal} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {GitHubSyncService} from '../services/github-sync.service';
+import {StorageService} from '../services/storage.service';
 
 @Component({
     selector: 'jbg-github-sync-modal',
@@ -189,11 +188,10 @@ import { StorageService } from '../services/storage.service';
     `,
     styles: `
         .modal-backdrop {
-            position: fixed; inset: 0; z-index: 200;
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(4px);
+            position: fixed; inset: 0;
+            background: rgba(36, 31, 24, 0.45);
             display: flex; align-items: center; justify-content: center;
-            padding: 16px;
+            padding: 20px; z-index: 100;
             animation: fadeIn 0.15s ease;
         }
         @keyframes fadeIn {
@@ -201,13 +199,14 @@ import { StorageService } from '../services/storage.service';
             to   { opacity: 1; }
         }
         .modal {
-            background: var(--surf);
-            border: 1px solid var(--border2);
-            border-radius: 10px;
+            background: #fffdf7;
+            border: 1px solid var(--color-divider);
+            border-radius: var(--radius);
             width: 100%; max-width: 480px;
-            box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+            box-shadow: var(--shadow-lg);
             animation: slideUp 0.18s ease;
             overflow: hidden;
+            font-family: var(--font-body);
         }
         @keyframes slideUp {
             from { transform: translateY(16px); opacity: 0; }
@@ -215,54 +214,55 @@ import { StorageService } from '../services/storage.service';
         }
         .modal-header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
+            padding: var(--space-4) var(--space-5);
+            border-bottom: 1px solid var(--color-divider);
         }
         .modal-title-row {
             display: flex; align-items: center; gap: 8px;
         }
         .modal-icon { font-size: 18px; }
         h2 {
-            font-size: 14px; font-weight: 600;
-            color: var(--txt); letter-spacing: 0.3px; margin: 0;
+            font-family: var(--font-heading);
+            font-size: 17px; font-weight: 700;
+            color: var(--color-text); margin: 0;
         }
         .close-btn {
-            background: none; border: none; color: var(--txt3);
+            background: none; border: none; color: var(--color-neutral-600);
             font-size: 14px; cursor: pointer; padding: 4px 8px;
-            border-radius: 4px; transition: color 0.15s, background 0.15s;
+            border-radius: var(--radius-sm); transition: color 0.15s, background 0.15s;
         }
-        .close-btn:hover { color: var(--txt); background: var(--surf2); }
-        .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
-        .modal-desc { font-size: 12px; color: var(--txt2); line-height: 1.6; }
-        .modal-desc strong { color: var(--txt); }
+        .close-btn:hover { color: var(--color-text); background: var(--color-neutral-100); }
+        .modal-body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); }
+        .modal-desc { font-size: 13px; color: var(--color-neutral-700); line-height: 1.6; }
+        .modal-desc strong { color: var(--color-text); }
 
         /* Toggle */
         .toggle-row {
             display: flex; align-items: center; justify-content: space-between;
             cursor: pointer; padding: 10px 12px;
-            background: var(--surf2); border-radius: 6px;
-            border: 1px solid var(--border);
+            background: var(--color-neutral-100); border-radius: var(--radius-sm);
+            border: 1px solid var(--color-divider);
         }
-        .toggle-label { font-size: 12px; color: var(--txt); font-weight: 500; }
+        .toggle-label { font-size: 13px; color: var(--color-text); font-weight: 500; }
         .toggle-wrap { position: relative; }
         .toggle-input {
             position: absolute; opacity: 0; width: 0; height: 0;
         }
         .toggle-track {
             display: block; width: 36px; height: 20px;
-            background: var(--border2); border-radius: 10px;
+            background: var(--color-neutral-300); border-radius: 10px;
             transition: background 0.2s; cursor: pointer;
             position: relative;
         }
         .toggle-thumb {
             position: absolute; top: 3px; left: 3px;
             width: 14px; height: 14px;
-            background: var(--txt3); border-radius: 50%;
+            background: #fffdf7; border-radius: 50%;
             transition: transform 0.2s, background 0.2s;
         }
-        .toggle-input:checked + .toggle-track { background: var(--accent-dim); border: 1px solid var(--accent); }
+        .toggle-input:checked + .toggle-track { background: var(--color-accent-100); border: 1px solid var(--color-accent); }
         .toggle-input:checked + .toggle-track .toggle-thumb {
-            transform: translateX(16px); background: var(--accent);
+            transform: translateX(16px); background: var(--color-accent);
         }
 
         /* Form fields */
@@ -273,45 +273,45 @@ import { StorageService } from '../services/storage.service';
             margin-bottom: 6px;
         }
         .help-link {
-            font-size: 10px; color: var(--accent); text-decoration: none;
-            border: 1px solid var(--accent); border-radius: 10px;
+            font-size: 11px; color: var(--color-accent-700); text-decoration: none;
+            border: 1px solid var(--color-divider); border-radius: 10px;
             padding: 2px 8px; transition: background 0.15s;
         }
-        .help-link:hover { background: var(--accent-dim); }
+        .help-link:hover { background: var(--color-accent-100); }
         .token-input { padding-right: 60px; }
         .token-toggle {
-            float: right; margin-top: -28px; margin-right: 8px;
-            background: none; border: none; color: var(--txt3);
-            font-size: 10px; cursor: pointer; position: relative;
+            float: right; margin-top: -30px; margin-right: 8px;
+            background: none; border: none; color: var(--color-neutral-600);
+            font-size: 11px; cursor: pointer; position: relative;
             z-index: 1; padding: 4px;
         }
-        .token-toggle:hover { color: var(--txt2); }
+        .token-toggle:hover { color: var(--color-text); }
         .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .field { margin-bottom: 0; }
 
         /* Info box */
         .info-box {
             display: flex; gap: 10px; padding: 12px;
-            background: var(--surf2); border-radius: 6px;
-            border: 1px solid var(--border);
+            background: var(--color-neutral-100); border-radius: var(--radius-sm);
+            border: 1px solid var(--color-divider);
         }
-        .info-icon { font-size: 16px; flex-shrink: 0; color: var(--accent); }
-        .info-text { font-size: 11px; color: var(--txt2); line-height: 1.7; }
-        .info-text a { color: var(--accent); text-decoration: none; }
+        .info-icon { font-size: 16px; flex-shrink: 0; color: var(--color-accent); }
+        .info-text { font-size: 12px; color: var(--color-neutral-700); line-height: 1.7; }
+        .info-text a { color: var(--color-accent-700); text-decoration: none; }
         .info-text a:hover { text-decoration: underline; }
 
         /* Status message */
         .status-msg {
-            font-size: 11px; padding: 8px 12px;
-            border-radius: 5px; border: 1px solid var(--border);
+            font-size: 12px; padding: 8px 12px;
+            border-radius: var(--radius-sm); border: 1px solid var(--color-divider);
         }
-        .status-ok { border-color: var(--success); color: var(--success); background: rgba(90,138,90,0.1); }
-        .status-err { border-color: var(--danger-border); color: var(--danger); background: rgba(160,80,80,0.1); }
-        .status-info { border-color: var(--border2); color: var(--txt2); }
+        .status-ok { border-color: var(--success); color: var(--success); background: rgba(60,122,68,0.1); }
+        .status-err { border-color: var(--color-accent-700); color: var(--color-accent-700); background: var(--color-accent-100); }
+        .status-info { border-color: var(--color-divider); color: var(--color-neutral-700); }
 
         /* Sync actions */
         .sync-actions {
-            border-top: 1px solid var(--border); padding-top: 16px;
+            border-top: 1px solid var(--color-divider); padding-top: 16px;
         }
         .sync-actions .btn-row { margin-top: 8px; }
 
@@ -319,8 +319,8 @@ import { StorageService } from '../services/storage.service';
         .modal-footer {
             display: flex; gap: 8px; justify-content: flex-end;
             padding: 14px 20px;
-            border-top: 1px solid var(--border);
-            background: var(--surf2);
+            border-top: 1px solid var(--color-divider);
+            background: var(--color-neutral-100);
         }
     `,
 })

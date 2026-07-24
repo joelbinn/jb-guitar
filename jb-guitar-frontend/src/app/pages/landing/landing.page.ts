@@ -10,51 +10,81 @@ import {ExerciseService, PlanService, SessionService} from '../../services';
 
     @if (latestSession()) {
       @if (plan(); as p) {
-        <div class="card card-accent-top">
+        <div class="card elev-sm" style="max-width: 640px;">
+          <div class="card-kicker">Övningsplan</div>
           <div class="card-title">{{ p.name }}</div>
-          <div class="card-sub">Övningsplan · {{ statusLabel() }} {{ pausedDateTime() }} ·
-            ⏱ {{ estimatedMinutes() }} min
-          </div>
+          <div class="status-line">{{ statusLabel() }} {{ pausedDateTime() }} · ⏱ {{ estimatedMinutes() }} min</div>
+
           <div class="prog-wrap">
             <div class="prog-fill" [style.width.%]="progressPercent()"></div>
           </div>
           <div class="progress-text">{{ completedCount() }} av {{ totalCount() }} övningar</div>
 
           @if (currentExercise(); as ex) {
-            <div class="current-label">Aktuell övning</div>
-            <div class="current-name">{{ ex.name }}</div>
-            <div class="current-url">{{ ex.url }}</div>
+            <div class="current-box">
+              <div class="current-kicker">Aktuell övning</div>
+              <div class="current-name">{{ ex.name }}</div>
+              <div class="current-url">{{ ex.url }}</div>
+            </div>
           }
 
           <div class="btn-row">
-            <button class="btn btn-primary" (click)="continueSession()">Fortsätt →</button>
-            <button class="btn btn-ghost" (click)="startNew()">Starta ny session</button>
+            <button type="button" class="btn btn-primary" (click)="continueSession()">
+              Fortsätt
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+              </svg>
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="startNew()">
+              Starta ny session
+            </button>
           </div>
         </div>
       }
     } @else {
-      <div class="empty-state">
+      <div class="card" style="max-width: 640px; text-align: center; padding: var(--space-8) var(--space-4);">
         <div class="empty-hint">Ingen övningssession påbörjad</div>
-        <button class="btn btn-ghost empty-btn" (click)="startNew()">+ Starta övningssession</button>
+        <button type="button" class="btn btn-secondary" style="margin: 0 auto;" (click)="startNew()">
+          + Starta övningssession
+        </button>
       </div>
     }
   `,
   styles: `
-    .progress-text { font-size: 10px; color: var(--txt3); margin-bottom: 8px; }
-    .current-label {
-      font-size: 9px; color: var(--txt3); letter-spacing: 1px;
-      text-transform: uppercase; margin-bottom: 4px;
+    .status-line {
+      font-size: 13px;
+      color: var(--color-neutral-700);
     }
-    .current-name { font-size: 12px; color: var(--txt); margin-bottom: 2px; }
-    .current-url { font-size: 10px; color: var(--txt3); margin-bottom: 10px; }
-    .empty-state {
-      border: 1px dashed var(--border); border-radius: 8px;
-      padding: 40px 24px; text-align: center;
+    .progress-text {
+      font-size: 12px;
+      color: var(--color-neutral-600);
+    }
+    .current-box {
+      margin-top: var(--space-3);
+    }
+    .current-kicker {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-neutral-600);
+      margin-bottom: 2px;
+    }
+    .current-name {
+      font-size: 14px;
+      color: var(--color-text);
+      font-weight: 500;
+    }
+    .current-url {
+      font-size: 11px;
+      color: var(--color-neutral-600);
+      word-break: break-all;
     }
     .empty-hint {
-      font-size: 11px; color: var(--txt4); margin-bottom: 12px; font-style: italic;
+      font-size: 13px;
+      color: var(--color-neutral-600);
+      font-style: italic;
+      margin-bottom: var(--space-3);
     }
-    .empty-btn { font-size: 12px; padding: 8px 20px; }
   `,
 })
 export class LandingPage {

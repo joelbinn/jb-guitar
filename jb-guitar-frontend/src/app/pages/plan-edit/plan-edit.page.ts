@@ -15,100 +15,183 @@ interface PlanExerciseRow {
   selector: 'jbg-plan-edit',
   imports: [FormsModule, DragDropModule],
   template: `
-    <div class="breadcrumb" (click)="goBack()">← Skapa /
-      <span class="crumb-active">Övningsplan</span></div>
-    <div class="page-title">{{ isNew() ? 'Ny plan' : 'Redigera plan' }}</div>
+    <div class="breadcrumb" (click)="goBack()">
+      ← Skapa / <span class="crumb-active">Övningsplan</span>
+    </div>
+    <h2 class="page-title">{{ isNew() ? 'Ny plan' : 'Redigera plan' }}</h2>
 
-    <div class="field">
-      <label class="field-label" for="name">Namn</label>
-      <input class="field-input" id="name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
+    <div class="field" style="max-width: 480px;">
+      <label for="plan-name">Namn</label>
+      <input class="input" id="plan-name" [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="Ange namn..." />
     </div>
 
-    <div class="sect-label">Övningar i planen <span class="count">{{ rows().length }} st</span></div>
+    <div class="plan-eyebrow">Övningar i planen · {{ rows().length }} st</div>
 
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <div cdkDropList (cdkDropListDropped)="drop($event)" class="rows-container">
       @for (row of rows(); track row.exerciseId; let i = $index) {
         <div class="plan-row" cdkDrag>
-          <span class="drag-handle" cdkDragHandle>⠿</span>
-          <span class="plan-num">{{ i + 1 }}.</span>
-          <span class="plan-name">{{ row.name }}</span>
-          <span class="tag" style="font-size: 9px;">{{ row.source }}</span>
-          <span class="plan-remove" (click)="removeExercise(i)">×</span>
+          <span class="drag-handle" cdkDragHandle title="Dra för att sortera">⠿</span>
+          <span class="row-num">{{ i + 1 }}.</span>
+          <span class="row-name">{{ row.name }}</span>
+          <span class="tag tag-neutral">{{ sourceLabel(row.source) }}</span>
+
+          <button type="button" class="btn btn-ghost btn-icon row-btn" (click)="moveUp(i)" [disabled]="i === 0" aria-label="Flytta upp">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m18 15-6-6-6 6"/>
+            </svg>
+          </button>
+          <button type="button" class="btn btn-ghost btn-icon row-btn" (click)="moveDown(i)" [disabled]="i === rows().length - 1" aria-label="Flytta ner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <button type="button" class="btn btn-ghost btn-icon row-btn" (click)="removeExercise(i)" aria-label="Ta bort">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+            </svg>
+          </button>
         </div>
       }
     </div>
 
-    <div class="add-exercise" (click)="showAddPicker.set(true)">+ Lägg till övning</div>
-    <div class="drag-hint">⠿ Drag & drop för att sortera om</div>
+    <div class="add-exercise-btn" (click)="showAddPicker.set(true)">
+      + Lägg till övning
+    </div>
 
-    <button class="btn btn-primary btn-full" style="margin-bottom: 8px;" (click)="save()">
-      Spara övningsplan
-    </button>
-    <div class="btn-row">
-      <button class="btn btn-ghost" style="flex: 1;" (click)="cancel()">Avbryt</button>
-      @if (!isNew()) {
-        <button class="btn btn-danger" style="flex: 1;" (click)="remove()">Ta bort plan</button>
-      }
+    <div style="max-width: 480px; display: flex; flex-direction: column; gap: var(--space-2);">
+      <button type="button" class="btn btn-primary btn-block" (click)="save()">
+        Spara övningsplan
+      </button>
+      <div style="display: flex; gap: var(--space-2);">
+        <button type="button" class="btn btn-secondary" style="flex: 1;" (click)="cancel()">Avbryt</button>
+        @if (!isNew()) {
+          <button type="button" class="btn btn-secondary" style="flex: 1;" (click)="remove()">Ta bort plan</button>
+        }
+      </div>
     </div>
 
     @if (showAddPicker()) {
-      <div class="picker-overlay" (click)="showAddPicker.set(false)">
-        <div class="picker" (click)="$event.stopPropagation()">
-          <div class="picker-title">Lägg till övning</div>
-          @for (ex of availableExercises(); track ex.id) {
-            <button class="picker-item" (click)="addExercise(ex)">
-              {{ ex.name }}
-              <span class="picker-source">{{ ex.source }}</span>
+      <div class="dialog-backdrop" (click)="showAddPicker.set(false)">
+        <div class="dialog" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+          <div class="dialog-title">Lägg till övning</div>
+          <div class="dialog-body">
+            <div class="picker-list">
+              @for (ex of availableExercises(); track ex.id) {
+                <button type="button" class="btn btn-secondary picker-btn" (click)="addExercise(ex)">
+                  <span>{{ ex.name }}</span>
+                  <span class="picker-source">{{ sourceLabel(ex.source) }}</span>
+                </button>
+              }
+              @if (availableExercises().length === 0) {
+                <div class="picker-empty">Alla övningar är redan tillagda, eller inga övningar finns.</div>
+              }
+            </div>
+          </div>
+          <div class="dialog-actions">
+            <button type="button" class="btn btn-secondary" (click)="showAddPicker.set(false)">
+              Avbryt
             </button>
-          }
-          @if (availableExercises().length === 0) {
-            <div class="picker-empty">Alla övningar är redan tillagda, eller inga övningar finns.</div>
-          }
+          </div>
         </div>
       </div>
     }
   `,
   styles: `
-    .breadcrumb { font-size: 10px; color: var(--txt3); margin-bottom: 16px; cursor: pointer; }
-    .crumb-active { color: var(--txt2); }
-    .page-title { font-size: 18px; font-weight: 700; color: var(--txt); margin-bottom: 20px; }
-    .count { color: var(--txt4); }
+    .breadcrumb {
+      font-size: 11px;
+      color: var(--color-neutral-500);
+      cursor: pointer;
+      margin-bottom: var(--space-2);
+    }
+    .crumb-active {
+      color: var(--color-text);
+    }
+    .page-title {
+      margin-bottom: var(--space-6);
+      font-size: 24px;
+    }
+    .plan-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-2);
+    }
+    .rows-container {
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
+    }
     .plan-row {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--surf); border: 1px solid var(--border); border-radius: 6px;
-      padding: 8px 10px; margin-bottom: 6px; transition: border-color 0.15s, background 0.15s;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      border: 1px solid var(--color-divider);
+      padding: var(--space-2) var(--space-3);
+      background: #fffdf7;
+      border-radius: var(--radius-sm);
     }
-    .plan-row:hover { border-color: var(--border2); }
-    .drag-handle { color: var(--border2); font-size: 14px; cursor: grab; flex-shrink: 0; }
-    .plan-num { font-size: 10px; color: var(--txt3); width: 18px; flex-shrink: 0; }
-    .plan-name { flex: 1; font-size: 12px; color: var(--txt); }
-    .plan-remove { font-size: 14px; color: var(--txt4); cursor: pointer; flex-shrink: 0; transition: color 0.15s; }
-    .plan-remove:hover { color: var(--danger); }
-    .add-exercise {
-      border: 1px dashed var(--border2); border-radius: 6px; padding: 10px;
-      text-align: center; font-size: 11px; color: var(--txt4); cursor: pointer;
-      margin: 10px 0; transition: border-color 0.15s, color 0.15s;
+    .drag-handle {
+      font-size: 14px;
+      color: var(--color-neutral-400);
+      cursor: grab;
+      user-select: none;
     }
-    .add-exercise:hover { border-color: var(--accent); color: var(--txt3); }
-    .drag-hint { font-size: 9px; color: var(--txt4); margin-bottom: 16px; font-style: italic; }
-    .picker-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-      display: flex; align-items: center; justify-content: center; z-index: 100;
+    .row-num {
+      font-size: 11px;
+      color: var(--color-neutral-500);
+      width: 18px;
     }
-    .picker {
-      background: var(--surf); border: 1px solid var(--border); border-radius: 10px;
-      padding: 20px; width: 340px; max-width: 90vw;
+    .row-name {
+      flex: 1;
+      font-size: 13px;
+      color: var(--color-text);
     }
-    .picker-title { font-weight: 600; font-size: 14px; margin-bottom: 14px; color: var(--txt); }
-    .picker-item {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: var(--surf2); border: 1px solid var(--border);
-      border-radius: 6px; padding: 10px 12px; color: var(--txt); font-size: 12px;
-      cursor: pointer; margin-bottom: 6px; font-family: inherit; transition: border-color 0.15s;
+    .row-btn {
+      width: 28px;
+      height: 28px;
+      padding: 0;
     }
-    .picker-item:hover { border-color: var(--accent); }
-    .picker-source { font-size: 10px; color: var(--txt3); }
-    .picker-empty { font-size: 11px; color: var(--txt4); font-style: italic; text-align: center; padding: 16px; }
+    .add-exercise-btn {
+      max-width: 560px;
+      border: 1px dashed var(--color-divider);
+      text-align: center;
+      padding: var(--space-3);
+      font-size: 12px;
+      color: var(--color-neutral-600);
+      cursor: pointer;
+      margin-bottom: var(--space-6);
+      background: #fffdf7;
+      border-radius: var(--radius-sm);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .add-exercise-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent-700);
+    }
+    .picker-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .picker-btn {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .picker-source {
+      font-size: 11px;
+      color: var(--color-neutral-500);
+      font-weight: normal;
+    }
+    .picker-empty {
+      font-size: 12px;
+      color: var(--color-neutral-600);
+      font-style: italic;
+      text-align: center;
+      padding: var(--space-4);
+    }
   `,
 })
 export class PlanEditPage {
@@ -150,6 +233,16 @@ export class PlanEditPage {
     }
   }
 
+  sourceLabel(source: string): string {
+    const map: Record<string, string> = {
+      youtube: 'YouTube',
+      jtc: 'JTC Guitar',
+      soundslice: 'Soundslice',
+      other: 'Annan',
+    };
+    return map[source] ?? source;
+  }
+
   addExercise(ex: Exercise): void {
     this.rows.update((r) => [...r, { exerciseId: ex.id, name: ex.name, source: ex.source }]);
     this.showAddPicker.set(false);
@@ -157,6 +250,30 @@ export class PlanEditPage {
 
   removeExercise(index: number): void {
     this.rows.update((r) => r.filter((_, i) => i !== index));
+  }
+
+  moveUp(index: number): void {
+    if (index > 0) {
+      this.rows.update((r) => {
+        const copy = [...r];
+        const temp = copy[index - 1];
+        copy[index - 1] = copy[index];
+        copy[index] = temp;
+        return copy;
+      });
+    }
+  }
+
+  moveDown(index: number): void {
+    if (index < this.rows().length - 1) {
+      this.rows.update((r) => {
+        const copy = [...r];
+        const temp = copy[index + 1];
+        copy[index + 1] = copy[index];
+        copy[index] = temp;
+        return copy;
+      });
+    }
   }
 
   drop(event: CdkDragDrop<PlanExerciseRow[]>): void {
