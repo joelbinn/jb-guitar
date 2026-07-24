@@ -59,6 +59,12 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
 
           <div class="sess-main">
             @if (currentExercise(); as ex) {
+              @if (ex.description) {
+                <div class="description-block">
+                  {{ ex.description }}
+                </div>
+              }
+
               @if (embedUrl(); as url) {
                 <div class="iframe-container">
                   <iframe [src]="url" class="exercise-iframe" allowfullscreen></iframe>
@@ -88,12 +94,6 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
                       }
                     </button>
                   </div>
-                </div>
-              }
-
-              @if (ex.description) {
-                <div class="description-block">
-                  {{ ex.description }}
                 </div>
               }
 
