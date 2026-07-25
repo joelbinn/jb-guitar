@@ -867,9 +867,9 @@ export class SessionPage {
     if (!this.audioCtx) return;
     const strength = this.beatProfile()[beatIdx] ?? 'svag';
     const params: Record<BeatStrength, [number, number, number]> = {
-      stark: [1050, 0.05, 0.5],
-      mellan: [880, 0.04, 0.35],
-      svag: [660, 0.04, 0.2],
+      stark: [1050, 0.05, 0.8],
+      mellan: [880, 0.04, 0.6],
+      svag: [660, 0.04, 0.35],
     };
     const [freq, dur, baseVol] = params[strength];
     const volumeMultiplier = this.storage.metronomeVolume() / 100;
