@@ -944,7 +944,7 @@ export class SessionPage {
       osc.frequency.setValueAtTime(800, now);
       osc.frequency.exponentialRampToValueAtTime(400, now + 0.3);
 
-      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.setValueAtTime(0.6, now);
       gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
 
       osc.start(now);
