@@ -102,20 +102,20 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
                 <div class="card">
                   <div class="card-kicker">Timer</div>
                   <div class="timer-display">{{ timerDisplay() }}</div>
-                  <div class="timer-input-row">
-                    <input
-                      class="input"
-                      type="number"
-                      min="0"
-                      max="59"
-                      style="width: 64px; text-align: center;"
-                      [value]="timerInputMinutes()"
-                      (change)="timerInputMinutes.set(+$any($event.target).value)"
-                      [disabled]="timerRunning()"
-                    />
-                    <span class="unit-label">min</span>
-                  </div>
                   <div class="btn-group">
+                    <div class="timer-input-row">
+                      <input
+                        class="input"
+                        type="number"
+                        min="0"
+                        max="59"
+                        style="width: 64px; text-align: center;"
+                        [value]="timerInputMinutes()"
+                        (change)="timerInputMinutes.set(+$any($event.target).value)"
+                        [disabled]="timerRunning()"
+                      />
+                      <span class="unit-label">min</span>
+                    </div>
                     <button type="button" class="btn btn-secondary" style="flex: 1;" [disabled]="timerRunning()" (click)="startTimer()">Start</button>
                     <button type="button" class="btn btn-secondary" style="flex: 1;" [disabled]="!timerRunning()" (click)="pauseTimer()">Pausa</button>
                     <button type="button" class="btn btn-ghost" style="flex: 1;" (click)="resetTimer()">Återställ</button>
@@ -134,9 +134,9 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
                     <input
                       class="input"
                       type="number"
-                      min="20"
+                      min="10"
                       max="300"
-                      style="width: 60px; text-align: center;"
+                      style="width: 7rem; text-align: center;"
                       [value]="metroBpm()"
                       (change)="setMetroBpm(+$any($event.target).value)"
                       [disabled]="metronomeRunning()"
@@ -147,7 +147,7 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
                       type="number"
                       min="1"
                       max="16"
-                      style="width: 48px; text-align: center;"
+                      style="width: 5rem; text-align: center;"
                       [value]="metroNumerator()"
                       (change)="setMetroNumerator(+$any($event.target).value)"
                       [disabled]="metronomeRunning()"
