@@ -873,7 +873,7 @@ export class SessionPage {
     };
     const [freq, dur, baseVol] = params[strength];
     const volumeMultiplier = this.storage.metronomeVolume() / 100;
-    const vol = baseVol * volumeMultiplier;
+    const vol = baseVol * volumeMultiplier * 3.0;
 
     const osc = this.audioCtx.createOscillator();
     const gain = this.audioCtx.createGain();
@@ -944,7 +944,7 @@ export class SessionPage {
       osc.frequency.setValueAtTime(800, now);
       osc.frequency.exponentialRampToValueAtTime(400, now + 0.3);
 
-      gain.gain.setValueAtTime(0.6, now);
+      gain.gain.setValueAtTime(2.0, now);
       gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
 
       osc.start(now);
