@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(grep -E \"\\\\.\\(ts|html\\)$\")",
+      "Bash(npm start *)",
+      "Bash(curl -s http://localhost:4200/)"
     ]
   }
 }
