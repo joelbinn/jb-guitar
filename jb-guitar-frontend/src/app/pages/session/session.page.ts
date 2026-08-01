@@ -166,6 +166,17 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
                 </div>
               </div>
 
+              <div class="notes-section">
+                <label for="exercise-notes" class="notes-label">Anteckningar</label>
+                <textarea
+                  id="exercise-notes"
+                  class="notes-textarea"
+                  placeholder="Lägg till anteckningar om denna övning..."
+                  [value]="exerciseNotes()"
+                  (change)="updateNotes($event)"
+                ></textarea>
+              </div>
+
               <div class="nav-controls">
                 <button type="button" class="btn btn-secondary" style="flex: 1;" [disabled]="currentExerciseIndex() === 1" (click)="previous()">
                   ← Föregående
@@ -467,6 +478,40 @@ import {ExerciseService, PlanService, SessionService, StorageService} from '../.
       display: flex;
       gap: var(--space-3);
     }
+    .notes-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .notes-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-neutral-600);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .notes-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text);
+      background: #fffdf7;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+    .notes-textarea:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      background: #fff;
+    }
+    .notes-textarea::placeholder {
+      color: var(--color-neutral-400);
+    }
+
     .session-actions {
       display: flex;
       gap: var(--space-2);
@@ -566,6 +611,9 @@ export class SessionPage {
   private nextBeatIndex = 0;
   private metronomeTimerId: number | null = null;
 
+  // Notes signal
+  exerciseNotes = signal('');
+
   constructor() {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.loadSession(id);
@@ -597,6 +645,7 @@ export class SessionPage {
             const completion = s.exerciseState.find((c) => c.exerciseId === exerciseId);
             if (completion) {
               this.timerInputMinutes.set(completion.timerMinutes);
+              this.exerciseNotes.set(completion.notes || '');
               const mc = completion.metronomeConfig ?? this.defaultMetronomeConfig();
               this.metroBpm.set(mc.bpm);
               this.metroNumerator.set(mc.numerator);
@@ -639,6 +688,7 @@ export class SessionPage {
       const completion = updated.exerciseState.find((c) => c.exerciseId === exerciseId);
       if (completion) {
         this.timerInputMinutes.set(completion.timerMinutes);
+        this.exerciseNotes.set(completion.notes || '');
         const mc = completion.metronomeConfig ?? this.defaultMetronomeConfig();
         this.metroBpm.set(mc.bpm);
         this.metroNumerator.set(mc.numerator);
@@ -834,6 +884,17 @@ export class SessionPage {
       denominator: 4,
       beatProfile: ['stark', 'svag', 'svag', 'svag']
     };
+  }
+
+  updateNotes(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    this.exerciseNotes.set(textarea.value);
+    const s = this.session();
+    if (!s) return;
+    const c = s.exerciseState.find(e => e.exerciseId === s.currentExerciseId);
+    if (!c) return;
+    c.notes = textarea.value;
+    this.sessionService.save(s);
   }
 
   private saveMetronomeConfig(): void {

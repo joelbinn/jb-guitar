@@ -30,6 +30,11 @@ export class SessionService {
           };
           needsSave = true;
         }
+        // Migrate old sessions that don't have notes
+        if (completion.notes === undefined) {
+          completion.notes = '';
+          needsSave = true;
+        }
       });
       if (needsSave) {
         this.storage.saveSession(session);
@@ -55,6 +60,7 @@ export class SessionService {
             exerciseId: id,
             completed: false,
             timerMinutes: 5,
+            notes: '',
             metronomeConfig: {
               bpm: 100,
               numerator: 4,

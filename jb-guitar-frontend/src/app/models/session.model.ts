@@ -13,6 +13,7 @@ export interface ExerciseSessionState {
   completed: boolean;
   timerMinutes: number;
   metronomeConfig?: MetronomeConfig;
+  notes: string;
 }
 
 export interface Session {
